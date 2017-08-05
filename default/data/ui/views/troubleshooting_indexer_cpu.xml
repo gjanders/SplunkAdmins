@@ -1,0 +1,453 @@
+<form>
+  <label>Troubleshooting Indexer CPU</label>
+  <fieldset submitButton="false">
+    <input type="time" token="time_tok">
+      <label>General Time Picker</label>
+      <default>
+        <earliest>-4h@h</earliest>
+        <latest>@h</latest>
+      </default>
+    </input>
+    <input type="text" token="user">
+      <label>User</label>
+    </input>
+    <input type="dropdown" searchWhenChanged="true" token="interval">
+      <label></label>
+      <choice value="10m">10m</choice>
+      <choice value="30m">30m</choice>
+      <choice value="60m">60m</choice>
+      <choice value="120m">120m</choice>
+      <choice value="240m">4h</choice>
+      <default>60m</default>
+    </input>
+    <input type="time" token="CPUtimetoken">
+      <label>CPU Based Time Picker (Pie charts near top)</label>
+      <default>
+        <earliest>-1h@h</earliest>
+        <latest>@h</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Search Count Per Application</title>
+      <chart>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::*  | eval app = 'data.search_props.app'
+| chart count by  app</query>
+          <earliest>$CPUtimetoken.earliest$</earliest>
+          <latest>$CPUtimetoken.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>CPU Usage By Application (point in time across all indexers)</title>
+      <chart>
+        <title>CPU is approx CPU% at any point in time</title>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::*  | eval app = 'data.search_props.app' | eval cpuperc = 'data.pct_cpu' | bin _time span=1m  | stats sum(cpuperc) AS totalCPU, avg(cpuperc) AS avgCPU by data.pid, host, _time, app | stats sum(totalCPU) AS totalCPU, sum(avgCPU) AS avgCPU by app | addinfo  | eval overThisManyMinutes = round((info_max_time-info_min_time)/60) | eval CPUPercUsed = round(avgCPU/overThisManyMinutes) | fields - totalCPU, info* overThisManyMinutes, avgCPU</query>
+          <earliest>$CPUtimetoken.earliest$</earliest>
+          <latest>$CPUtimetoken.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Searches Running Per Indexer</title>
+      <chart>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::* | chart count by host</query>
+          <earliest>$CPUtimetoken.earliest$</earliest>
+          <latest>$CPUtimetoken.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Search Related CPU By Indexer</title>
+      <chart>
+        <title>CPU is approx CPU% at any point in time</title>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::* | eval cpuperc = 'data.pct_cpu' | bin _time span=1m  | stats sum(cpuperc) AS totalCPU, avg(cpuperc) AS avgCPU by data.pid, host, _time|  stats sum(totalCPU) AS totalCPU, sum(avgCPU) AS avgCPUTotal by host  | addinfo | eval overThisManyMinutes = round((info_max_time-info_min_time)/60) | eval CPUPercUsed = round(avgCPUTotal/overThisManyMinutes)  | fields - info* overThisManyMinutes, totalCPU, avgCPUTotal</query>
+          <earliest>$CPUtimetoken.earliest$</earliest>
+          <latest>$CPUtimetoken.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>TotalCPU By Indexer And Application</title>
+      <chart>
+        <title>This is not % CPU, a rough guide only</title>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::*  | eval app = 'data.search_props.app' | eval cpuperc = 'data.pct_cpu' | chart  sum(cpuperc) AS totalCPU by host, app</query>
+          <earliest>$time_tok.earliest$</earliest>
+          <latest>$time_tok.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Search count by app, indexer</title>
+      <chart>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::*  | eval app = 'data.search_props.app'
+| chart count by  app, host</query>
+          <earliest>$time_tok.earliest$</earliest>
+          <latest>$time_tok.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Usage by non system users - per $interval$ block of time</title>
+      <table>
+        <title>CPU is total measured amount, memory is maximum memory usage by process, 100 is 1 CPU core</title>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::* "data.search_props.user"!=admin  "data.search_props.user"!=splunk-system-user
+| eval mem_used = 'data.mem_used' | eval app = 'data.search_props.app' | eval elapsed = 'data.elapsed' | eval label = 'data.search_props.label' 
+| eval type = 'data.search_props.type' | eval mode = 'data.search_props.mode' | eval user = 'data.search_props.user' | eval cpuperc = 'data.pct_cpu'
+| eval search_head = 'data.search_props.search_head' | eval read_mb = 'data.read_mb'
+| eval provenance='data.search_props.provenance' | eval label=coalesce(label, provenance)
+| stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as searchStartTime, sum(cpuperc) AS totalCPU, avg(cpuperc) AS avgCPU, max(read_mb) AS read_mb by type, mode, app, user, label, host, search_head, data.pid
+| bin searchStartTime span=$interval$
+| stats sum(totalCPU) AS totalCPU, sum(mem_used) AS totalMemUsed, sum(runtime) AS totalRuntime, avg(runtime) AS avgRuntime, sum(avgCPU) AS avgCPUAcrossAllIndexers, sum(read_mb) AS totalReadMB by searchStartTime, type, mode, app, user
+| eval totalduration = tostring(totalRuntime, "duration"), averageduration = tostring(avgRuntime, "duration")
+| eval Started = strftime(searchStartTime,"%+")
+| eval avgCPUAcrossAllIndexers = round(avgCPUAcrossAllIndexers)
+| sort - totalCPU, totalMemUsed
+| fields Started, totalMemUsed, user, app, mode, type, averageduration, totalduration, totalCPU, avgCPUAcrossAllIndexers, totalReadMB</query>
+          <earliest>$time_tok.earliest$</earliest>
+          <latest>$time_tok.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <eval token="app">if($click.name2$="app", $click.value2$, "*"</eval>
+          <eval token="user">if($click.name2$="user", $click.value2$, ""</eval>
+          <link target="_blank">/app/SplunkAdmins/troubleshooting_indexer_cpu_drilldown?form.app=$app$&amp;form.user=$user$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Usage by system users per $interval$ block of time</title>
+      <table>
+        <title>CPU is totalMeasuredAmount, memory is maximum memory usage by process, 100 is 1 CPU core</title>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::* "data.search_props.user"=admin OR "data.search_props.user"=splunk-system-user
+| eval mem_used = 'data.mem_used' | eval app = 'data.search_props.app' | eval elapsed = 'data.elapsed' | eval label = 'data.search_props.label' 
+| eval type = 'data.search_props.type' | eval mode = 'data.search_props.mode' | eval user = 'data.search_props.user' | eval cpuperc = 'data.pct_cpu'
+| eval search_head = 'data.search_props.search_head' | eval read_mb = 'data.read_mb'
+| eval provenance='data.search_props.provenance' | eval label=coalesce(label, provenance)
+| stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as searchStartTime, sum(cpuperc) AS totalCPU, avg(cpuperc) AS avgCPU, max(read_mb) AS read_mb by type, mode, app, user, label, host, search_head, data.pid
+| bin searchStartTime span=$interval$
+| stats sum(totalCPU) AS totalCPU, sum(mem_used) AS totalMemUsed, sum(runtime) AS totalRuntime, avg(runtime) AS avgRuntime, sum(avgCPU) AS avgCPUAcrossAllIndexers, sum(read_mb) AS totalReadMB by searchStartTime, type, mode, app, user
+| eval totalduration = tostring(totalRuntime, "duration"), averageduration = tostring(avgRuntime, "duration")
+| eval Started = strftime(searchStartTime,"%+") 
+| eval avgCPUAcrossAllIndexers = round(avgCPUAcrossAllIndexers)
+| sort - totalCPU, totalMemUsed
+| fields Started, totalMemUsed, user, app, mode, type, averageduration, totalduration, totalCPU, avgCPUAcrossAllIndexers, totalReadMB</query>
+          <earliest>$time_tok.earliest$</earliest>
+          <latest>$time_tok.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <eval token="app">if($click.name2$="app", $click.value2$, "*"</eval>
+          <eval token="user">if($click.name2$="user", $click.value2$, ""</eval>
+          <link target="_blank">/app/SplunkAdmins/troubleshooting_indexer_cpu_drilldown?form.app=$app$&amp;form.user=$user$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>CPU used per indexer per search label, CPU measured at point in time</title>
+      <input type="dropdown" token="labelExclusion" searchWhenChanged="false">
+        <label>Exclude</label>
+        <choice value="_ACCELERATE*">_ACCELERATE*</choice>
+        <choice value="__DONTEXCLUDE__">No Exclusion</choice>
+        <default>__DONTEXCLUDE__</default>
+      </input>
+      <input type="dropdown" token="sort">
+        <label>Sort By</label>
+        <choice value="totalAVGCPU, totalMemUsed">avgCPU, memory</choice>
+        <choice value="totalCPU, totalMemUsed">totalCPU, memory</choice>
+        <choice value="totalRuntime, totalCPU">duration, totalCPU</choice>
+        <choice value="totalRuntime, totalAVGCPU">duration, avgCPU</choice>
+        <default>totalAVGCPU, totalMemUsed</default>
+        <initialValue>totalAVGCPU, totalMemUsed</initialValue>
+      </input>
+      <table>
+        <title>CPU is approx CPU% at any point in time, memory is maximum memory usage by process, 100 is 1 CPU core</title>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::* NOT ("data.search_props.label"=$labelExclusion$)
+| eval mem_used = 'data.mem_used' | eval app = 'data.search_props.app' | eval elapsed = 'data.elapsed' | eval label = 'data.search_props.label' 
+| eval type = 'data.search_props.type' | eval mode = 'data.search_props.mode' | eval user = 'data.search_props.user' | eval cpuperc = 'data.pct_cpu'
+| eval read_mb = 'data.read_mb'
+| eval provenance='data.search_props.provenance'
+| eval label=coalesce(label, provenance)
+| stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as Started, sum(cpuperc) AS totalCPU, max(read_mb) AS read_mb, avg(cpuperc) AS avgCPU by type, mode, app, user, label, host, data.pid
+| stats sum(avgCPU) AS totalAVGCPU, sum(mem_used) AS totalMemUsed, sum(runtime) AS totalRuntime, sum(read_mb) AS totalReadMB, sum(totalCPU) AS totalCPU by Started, type, "mode", app, user, label, host
+| eval totalMemUsed = round(totalMemUsed, 2)
+| eval Started=strftime(Started,"%+") 
+| eval duration = tostring(totalRuntime, "duration")
+| eval avgCPU = round(totalAVGCPU)
+| sort - $sort$
+| fields - totalRuntime, totalAVGCPU</query>
+          <earliest>$time_tok.earliest$</earliest>
+          <latest>$time_tok.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <eval token="app">if($click.name2$="app", $click.value2$, "*"</eval>
+          <eval token="user">if($click.name2$="user", $click.value2$, ""</eval>
+          <link target="_blank">/app/SplunkAdmins/troubleshooting_indexer_cpu_drilldown?form.app=$app$&amp;form.user=$user$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Most Expensive Non System Queries with CPU measured at point in time</title>
+      <input type="dropdown" token="sort2">
+        <label>Sort By</label>
+        <choice value="totalAVGCPU, totalMemUsed">avgCPU, memory</choice>
+        <choice value="totalCPU, totalMemUsed">totalCPU, memory</choice>
+        <choice value="totalRuntime, totalCPU">duration, totalCPU</choice>
+        <choice value="totalRuntime, totalAVGCPU">duration, avgCPU</choice>
+        <default>totalAVGCPU, totalMemUsed</default>
+        <initialValue>totalAVGCPU, totalMemUsed</initialValue>
+      </input>
+      <table>
+        <title>CPU is approx CPU% at any point in time, memory is maximum memory usage by process, 100 is 1 CPU core</title>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::*  "data.search_props.user"!=admin "data.search_props.user"!=splunk-system-user
+| eval mem_used = 'data.mem_used' | eval app = 'data.search_props.app' | eval elapsed = 'data.elapsed' | eval label = 'data.search_props.label' 
+| eval type = 'data.search_props.type' | eval mode = 'data.search_props.mode' | eval user = 'data.search_props.user' | eval cpuperc = 'data.pct_cpu'
+| eval read_mb = 'data.read_mb'
+| eval provenance='data.search_props.provenance'
+| eval label=coalesce(label, provenance)
+| stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as Started, sum(cpuperc) AS totalCPU, max(read_mb) AS read_mb, avg(cpuperc) AS avgCPU by type, mode, app, user, label, host, data.pid
+| stats sum(avgCPU) AS totalAVGCPU, sum(mem_used) AS totalMemUsed, sum(runtime) AS totalRuntime, sum(read_mb) AS totalReadMB, sum(totalCPU) AS totalCPU by Started, type, "mode", app, user, label, host
+| eval totalMemUsed = round(totalMemUsed, 2)
+| eval Started=strftime(Started,"%+") 
+| eval duration = tostring(totalRuntime, "duration")
+| eval avgCPU = round(totalAVGCPU)
+| sort - $sort2$
+| fields - totalRuntime, totalAVGCPU</query>
+          <earliest>$time_tok.earliest$</earliest>
+          <latest>$time_tok.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <eval token="app">if($click.name2$="app", $click.value2$, "*"</eval>
+          <eval token="user">if($click.name2$="user", $click.value2$, ""</eval>
+          <link target="_blank">/app/SplunkAdmins/troubleshooting_indexer_cpu_drilldown?form.app=$app$&amp;form.user=$user$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>CPU used on a per SID basis</title>
+      <input type="dropdown" token="sort3">
+        <label>Sort By</label>
+        <choice value="totalAVGCPUPerMinute, totalMemUsed">avgCPU, memory</choice>
+        <choice value="totalCPU, totalMemUsed">totalCPU, memory</choice>
+        <choice value="totalRuntime, totalCPU">duration, totalCPU</choice>
+        <choice value="totalRuntime, totalAVGCPUPerMinute">duration, avgCPU</choice>
+        <initialValue>totalRuntime, totalCPU</initialValue>
+      </input>
+      <input type="dropdown" token="labelExclusion2">
+        <label>Exclude</label>
+        <choice value="_ACCELERATE*">_ACCELERATE*</choice>
+        <choice value="__DONTEXCLUDE__">No Exclusion</choice>
+        <default>__DONTEXCLUDE__</default>
+      </input>
+      <table>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::* NOT ("data.search_props.label"=$labelExclusion2$)
+| eval mem_used = 'data.mem_used' | eval app = 'data.search_props.app' | eval elapsed = 'data.elapsed' | eval label = 'data.search_props.label' 
+| eval type = 'data.search_props.type' | eval mode = 'data.search_props.mode' | eval user = 'data.search_props.user' | eval cpuperc = 'data.pct_cpu'
+| eval read_mb = 'data.read_mb'
+| eval sid='data.search_props.sid'
+| eval provenance='data.search_props.provenance'
+| eval label=coalesce(label, provenance)
+| stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as Started, sum(cpuperc) AS totalCPU, max(read_mb) AS read_mb, avg(cpuperc) AS avgCPUPerMinute by type, mode, app, user, label, host, data.pid, sid 
+| stats sum(avgCPUPerMinute) AS totalAVGCPUPerMinute, sum(mem_used) AS totalMemUsed, sum(runtime) AS totalRuntime, sum(read_mb) AS totalReadMB, sum(totalCPU) AS totalCPU by Started, type, "mode", app, user, label, host, sid, data.pid
+| eval totalMemUsed = round(totalMemUsed, 2)
+| eval Started=strftime(Started,"%+") 
+| eval duration = tostring(totalRuntime, "duration")
+| eval avgCPU = round(totalAVGCPUPerMinute)
+| sort - $sort3$
+| fields - totalRuntime, totalAVGCPUPerMinute, sid</query>
+          <earliest>$time_tok.earliest$</earliest>
+          <latest>$time_tok.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <eval token="app">if($click.name2$="app", $click.value2$, "*"</eval>
+          <eval token="user">if($click.name2$="user", $click.value2$, ""</eval>
+          <link target="_blank">/app/SplunkAdmins/troubleshooting_indexer_cpu_drilldown?form.app=$app$&amp;form.user=$user$</link>
+        </drilldown>		
+      </table>
+    </panel>
+  </row>
+</form>

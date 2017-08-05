@@ -1,0 +1,23 @@
+# Application-level permissions
+[]
+access = read : [ admin ], write : [ admin ]
+
+[eventtypes]
+export = none
+
+[props]
+export = none
+
+[transforms]
+export = none
+
+[lookups]
+export = none
+
+[tags]
+export = none
+
+[viewstates]
+access = read : [ * ], write : [ * ]
+export = none
+

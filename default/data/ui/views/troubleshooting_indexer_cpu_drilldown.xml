@@ -1,0 +1,114 @@
+<form>
+  <label>Troubleshooting Indexer CPU Drilldown</label>
+  <fieldset submitButton="false">
+    <input type="time" token="time_tok" searchWhenChanged="true">
+      <label>Time</label>
+      <default>
+        <earliest>-4h@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="sort" searchWhenChanged="true">
+      <label>Sort By</label>
+      <choice value="totalAVGCPU, totalMemUsed">avgCPU, memory</choice>
+      <choice value="totalCPU, totalMemUsed">totalCPU, memory</choice>
+      <choice value="totalRuntime, totalCPU">duration, totalCPU</choice>
+      <choice value="totalRuntime, totalAVGCPU">duration, avgCPU</choice>
+      <default>totalAVGCPU, totalMemUsed</default>
+      <initialValue>totalAVGCPU, totalMemUsed</initialValue>
+    </input>
+    <input type="text" token="user" searchWhenChanged="true">
+      <label>user</label>
+      <prefix>data.search_props.user=</prefix>
+      <change>
+        <condition value="">
+          <unset token="display_user_panel"></unset>
+        </condition>
+        <condition value="*">
+          <set token="display_user_panel">true</set>
+          <set token="uservalue">$value$</set>
+        </condition>
+      </change>
+    </input>
+    <input type="text" token="app" searchWhenChanged="true">
+      <label>application</label>
+      <default>*</default>
+    </input>
+    <input type="checkbox" token="per_pid_breakdown">
+      <label>Breakdown Per PID?</label>
+      <choice value="true">Yes</choice>
+      <delimiter> </delimiter>
+    </input>
+  </fieldset>
+  <row>
+    <panel depends="$per_pid_breakdown$">
+      <title>Usage Drilldown Per PID</title>
+      <table>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::* $user$ data.search_props.app=$app$
+| eval mem_used = 'data.mem_used' | eval app = 'data.search_props.app' | eval elapsed = 'data.elapsed' | eval label = 'data.search_props.label' 
+| eval type = 'data.search_props.type' | eval mode = 'data.search_props.mode' | eval user = 'data.search_props.user' | eval cpuperc = 'data.pct_cpu'
+| eval read_mb = 'data.read_mb'
+| eval sid='data.search_props.sid'
+| eval provenance='data.search_props.provenance' | eval label=coalesce(label, provenance)
+| stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as Started, sum(cpuperc) AS totalCPU, max(read_mb) AS read_mb, avg(cpuperc) AS avgCPUPerMinute by type, mode, app, user, label, host, data.pid, sid 
+| stats sum(avgCPUPerMinute) AS totalAVGCPUPerMinute, sum(mem_used) AS totalMemUsed, sum(runtime) AS totalRuntime, sum(read_mb) AS totalReadMB, sum(totalCPU) AS totalCPU by Started, type, "mode", app, user, label, host, sid, data.pid
+| eval totalMemUsed = round(totalMemUsed, 2)
+| eval Started=strftime(Started,"%+") 
+| eval duration = tostring(totalRuntime, "duration")
+| eval avgCPU = round(totalAVGCPUPerMinute)
+| sort - totalRuntime, totalCPU
+| fields - totalRuntime, totalAVGCPUPerMinute, sid</query>
+          <earliest>$time_tok.earliest$</earliest>
+          <latest>$time_tok.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel rejects="$per_pid_breakdown$">
+      <table>
+        <title>Usage Drilldown Per Search Label</title>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::* $user$ data.search_props.app=$app$
+| eval mem_used = 'data.mem_used' | eval app = 'data.search_props.app' | eval elapsed = 'data.elapsed' | eval label = 'data.search_props.label' 
+| eval type = 'data.search_props.type' | eval mode = 'data.search_props.mode' | eval user = 'data.search_props.user' | eval cpuperc = 'data.pct_cpu'
+| eval read_mb = 'data.read_mb'
+| eval provenance='data.search_props.provenance' | eval label=coalesce(label, provenance)
+| bin _time span=1m
+| stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as Started, sum(cpuperc) AS totalCPU, max(read_mb) AS read_mb, avg(cpuperc) AS avgCPU by type, mode, app, user, label, data.pid, host
+| stats sum(avgCPU) AS totalAVGCPU, sum(mem_used) AS totalMemUsed, sum(runtime) AS totalRuntime, sum(read_mb) AS totalReadMB, sum(totalCPU) AS totalCPU by Started, type, "mode", app, user, label
+| eval totalMemUsed = round(totalMemUsed, 2)
+| eval Started=strftime(Started,"%+") 
+| eval duration = tostring(totalRuntime, "duration")
+| eval avgCPU = round(totalAVGCPU)
+| sort - $sort$
+| fields - totalRuntime, totalAVGCPU</query>
+          <earliest>$time_tok.earliest$</earliest>
+          <latest>$time_tok.latest$</latest>
+        </search>
+        <option name="count">20</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel depends="$display_user_panel$">
+      <table>
+        <title>Recently Used URL By User</title>
+        <search>
+          <query>index=_internal  sourcetype=splunkd_ui_access user=$uservalue$ `searchheadhosts` | top referer</query>
+          <earliest>$time_tok.earliest$</earliest>
+          <latest>$time_tok.latest$</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+</form>

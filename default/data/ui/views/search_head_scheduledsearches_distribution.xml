@@ -1,0 +1,86 @@
+<form>
+  <label>Search Head ScheduledSearches Distribution</label>
+  <description>Number of scheduler searches per search head</description>
+  <fieldset submitButton="false">
+    <input type="time" token="time">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Searches per search head</title>
+      <chart>
+        <search>
+          <query>index=_internal `searchheadhosts` sourcetype=scheduler  status=delegated_remote_completion | timechart count by member_label</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked100</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Scheduled searches starting later than 100 seconds after the scheduled time (mostly harmless as the now time period relates to the original scheduled time)</title>
+      <input type="dropdown" token="exclude" searchWhenChanged="true">
+        <label>Exclude</label>
+        <choice value="__NOEXCLUSION__">None</choice>
+        <choice value="_ACCELERATE*">_ACCELERATE</choice>
+        <default>__NOEXCLUSION__</default>
+        <initialValue>__NOEXCLUSION__</initialValue>
+      </input>
+      <input type="text" token="userequals">
+        <label>user equals</label>
+        <default>*</default>
+        <initialValue>*</initialValue>
+      </input>
+      <input type="text" token="usernotequalto">
+        <label>Exclude Username</label>
+        <default>noexclusion</default>
+        <initialValue>noexclusion</initialValue>
+      </input>
+      <table>
+        <search>
+          <query>index=_internal `searchheadhosts` sourcetype=scheduler app=* scheduled_time=* savedsearch_name!=$exclude$ user=$userequals$ user!=$usernotequalto$ | eval time=strftime(_time,"%Y-%m-%d %H:%M:%S") | eval delay_in_start = (dispatch_time - scheduled_time) |  where delay_in_start&gt;100  | eval scheduled_time=strftime(scheduled_time,"%Y-%m-%d %H:%M:%S") | eval dispatch_time=strftime(dispatch_time,"%Y-%m-%d %H:%M:%S") | rename time AS endTime | table host,savedsearch_name,delay_in_start, scheduled_time, dispatch_time, endTime, run_time, status, user, app | sort -delay_in_start | dedup host,savedsearch_name,delay_in_start</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>
