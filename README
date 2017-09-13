@@ -1,0 +1,59 @@
+****************
+Introduction
+****************
+This application accompanies the Splunk conf 2017 presentation "How did you get so big? Tips and tricks for growing your Splunk installation from 50GB/day to 1TB/day"
+
+The general idea is to provide a few dashboards that relate to troubleshooting indexer/heavy forwarder performance issues and alerts that detect a variety of failure or potential failure scenarios within Splunk
+Many of the alerts are informational and the description (described near the end of this document) explains which alerts are likely to generate the most noise.
+All alerts are disabled by default
+
+****************
+Macros - required configuration
+****************
+
+The various saved searches and dashboards use macros within their searches, you will need to update the macros to ensure the searches/dashboards work as expected.
+
+The macros are listed below, many expect a host=A OR host=B item to assist in narrowing down a search while others expect only a single value...
+
+indexerhosts - a host=... list of your indexers (for example host=indexer1 OR host=indexer2)
+
+heavyforwarderhosts - a host=... list of your heavy forwarders (for example host=heavyforwarder1 OR host=heavyforwarder2)
+
+searchheadhosts - a host=... list of your search head(s) (for example host=searchhead1 OR host=searchhead2)
+
+splunkenterprisehosts - a host=... list of any Splunk enterprise instance (for example host=indexer1 OR host=searchhead1 OR ...)
+
+deploymentserverhosts - a host=... list of deployment server(s) (for example host=splunkdeploymentserver)
+
+licensemasterhost - a host=... entry for the license master server (for example host=splunklicensemaster)
+
+splunkenterprisehostsvalue - a ... (1 value only) entry/wildcard for Splunk enterprise hosts (will be used in cases where splunk_servers=?) (for example splunk*)
+
+searchheadsplunkservers - a ... (1 value only) entry/wildcard for search head hosts (will be used in cases where splunk_servers=?) (for example searchhead*)
+
+splunkindexerhostsvalue - a ... (1 value only) entry/wildcard of indexer hosts (will be used in cases where splunk_servers=?) (for example indexer*)
+
+The macros are used in various alerts which you can optionally enable, the alerts all send an email to the email address updateme@company.com which you can override to send to the valid email address.
+
+****************
+Using the application
+****************
+
+Once the application is installed, *all* alerts are disabled by default and you can enable those you require or want to test in your local environment.
+If you choose not to cutomise the macros then many searches will search for all hosts, which will make the alerts and dashboard inaccurate!
+
+****************
+Which alerts should be enabled?
+****************
+The alerts are all useful for detecting a variety of different scenarios which may or may not be applicable within your Splunk environment.
+The description field has an (extremely) simple way of determining if an alert will require action there are three levels:
+Low - the alert is informational and likely relates to a potential issue, these alerts may produce false alarms
+Moderate - the alert is a warning and most likely action will need to be taken, a moderate chance of false alarms
+High - the alert is likely relating to something that requires action and there is a very slim chance that is a false alarm
+
+I do not have a nice way to auto-enable various alerts excluding editing the local/savedsearches.conf
+
+****************
+Feedback?
+****************
+Feel free to open an issue on github and I will try to get back to you when possible, thanks!
