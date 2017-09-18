@@ -200,7 +200,7 @@
       <title>TCPIn Queue Sizes (Max)</title>
       <chart>
         <search>
-          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=queue (name=splunktcpin)
+          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=queue (name=splunktcpin OR name=tcpin_cooked_pqueue)
 | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
 | eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
 | eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 

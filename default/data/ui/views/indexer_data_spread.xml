@@ -131,7 +131,7 @@
       <title>Incoming TCP Queues</title>
       <chart>
         <search>
-          <query>index=_internal `indexerhosts` source="*metrics.log" sourcetype=splunkd group=queue name=splunktcpin
+          <query>index=_internal `indexerhosts` source="*metrics.log" sourcetype=splunkd group=queue name=splunktcpin OR name=tcpin_cooked_pqueue
             | eval max=if(isnotnull(max_size_kb),max_size_kb,max_size)
             | eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size)
             | eval fill_perc=round((curr/max)*100,2)
