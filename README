@@ -9,6 +9,9 @@ The general idea is to provide a few dashboards that relate to troubleshooting i
 Many of the alerts are informational and the description (described near the end of this document) explains which alerts are likely to generate the most noise.
 All alerts are disabled by default
 
+The original presentation is available as a recording http://conf.splunk.com/files/2017/recordings/howd-you-get-so-big-tips-n-tricks-for-growing-your-splunk-deployment-from-50-gb-per-day-to-1-tb-per-day.mp4 or PDF http://conf.splunk.com/files/2017/slides/howd-you-get-so-big-tips-tricks-for-growing-your-splunk-deployment-from-50-gb-day-to-1-tb-day.pdf
+The powerpoint should it be required is available on https://github.com/gjanders/splunkconf2017
+
 ****************
 Macros - required configuration
 ****************
@@ -35,14 +38,14 @@ searchheadsplunkservers - a ... (1 value only) entry/wildcard for search head ho
 
 splunkindexerhostsvalue - a ... (1 value only) entry/wildcard of indexer hosts (will be used in cases where splunk_servers=?) (for example indexer*)
 
-The macros are used in various alerts which you can optionally enable, the alerts all send an email to the email address updateme@company.com which you can override to send to the valid email address.
+The macros are used in various alerts which you can optionally enable, the alerts will raise a triggered alert only as emails are not allowed for Splunk app certification purposes 
 
 ****************
 Using the application
 ****************
 
 Once the application is installed, *all* alerts are disabled by default and you can enable those you require or want to test in your local environment.
-If you choose not to cutomise the macros then many searches will search for all hosts, which will make the alerts and dashboard inaccurate!
+If you choose not to cutomise the macros then many searches will search for all hosts, which will make the alerts and dashboards inaccurate!
 
 ****************
 Which alerts should be enabled?
