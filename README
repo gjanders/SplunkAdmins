@@ -12,6 +12,9 @@ All alerts are disabled by default
 The original presentation is available as a recording http://conf.splunk.com/files/2017/recordings/howd-you-get-so-big-tips-n-tricks-for-growing-your-splunk-deployment-from-50-gb-per-day-to-1-tb-per-day.mp4 or PDF http://conf.splunk.com/files/2017/slides/howd-you-get-so-big-tips-tricks-for-growing-your-splunk-deployment-from-50-gb-day-to-1-tb-day.pdf
 The powerpoint should it be required is available on https://github.com/gjanders/splunkconf2017
 
+Please note that the all alerts & dashboards were tested on a Linux-based Splunk infrastructure, with AIX, Linux and Windows forwarders.
+If you are running your Splunk enterprise installation on Windows you will need to customise the application due to the /opt/splunk/... references in the searches, or I'm happy to integrate a change into a future app version if requested.
+
 ****************
 Macros - required configuration
 ****************
@@ -41,6 +44,25 @@ splunkindexerhostsvalue - a ... (1 value only) entry/wildcard of indexer hosts (
 The macros are used in various alerts which you can optionally enable, the alerts will raise a triggered alert only as emails are not allowed for Splunk app certification purposes 
 
 ****************
+Installation
+****************
+
+The application is designed to work on a search head or search head cluster instance, installation on the indexing tier is not required.
+There are a few searches that use REST API calls which are specific to the search head cluster they run on, these alerts will likely have to be placed on each search head or search head clust to provide the expected results these are:
+SearchHeadLevel - Accelerated DataModels with All Time Searching Enabled
+SearchHeadLevel - Realtime Scheduled Searches are in use
+SearchHeadLevel - Scheduled Searches without a configured earliest and latest time
+SearchHeadLevel - Scheduled searches not specifying an index
+SearchHeadLevel - User - Dashboards searching all indexes
+SearchHeadLevel - Scheduled Searches Configured with incorrect sharing
+SearchHeadLevel - Realtime Search Queries in dashboards
+
+The following reports also are specific to a search head or search head cluster:
+SearchHeadLevel - Alerts that have not fired an action in X days
+SearchHeadLevel - Data Model Acceleration Completion Status
+What Access Do I Have?
+
+****************
 Using the application
 ****************
 
@@ -59,9 +81,24 @@ High - the alert is likely relating to something that requires action and there 
 I do not have a nice way to auto-enable various alerts excluding editing the local/savedsearches.conf
 
 ****************
+How is this application used?
+****************
+
+In the current environment the vast majority of the alerts are enabled to detect issues, they raise automated tickets or email depending on the urgency of the specific alert.
+There are a few environment characteristics that may require changes to the way the app is used, and feedback is welcome if there is a nicer way to structure the alerts/application:
+The overall assumption is that the admin(s) are not carefully watching the splunkd logs or the messages in the console of the monitoring server/Splunk servers
+
+****************
+How is this application tested?
+****************
+Universal forwarders in use are on Windows, Linux & AIX
+All heavy forwarders, and Splunk enterprise installations are Linux based, while I expect the alerts will work with minor modification for a Windows based environment this remains untested.
+The test environment has a single indexer cluster and two search head clusters.
+
+****************
 Feedback?
 ****************
-Feel free to open an issue on github and I will try to get back to you when possible, thanks!
+Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 Icons made by Freepik (http://www.freepik.com) from www.flaticon.com is licensed by Creative Commons BY 3.0 (http://creativecommons.org/licenses/by/3.0)
 
