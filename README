@@ -13,7 +13,7 @@ The original presentation is available as a recording http://conf.splunk.com/fil
 The powerpoint should it be required is available on https://github.com/gjanders/splunkconf2017
 
 Please note that the all alerts & dashboards were tested on a Linux-based Splunk infrastructure, with AIX, Linux and Windows forwarders.
-If you are running your Splunk enterprise installation on Windows you will need to customise the application due to the /opt/splunk/... references in the searches, or I'm happy to integrate a change into a future app version if requested.
+If you are running your Splunk enterprise installation on Windows or have customised your installation directory you will need to customise the macro splunkadmins_splunkd_source to point to the correct splunkd log file location
 
 ****************
 Macros - required configuration
@@ -40,6 +40,8 @@ splunkenterprisehostsvalue - a ... (1 value only) entry/wildcard for Splunk ente
 searchheadsplunkservers - a ... (1 value only) entry/wildcard for search head hosts (will be used in cases where splunk_servers=?) (for example searchhead*)
 
 splunkindexerhostsvalue - a ... (1 value only) entry/wildcard of indexer hosts (will be used in cases where splunk_servers=?) (for example indexer*)
+
+splunkadmins_splunkd_source - this defaults to source=/opt/splunk/var/log/splunk/splunkd.log , if your splunkd log location is not in this directory please override this macro as appropriate
 
 The macros are used in various alerts which you can optionally enable, the alerts will raise a triggered alert only as emails are not allowed for Splunk app certification purposes 
 
@@ -94,6 +96,12 @@ How is this application tested?
 Universal forwarders in use are on Windows, Linux & AIX
 All heavy forwarders, and Splunk enterprise installations are Linux based, while I expect the alerts will work with minor modification for a Windows based environment this remains untested.
 The test environment has a single indexer cluster and two search head clusters.
+
+****************
+Why was this application and associated conf talk created?
+****************
+Inspired by articles such as "Things I wish I knew then" and knowledge collected from various conference replays, SplunkAnswers, 200+ support tickets & nearly four years of working on a Splunk environment I decided that I would attempt to share what I have learned in an attempt to prevent others from repeating the same mistakes. 
+There are many Splunk conf talks available on this subject in various conference replays, however my goal was to provide practical steps to implement the ideas. This is why this application exists.
 
 ****************
 Feedback?
