@@ -101,7 +101,7 @@ The test environment has a single indexer cluster and two search head clusters.
 Why was this application and associated conf talk created?
 ****************
 Inspired by articles such as "Things I wish I knew then" and knowledge collected from various conference replays, SplunkAnswers, 200+ support tickets & nearly four years of working on a Splunk environment I decided that I would attempt to share what I have learned in an attempt to prevent others from repeating the same mistakes. 
-There are many Splunk conf talks available on this subject in various conference replays, however my goal was to provide practical steps to implement the ideas. This is why this application exists.
+There are many Splunk conf talks available on this subject in various conference replays, however my goal was to provide practical steps to implement the ideas. That is why this application exists.
 
 ****************
 Feedback?
