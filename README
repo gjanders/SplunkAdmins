@@ -35,13 +35,13 @@ deploymentserverhosts - a host=... list of deployment server(s) (for example hos
 
 licensemasterhost - a host=... entry for the license master server (for example host=splunklicensemaster)
 
-splunkenterprisehostsvalue - a ... (1 value only) entry/wildcard for Splunk enterprise hosts (will be used in cases where splunk_servers=?) (for example splunk*)
+searchheadsplunkservers - a splunk_server=... list of any Splunk search head hosts (for example splunk_server=searchhead*)
 
-searchheadsplunkservers - a ... (1 value only) entry/wildcard for search head hosts (will be used in cases where splunk_servers=?) (for example searchhead*)
+splunkindexerhostsvalue - a splunk_server=... list of any Splunk indexer hosts (for example splunk_server=indexer*)
 
-splunkindexerhostsvalue - a ... (1 value only) entry/wildcard of indexer hosts (will be used in cases where splunk_servers=?) (for example indexer*)
+splunkadmins_splunkd_source - this defaults to source=/opt/splunk/var/log/splunk/splunkd.log, if your splunkd log location is not in this directory please override this macro as appropriate
 
-splunkadmins_splunkd_source - this defaults to source=/opt/splunk/var/log/splunk/splunkd.log , if your splunkd log location is not in this directory please override this macro as appropriate
+splunkadmins_splunkuf_source - this defaults to source=*splunkd.log, you may wish to narrow down this location if your splunkd logs on universal forwarders have consistent installation directories 
 
 The macros are used in various alerts which you can optionally enable, the alerts will raise a triggered alert only as emails are not allowed for Splunk app certification purposes 
 
@@ -108,5 +108,36 @@ Feedback?
 ****************
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
+****************
+Release Notes
+****************
+1.7
+New macro splunkadmins_splunkuf_source
+Removed unused macro splunkenterprisehostsvalue
+Changed macro splunkindexerhostsvalue to include splunk_server=
+New alert "AllSplunkEnterpriseLevel - TCP or SSL Config Issue" for detecting when the listener ports fail to start on a HF/Indexer
+Updated searches to use (`splunkadmins_splunkd_source`) in brackets so it looks valid when expanded (and allows a future OR/NOT statement to be added before or after with no unexpected side effects)
+Removed hardcoded references to the location of splunkd.log file and replaced with splunkadmins_splunkd_source macro
+Removed a few unnessary fields/fixed some other minor issues within the file
+Updated a few comments and improved some searches to narrow down the required hosts/sources/sourcetypes
+
+1.6
+Removed "Splunk Alert failures" and updated "AllSplunkEnterpriseLevel - sendmodalert errors", also updated "Time format has changed" alert to have more clear output via email
+
+1.5
+Updated Splunk Alert Failures alert and the Time format has changed alerts to have more clear output via email
+Simplified "Scheduled Searches without a configured earliest and latest time", and "Scheduled searches not specifying an index"
+
+1.4
+Two new alerts LicenseMaster - Duplicated License Situation, DeploymentServer - Unsupported attribute within DS config
+Simplified Scheduled Searches without a configured earliest and latest time, and Scheduled searches not specifying an index
+Created a macro splunkadmins_splunkd_source for Windows users or others using non-standard Splunk installation directories
+
+1.0 to 1.3
+Creation of app, addition of icons and removal of email functionality from the app for Splunk certification purposes
+
+****************
+Other
+****************
 Icons made by Freepik (http://www.freepik.com) from www.flaticon.com is licensed by Creative Commons BY 3.0 (http://creativecommons.org/licenses/by/3.0)
 
