@@ -111,6 +111,10 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
+1.8
+Updated ForwarderLevel - File Too Small to checkCRC occurring multiple times to have the correct dispatch application
+Updated AllSplunkEnterpriseLevel - Email Sending Failures with saved search name
+
 1.7
 New macro splunkadmins_splunkuf_source
 Removed unused macro splunkenterprisehostsvalue
