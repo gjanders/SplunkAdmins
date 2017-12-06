@@ -115,6 +115,7 @@ Release Notes
 Updated ForwarderLevel - File Too Small to checkCRC occurring multiple times to have the correct dispatch application
 Updated AllSplunkEnterpriseLevel - Email Sending Failures with saved search name
 Changed IndexerLevel - Indexer replication queue issues to some peers to be less sensitive as this cannot be tuned in 7.0.0
+Updated AllSplunkLevel - Unable To Distribute to Peer to include the peer name
 
 1.7
 New macro splunkadmins_splunkuf_source
