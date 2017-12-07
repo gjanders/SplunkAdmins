@@ -125,23 +125,24 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 Release Notes
 ****************
 1.8
-Updated ForwarderLevel - File Too Small to checkCRC occurring multiple times to have the correct dispatch application
-Updated AllSplunkEnterpriseLevel - Email Sending Failures with saved search name
-Changed IndexerLevel - Indexer replication queue issues to some peers to be less sensitive as this cannot be tuned in 7.0.0
-Updated AllSplunkLevel - Unable To Distribute to Peer to include the peer name
 New alert IndexerLevel - Peer will not return results due to outdated generation
 New alert SearchHeadLevel - Scheduled searches failing in cluster with 404 error
+Updated ForwarderLevel - File Too Small to checkCRC occurring multiple times to have the correct dispatch application
+Updated AllSplunkEnterpriseLevel - Email Sending Failures with saved search name
+Updated IndexerLevel - Indexer replication queue issues to some peers to be less sensitive as this cannot be tuned in 7.0.0
+Updated AllSplunkLevel - Unable To Distribute to Peer to include the peer name
 Updated IndexerLevel - Indexer Queues May Have Issues to ensure it fires when neccesary but is not too noisy (this may require tuning)
+Corrected ForwarderLevel - Bandwidth Throttling Occurring, this alert was not working as expected 
 
 1.7
 New macro splunkadmins_splunkuf_source
-Removed unused macro splunkenterprisehostsvalue
-Changed macro splunkindexerhostsvalue to include splunk_server=
 New alert "AllSplunkEnterpriseLevel - TCP or SSL Config Issue" for detecting when the listener ports fail to start on a HF/Indexer
+Updated macro splunkindexerhostsvalue to include splunk_server=
 Updated searches to use (`splunkadmins_splunkd_source`) in brackets so it looks valid when expanded (and allows a future OR/NOT statement to be added before or after with no unexpected side effects)
+Updated a few comments and improved some searches to narrow down the required hosts/sources/sourcetypes
+Removed unused macro splunkenterprisehostsvalue
 Removed hardcoded references to the location of splunkd.log file and replaced with splunkadmins_splunkd_source macro
 Removed a few unnessary fields/fixed some other minor issues within the file
-Updated a few comments and improved some searches to narrow down the required hosts/sources/sourcetypes
 
 1.6
 Removed "Splunk Alert failures" and updated "AllSplunkEnterpriseLevel - sendmodalert errors", also updated "Time format has changed" alert to have more clear output via email
