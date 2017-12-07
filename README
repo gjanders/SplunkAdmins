@@ -104,6 +104,19 @@ Inspired by articles such as "Things I wish I knew then" and knowledge collected
 There are many Splunk conf talks available on this subject in various conference replays, however my goal was to provide practical steps to implement the ideas. That is why this application exists.
 
 ****************
+Which alerts are best suited to automation?
+****************
+SearchHeadLevel - Scheduled searches not specifying an index
+SearchHeadLevel - Scheduled Searches Configured with incorrect sharing
+SearchHeadLevel - Splunk login attempts from users that do not have any LDAP roles
+SearchHeadLevel - Scheduled Searches That Cannot Run
+SearchHeadLevel - Scheduled Searches without a configured earliest and latest time
+SearchHeadLevel - Users exceeding the disk quota
+SearchHeadLevel - User - Dashboards searching all indexes
+
+Are all well suited to an automated email using the sendresults command or a similar function as they involve end user configuration which the individual can change/fix.
+
+****************
 Feedback?
 ****************
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
@@ -116,6 +129,9 @@ Updated ForwarderLevel - File Too Small to checkCRC occurring multiple times to 
 Updated AllSplunkEnterpriseLevel - Email Sending Failures with saved search name
 Changed IndexerLevel - Indexer replication queue issues to some peers to be less sensitive as this cannot be tuned in 7.0.0
 Updated AllSplunkLevel - Unable To Distribute to Peer to include the peer name
+New alert IndexerLevel - Peer will not return results due to outdated generation
+New alert SearchHeadLevel - Scheduled searches failing in cluster with 404 error
+Updated IndexerLevel - Indexer Queues May Have Issues to ensure it fires when neccesary but is not too noisy (this may require tuning)
 
 1.7
 New macro splunkadmins_splunkuf_source
