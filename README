@@ -129,6 +129,9 @@ New macro splunkadmins_mongo_source
 New alert IndexerLevel - Too many events with the same timestamp
 New alert SearchHeadLevel - Detect MongoDB errors
 Updated AllSplunkEnterpriseLevel - Email Sending Failures to include to the toaddress
+Updated SearchHeadLevel - Splunk Users Violating the Search Quota to detect an alternative log message
+Updated Scheduled searches not specifying an index
+Updated SearchHeadLevel - Scheduled Searches without a configured earliest and latest time
 
 1.8
 New alert IndexerLevel - Peer will not return results due to outdated generation
