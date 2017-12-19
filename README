@@ -43,6 +43,8 @@ splunkadmins_splunkd_source - this defaults to source=/opt/splunk/var/log/splunk
 
 splunkadmins_splunkuf_source - this defaults to source=*splunkd.log, you may wish to narrow down this location if your splunkd logs on universal forwarders have consistent installation directories 
 
+splunkadmins_mongo_source - this defaults to source=/opt/splunk/var/log/splunk/mongod.log, if your mongodb log file is not in this directory please override this macro as appropriate
+
 The macros are used in various alerts which you can optionally enable, the alerts will raise a triggered alert only as emails are not allowed for Splunk app certification purposes 
 
 ****************
@@ -132,6 +134,10 @@ Updated AllSplunkEnterpriseLevel - Email Sending Failures to include to the toad
 Updated SearchHeadLevel - Splunk Users Violating the Search Quota to detect an alternative log message
 Updated Scheduled searches not specifying an index
 Updated SearchHeadLevel - Scheduled Searches without a configured earliest and latest time
+Updated ForwarderLevel - File Too Small to checkCRC occurring multiple times, to handle spaces in filename
+Updated ForwarderLevel - crcSalt or initCrcLength change may be required
+Updated IndexerLevel - Indexer Queues May Have Issues to be less sensitive
+Corrected AllSplunkLevel - Splunk forwarders that are not talking to the deployment server
 
 1.8
 New alert IndexerLevel - Peer will not return results due to outdated generation
