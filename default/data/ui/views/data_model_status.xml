@@ -1,0 +1,168 @@
+<form>
+  <label>Data Model Status</label>
+  <description>Originally based on the work on URL https://conf.splunk.com/files/2017/slides/running-enterprise-security-at-capacity-tuning-es-with-data-model-acceleration.pdf modified to work without the macros (and misc tweaks)</description>
+  <fieldset submitButton="false">
+    <input type="time" token="timepicker1">
+      <label></label>
+      <default>
+        <earliest>-4h@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <chart>
+        <title>Skipped searches ($timepicker1.earliest$ to $timepicker1.latest$)</title>
+        <search>
+          <query>index=_internal `searchheadhosts` sourcetype=scheduler status="skipped"
+| eval type=if(match(savedsearch_name,"^_ACCELERATE_"),"DM","non-DM")
+| eval reason = if(isnull(reason) OR reason == "", "none", reason)
+| eval combo=type . " - " . reason
+| timechart span=5m count by combo</query>
+          <earliest>$timepicker1.earliest$</earliest>
+          <latest>$timepicker1.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="height">200</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+      <chart>
+        <title>Deferred &amp; Skipped searches ($timepicker1.earliest$ to $timepicker1.latest$)</title>
+        <search>
+          <query>index=_internal `searchheadhosts` sourcetype=scheduler status=continued OR status=skipped
+| eval type=if(match(savedsearch_name,"^_ACCELERATE_"),"DM","non-DM")
+| eval status=replace(status,"continued","deferred")
+| eval combo=type . "-" . status
+| timechart span=5m count by combo</query>
+          <earliest>$timepicker1.earliest$</earliest>
+          <latest>$timepicker1.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="height">200</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Top Accelerations by Run Duration (on this search head / cluster)</title>
+        <search>
+          <query>| rest /services/admin/summarization by_tstats=t splunk_server=local count=0
+| eval datamodel=replace('summary.id',(("DM_" . 'eai:acl.app') . "_"),"")
+| join max=1 overwrite=1 type=left usetime=0 datamodel
+    [| rest /services/data/models splunk_server=local count=0
+    | table title acceleration.cron_schedule eai:digest
+    | rename title as datamodel
+    | rename "acceleration.cron_schedule" as cron]
+| table datamodel eai:acl.app summary.access_time summary.is_inprogress summary.size summary.latest_time summary.complete summary.buckets_size summary.buckets cron summary.last_error summary.time_range summary.id summary.mod_time eai:digest summary.earliest_time summary.last_sid summary.access_count
+| rename "eai:digest" as digest, "summary.earliest_time" as earliest, "summary.id" as summary_id, "summary.latest_time" as latest, "summary.time_range" as retention
+| rename "eai:acl.app" as app, "summary.access_count" as access_count, "summary.access_time" as access_time, "summary.buckets" as buckets, "summary.buckets_size" as buckets_size, "summary.complete" as complete, "summary.is_inprogress" as is_inprogress, "summary.last_error" as last_error, "summary.last_sid" as last_sid, "summary.mod_time" as mod_time, "summary.size" as size, "summary.*" as "*", "eai:acl.*" as "*"
+| sort datamodel
+| rename access_count as "Datamodel_Acceleration.access_count", access_time as "Datamodel_Acceleration.access_time", app as "Datamodel_Acceleration.app", buckets as "Datamodel_Acceleration.buckets", buckets_size as "Datamodel_Acceleration.buckets_size", complete as "Datamodel_Acceleration.complete", cron as "Datamodel_Acceleration.cron", datamodel as "Datamodel_Acceleration.datamodel", digest as "Datamodel_Acceleration.digest", earliest as "Datamodel_Acceleration.earliest", is_inprogress as "Datamodel_Acceleration.is_inprogress", last_error as "Datamodel_Acceleration.last_error", last_sid as "Datamodel_Acceleration.last_sid", latest as "Datamodel_Acceleration.latest", mod_time as "Datamodel_Acceleration.mod_time", retention as "Datamodel_Acceleration.retention", size as "Datamodel_Acceleration.size", summary_id as "Datamodel_Acceleration.summary_id"
+| rename "Datamodel_Acceleration.access_count" as access_count, "Datamodel_Acceleration.access_time" as access_time, "Datamodel_Acceleration.app" as app, "Datamodel_Acceleration.buckets" as buckets, "Datamodel_Acceleration.buckets_size" as buckets_size, "Datamodel_Acceleration.complete" as complete, "Datamodel_Acceleration.cron" as cron, "Datamodel_Acceleration.datamodel" as datamodel, "Datamodel_Acceleration.digest" as digest, "Datamodel_Acceleration.earliest" as earliest, "Datamodel_Acceleration.is_inprogress" as is_inprogress, "Datamodel_Acceleration.last_error" as last_error, "Datamodel_Acceleration.last_sid" as last_sid, "Datamodel_Acceleration.latest" as latest, "Datamodel_Acceleration.mod_time" as mod_time, "Datamodel_Acceleration.retention" as retention, "Datamodel_Acceleration.size" as size, "Datamodel_Acceleration.summary_id" as summary_id, "Datamodel_Acceleration.*" as "*"
+| join max=1 overwrite=1 type=outer usetime=0 last_sid
+    [| rest splunk_server=* count=0 /services/search/jobs reportSearch=summarize*
+    | rename sid as last_sid
+    | fields last_sid,runDuration]
+| eval "size(MB)"=round((size / 1048576),1)
+| eval "retention(days)"=if((retention == 0),"unlimited",(retention / 86400))
+| eval "complete(%)"=round((complete * 100),1)
+| eval "runDuration(s)"=round(runDuration,1)
+| sort 18 - runDuration
+| table datamodel,runDuration
+| eval concurrent_threshold=300
+| eval deferred_threshold=600
+| eval skipped_threshold=900</query>
+          <earliest>0.000</earliest>
+          <latest></latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.overlayFields">concurrent_threshold,deferred_threshold,skipped_threshold</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="height">400</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>All skipped scheduled searches ($timepicker1.earliest$ to $timepicker1.latest$)</title>
+        <search>
+          <query>index=_internal `searchheadhosts` sourcetype=scheduler status="skipped"
+| table _time status savedsearch_name
+| sort - _time</query>
+          <earliest>$timepicker1.earliest$</earliest>
+          <latest>$timepicker1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>

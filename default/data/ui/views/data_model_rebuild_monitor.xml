@@ -1,0 +1,276 @@
+<form>
+  <label>Data Model Rebuild Monitor</label>
+  <description>Originally based on the work on URL https://conf.splunk.com/files/2017/slides/running-enterprise-security-at-capacity-tuning-es-with-data-model-acceleration.pdf modified to work without the macros and corrected the datamodel sizing (and misc tweaks).</description>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="dm">
+      <label>Data model (on this search head or cluster)</label>
+      <search>
+        <query>| rest /services/admin/summarization by_tstats=t splunk_server=local count=0
+| eval datamodel=replace('summary.id',"DM_".'eai:acl.app'."_","")
+| fields datamodel
+| sort 100 + datamodel</query>
+      </search>
+      <fieldForLabel>datamodel</fieldForLabel>
+      <fieldForValue>datamodel</fieldForValue>
+    </input>
+    <input type="dropdown" token="earliest_token" depends="$value_never_set$">
+      <label>field1</label>
+      <fieldForLabel>acceleration.earliest_time</fieldForLabel>
+      <fieldForValue>acceleration.earliest_time</fieldForValue>
+      <search>
+        <query>| rest /services/configs/conf-datamodels| search title=$dm$ | fields acceleration.earliest_time</query>
+        <earliest>0</earliest>
+        <latest></latest>
+      </search>
+      <selectFirstChoice>true</selectFirstChoice>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <html>
+<h1>$dm$ data modelconfig</h1>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <single>
+        <search>
+          <query>| rest /services/configs/conf-datamodels
+| search title=$dm$
+| fields acceleration.earliest_time</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="underLabel">Retention (earliest)</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">0</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+      <single>
+        <search>
+          <query>| rest /services/configs/conf-datamodels
+| search title=$dm$
+| fields acceleration.backfill_time</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="underLabel">Backfill target</option>
+        <option name="unitPosition">before</option>
+        <option name="useColors">0</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+      <single>
+        <search>
+          <query>| rest /services/admin/summarization by_tstats=t splunk_server=local count=0
+| eval datamodel=replace('summary.id',"DM_".'eai:acl.app'."_","")
+| fields summary.complete, datamodel
+| rename summary.complete AS complete
+| search datamodel=$dm$
+| eval complete(%)=round(complete*100,1)."%"
+| fields complete(%)</query>
+          <earliest>0.000</earliest>
+          <latest></latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="underLabel">Backfill complete</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">0</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+      <single>
+        <search>
+          <query>| rest /services/configs/conf-datamodels
+| search title=$dm$
+| fields acceleration.max_concurrent</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="underLabel">max concurrent summarisation jobs</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">0</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+      <single>
+        <search>
+          <query>| rest /services/configs/conf-datamodels
+| search title=$dm$
+| fields acceleration.max_time</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="underLabel">max acceleration runtime in seconds</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">0</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+      <single>
+        <search>
+          <query>`comment("The authors original attempt of | `datamodel(\"Splunk_Audit\", \"Datamodel_Acceleration\")` | `drop_dm_object_name(\"Datamodel_Acceleration\")` Just did not appear to show accurate numbers when compared to the filesystem of the indexers")`
+`comment("The previous attempt at this number via | rest \"/services/admin/introspection--disk-objects--summaries?count=-1\" ... worked fine *unless* there were multiple search head GUID's in the introspection data in which case it seems to return 1 set only (resulting in highly inaccurate numbers in some cases")`
+    `comment("Now querying the introspection data instead as that provides consistently accurate numbers")`
+    index=_introspection `indexerhosts` component=summaries "data.name"=*$dm$
+| stats latest(data.total_size) AS size by data.search_head_guid, data.related_indexes_count, data.related_indexes, host
+| stats sum(size) AS size</query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x65a637,","0x6db7c6,","0xf7bc38,","0xf58f39,","0xd93f3c"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="underLabel">data size in MB</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">0</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <h1>$dm$ data model acceleration state</h1>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$dm$ event counts - Monitor lag and backfill</title>
+      <chart>
+        <title>Backfill view over the last 2 hours</title>
+        <search>
+          <query>| tstats prestats=t summariesonly=t allow_old_summaries=t count from datamodel=$dm$ by _time span=10s
+| timechart count span=10s</query>
+          <earliest>-2h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="height">275</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+      <chart>
+        <title>Backfill view over time range of DM acceleration (and -1w)</title>
+        <search>
+          <query>|tstats prestats=t allow_old_summaries=t summariesonly=t count from datamodel=$dm$ by _time span=4h| timechart count span=4h</query>
+          <earliest>$earliest_token$-1w</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="height">275</option>
+      </chart>
+    </panel>
+    <panel>
+      <table>
+        <title>$dm$ recent acceleration jobs</title>
+        <search>
+          <query>index=_internal source=*scheduler.log _ACCELERATE_DM_*$dm$_ACCELERATE_ | eval scheduled=strftime(scheduled_time,"%c")
+| stats values(scheduled) as scheduled, values(scheduled_time) as scheduled_time, list(status) as statuses, values(run_time) as run_time by savedsearch_name sid | sort - scheduled_time |
+eval done=if(isnull(run_time),"running","done")
+| eval run_time=tostring(if(isnull(run_time),now()-scheduled_time,run_time),"duration") | fields - scheduled_time savedsearch_name sid </query>
+          <earliest>@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>

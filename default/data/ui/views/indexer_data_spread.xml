@@ -10,7 +10,7 @@
       </default>
     </input>
     <input type="time" token="time_tok">
-      <label>Time for the indexed ata per KB per second</label>
+      <label>Time for the indexed data per KB per second</label>
       <default>
         <earliest>-24h@h</earliest>
         <latest>now</latest>

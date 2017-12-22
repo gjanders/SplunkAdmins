@@ -130,6 +130,8 @@ Release Notes
 New macro splunkadmins_mongo_source 
 New alert IndexerLevel - Too many events with the same timestamp
 New alert SearchHeadLevel - Detect MongoDB errors
+New dashboard Data Model Status
+New dashboard Data Model Rebuild Monitor
 Updated AllSplunkEnterpriseLevel - Email Sending Failures to include to the toaddress
 Updated SearchHeadLevel - Splunk Users Violating the Search Quota to detect an alternative log message
 Updated Scheduled searches not specifying an index
@@ -137,6 +139,8 @@ Updated SearchHeadLevel - Scheduled Searches without a configured earliest and l
 Updated ForwarderLevel - File Too Small to checkCRC occurring multiple times, to handle spaces in filename
 Updated ForwarderLevel - crcSalt or initCrcLength change may be required
 Updated IndexerLevel - Indexer Queues May Have Issues to be less sensitive
+Updated IndexerLevel - Splunk Indexers Losing Contact With Master for an additional scenario
+Updated AllSplunkEnterpriseLevel - ulimit on Splunk enterprise servers is below 8192 to improve emails
 Corrected AllSplunkLevel - Splunk forwarders that are not talking to the deployment server
 
 1.8
