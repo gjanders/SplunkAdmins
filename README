@@ -126,6 +126,12 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
+2.0
+Updated AllSplunkLevel - Time skew on Splunk Servers
+Updated IndexerLevel - Future Dated Events that appeared in the last week
+Updated IndexerLevel - Time format has changed multiple log types in one sourcetype
+Removed AllSplunkEnterpriseLevel - Splunk Servers with time skew (replaced by the above alert)
+
 1.9
 New macro splunkadmins_mongo_source 
 New alert IndexerLevel - Too many events with the same timestamp
