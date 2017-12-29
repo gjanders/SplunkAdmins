@@ -132,6 +132,7 @@ Updated IndexerLevel - Future Dated Events that appeared in the last week
 Updated IndexerLevel - Time format has changed multiple log types in one sourcetype
 Updated IndexerLevel - Failures To Parse Timestamp Correctly (excluding breaking issues)
 Updated SearchHeadLevel - Users exceeding the disk quota
+Updated IndexerLevel - Weekly Broken Events Report
 Corrected AllSplunkLevel - TCP Output Processor has paused the data flow
 Removed AllSplunkEnterpriseLevel - Splunk Servers with time skew (replaced by the above alert)
 
