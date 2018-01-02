@@ -127,6 +127,7 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 Release Notes
 ****************
 2.0
+New alert IndexerLevel - Cold data location approaching size limits
 Updated AllSplunkLevel - Time skew on Splunk Servers
 Updated IndexerLevel - Future Dated Events that appeared in the last week
 Updated IndexerLevel - Time format has changed multiple log types in one sourcetype
@@ -134,7 +135,7 @@ Updated IndexerLevel - Failures To Parse Timestamp Correctly (excluding breaking
 Updated SearchHeadLevel - Users exceeding the disk quota
 Updated IndexerLevel - Weekly Broken Events Report
 Corrected AllSplunkLevel - TCP Output Processor has paused the data flow
-Removed AllSplunkEnterpriseLevel - Splunk Servers with time skew (replaced by the above alert)
+Removed AllSplunkEnterpriseLevel - Splunk Servers with time skew (replaced by Time skew on Splunk Servers)
 
 1.9
 New macro splunkadmins_mongo_source 
