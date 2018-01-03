@@ -127,6 +127,8 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 Release Notes
 ****************
 2.0
+Multiple searches now have an "investigationQuery" in them, the idea is that you can copy and paste the output into a search window and see results relevant to the particular alert.
+
 New alert IndexerLevel - Cold data location approaching size limits
 Updated AllSplunkLevel - Time skew on Splunk Servers
 Updated IndexerLevel - Future Dated Events that appeared in the last week
@@ -136,6 +138,9 @@ Updated SearchHeadLevel - Users exceeding the disk quota
 Updated IndexerLevel - Weekly Broken Events Report
 Updated IndexerLevel - Weekly Truncated Logs Report
 Updated IndexerLevel - Old data appearing in Splunk indexes
+Updated IndexerLevel - Valid Timestamp Invalid Parsed Time
+Updated IndexerLevel - Too many events with the same timestamp
+Updated IndexerLevel - Large multiline events using SHOULD_LINEMERGE setting 
 Corrected AllSplunkLevel - TCP Output Processor has paused the data flow
 Removed AllSplunkEnterpriseLevel - Splunk Servers with time skew (replaced by Time skew on Splunk Servers)
 
