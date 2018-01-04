@@ -130,19 +130,23 @@ Release Notes
 Multiple searches now have an "investigationQuery" in them, the idea is that you can copy and paste the output into a search window and see results relevant to the particular alert.
 
 New alert IndexerLevel - Cold data location approaching size limits
+New/renamed alert AllSplunkEnterpriseLevel - Splunk Scheduler excessive delays in executing search
+New/renamed alert AllSplunkEnterpriseLevel - Splunk Scheduler skipped searches and the reason
 Updated AllSplunkLevel - Time skew on Splunk Servers
 Updated IndexerLevel - Future Dated Events that appeared in the last week
 Updated IndexerLevel - Time format has changed multiple log types in one sourcetype
 Updated IndexerLevel - Failures To Parse Timestamp Correctly (excluding breaking issues)
-Updated SearchHeadLevel - Users exceeding the disk quota
 Updated IndexerLevel - Weekly Broken Events Report
 Updated IndexerLevel - Weekly Truncated Logs Report
 Updated IndexerLevel - Old data appearing in Splunk indexes
 Updated IndexerLevel - Valid Timestamp Invalid Parsed Time
 Updated IndexerLevel - Too many events with the same timestamp
 Updated IndexerLevel - Large multiline events using SHOULD_LINEMERGE setting 
+Updated SearchHeadLevel - Users exceeding the disk quota
 Corrected AllSplunkLevel - TCP Output Processor has paused the data flow
 Removed AllSplunkEnterpriseLevel - Splunk Servers with time skew (replaced by Time skew on Splunk Servers)
+Removed SearchHead Level - Splunk Scheduler excessive delays in executing search (renamed)
+Removed SearchHeadLevel - Splunk Scheduler Skipped Searches and the reason (renamed)
 
 1.9
 New macro splunkadmins_mongo_source 
