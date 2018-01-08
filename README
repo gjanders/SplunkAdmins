@@ -5,21 +5,24 @@ Introduction
 ****************
 This application accompanies the Splunk conf 2017 presentation "How did you get so big? Tips and tricks for growing your Splunk installation from 50GB/day to 1TB/day"
 
-The general idea is to provide a few dashboards that relate to troubleshooting indexer/heavy forwarder performance issues and alerts that detect a variety of failure or potential failure scenarios within Splunk
-Many of the alerts are informational and the description (described near the end of this document) explains which alerts are likely to generate the most noise.
-All alerts are disabled by default
+The overall idea behind this application is to provide a variety of alerts that detect issues or potential issues within the splunk log files and then advise via an alert that this has occurred
+This application was built as there were a variety of messages in the Splunk console and logs in Splunk that if acted upon could have prevented an issue within the environment.
 
 The original presentation is available as a recording http://conf.splunk.com/files/2017/recordings/howd-you-get-so-big-tips-n-tricks-for-growing-your-splunk-deployment-from-50-gb-per-day-to-1-tb-per-day.mp4 or PDF http://conf.splunk.com/files/2017/slides/howd-you-get-so-big-tips-tricks-for-growing-your-splunk-deployment-from-50-gb-day-to-1-tb-day.pdf
 The powerpoint should it be required is available on https://github.com/gjanders/splunkconf2017
 
-Please note that the all alerts & dashboards were tested on a Linux-based Splunk infrastructure, with AIX, Linux and Windows forwarders.
-If you are running your Splunk enterprise installation on Windows or have customised your installation directory you will need to customise the macro splunkadmins_splunkd_source to point to the correct splunkd log file location
+There are many potential alerts that might cause an issue so this application has all alerts disabled by default, post-installation once the required macros are configured you can enable the alerts you wish to use and add the required actions
+
+There are also a few dashboards for investigating indexer performance, heavy forwarder queue usage and data model acceleration issues
+
+Please note that the all alerts & dashboards were tested on Linux-based Splunk infrastructure, with AIX, Linux and Windows forwarders
+
+If you are running your Splunk enterprise installation on Windows or have customised your installation directory you will need to customise some of the macros such as splunkadmins_splunkd_source to point to the correct splunkd log file location
 
 ****************
 Macros - required configuration
 ****************
-
-The various saved searches and dashboards use macros within their searches, you will need to update the macros to ensure the searches/dashboards work as expected.
+The various saved searches and dashboards use macros within their searches, you will need to update the macros to ensure the searches/dashboards work as expected
 
 The macros are listed below, many expect a host=A OR host=B item to assist in narrowing down a search while others expect only a single value...
 
@@ -50,9 +53,8 @@ The macros are used in various alerts which you can optionally enable, the alert
 ****************
 Installation
 ****************
-
-The application is designed to work on a search head or search head cluster instance, installation on the indexing tier is not required.
-There are a few searches that use REST API calls which are specific to the search head cluster they run on, these alerts will likely have to be placed on each search head or search head clust to provide the expected results these are:
+The application is designed to work on a search head or search head cluster instance, installation on the indexing tier is not required
+There are a few searches that use REST API calls which are specific to the search head cluster they run on. These alerts will have to be placed on each search head or search head cluster, alternatively any server with the required search peers will also work, the relevant alerts are:
 SearchHeadLevel - Accelerated DataModels with All Time Searching Enabled
 SearchHeadLevel - Realtime Scheduled Searches are in use
 SearchHeadLevel - Scheduled Searches without a configured earliest and latest time
@@ -66,44 +68,46 @@ SearchHeadLevel - Alerts that have not fired an action in X days
 SearchHeadLevel - Data Model Acceleration Completion Status
 What Access Do I Have?
 
+The following dashboards are search head or search head cluster specific:
+Data Model Rebuild Monitor
+Data Model Status
+
 ****************
 Using the application
 ****************
-
-Once the application is installed, *all* alerts are disabled by default and you can enable those you require or want to test in your local environment.
-If you choose not to cutomise the macros then many searches will search for all hosts, which will make the alerts and dashboards inaccurate!
+Once the application is installed, *all* alerts are disabled by default and you can enable those you require or want to test in your local environment
+If you choose not to customise the macros then many searches will search for all hosts, which will make the alerts and dashboards inaccurate!
 
 ****************
 Which alerts should be enabled?
 ****************
-The alerts are all useful for detecting a variety of different scenarios which may or may not be applicable within your Splunk environment.
-The description field has an (extremely) simple way of determining if an alert will require action there are three levels:
-Low - the alert is informational and likely relates to a potential issue, these alerts may produce false alarms
-Moderate - the alert is a warning and most likely action will need to be taken, a moderate chance of false alarms
-High - the alert is likely relating to something that requires action and there is a very slim chance that is a false alarm
+The alerts are all useful for detecting a variety of different scenarios which may or may not be applicable within your Splunk environment
+The description field has an (extremely) simple way of determining if an alert will require action, there are three levels:
+  Low - the alert is informational and likely relates to a potential issue, these alerts may produce false alarms
+  Moderate - the alert is a warning, most likely further action will need to be taken, a moderate chance of false alarms
+  High - the alert is likely relating to something that requires action and there is a very low chance that this will create false alarms
 
-I do not have a nice way to auto-enable various alerts excluding editing the local/savedsearches.conf
+I do not have a nice way to auto-enable various alerts excluding editing the local/savedsearches.conf or via the GUI, any contribution of a setup file would be welcome here!
 
 ****************
 How is this application used?
 ****************
-
 In the current environment the vast majority of the alerts are enabled to detect issues, they raise automated tickets or email depending on the urgency of the specific alert.
-There are a few environment characteristics that may require changes to the way the app is used, and feedback is welcome if there is a nicer way to structure the alerts/application:
+There are a few environment characteristics that may require changes to the way the app is used, and feedback is welcome if there is a nicer way to structure the alerts/application
 The overall assumption is that the admin(s) are not carefully watching the splunkd logs or the messages in the console of the monitoring server/Splunk servers
 
 ****************
 How is this application tested?
 ****************
-Universal forwarders in use are on Windows, Linux & AIX
-All heavy forwarders, and Splunk enterprise installations are Linux based, while I expect the alerts will work with minor modification for a Windows based environment this remains untested.
-The test environment has a single indexer cluster and two search head clusters.
+The universal forwarders in use are installed on a mix of Windows, Linux & AIX servers
+All heavy forwarders, and Splunk enterprise installations are Linux based, while I expect the alerts will work with only changes to the macros.conf for a Windows based environment this remains untested
+The test environment for this application has a single indexer cluster and two search head clusters
 
 ****************
 Why was this application and associated conf talk created?
 ****************
-Inspired by articles such as "Things I wish I knew then" and knowledge collected from various conference replays, SplunkAnswers, 200+ support tickets & nearly four years of working on a Splunk environment I decided that I would attempt to share what I have learned in an attempt to prevent others from repeating the same mistakes. 
-There are many Splunk conf talks available on this subject in various conference replays, however my goal was to provide practical steps to implement the ideas. That is why this application exists.
+Inspired by articles such as "Things I wish I knew then" and knowledge collected from various conference replays, SplunkAnswers, 200+ support tickets & nearly four years of working on a Splunk environment I decided that I would attempt to share what I have learned in an attempt to prevent others from repeating the same mistakes
+There are many Splunk conf talks available on this subject in various conference replays, however my goal was to provide practical steps to implement the ideas. That is why this application exists
 
 ****************
 Which alerts are best suited to automation?
@@ -116,7 +120,7 @@ SearchHeadLevel - Scheduled Searches without a configured earliest and latest ti
 SearchHeadLevel - Users exceeding the disk quota
 SearchHeadLevel - User - Dashboards searching all indexes
 
-Are all well suited to an automated email using the sendresults command or a similar function as they involve end user configuration which the individual can change/fix.
+Are all well suited to an automated email using the sendresults command or a similar function as they involve end user configuration which the individual can change/fix
 
 ****************
 Feedback?
@@ -127,8 +131,10 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 Release Notes
 ****************
 2.0
-Multiple searches now have an "investigationQuery" in them, the idea is that you can copy and paste the output into a search window and see results relevant to the particular alert.
+Multiple searches now have an "investigationQuery" in them, the idea is that you can copy and paste the output into a search window and see results relevant to the particular alert
+The last few releases have been attempting to reduce false alarms from alerts related to server restarts
 
+Update summary:
 New alert IndexerLevel - Cold data location approaching size limits
 New/renamed alert AllSplunkEnterpriseLevel - Splunk Scheduler excessive delays in executing search
 New/renamed alert AllSplunkEnterpriseLevel - Splunk Scheduler skipped searches and the reason
@@ -143,7 +149,9 @@ Updated IndexerLevel - Valid Timestamp Invalid Parsed Time
 Updated IndexerLevel - Too many events with the same timestamp
 Updated IndexerLevel - Large multiline events using SHOULD_LINEMERGE setting 
 Updated SearchHeadLevel - Users exceeding the disk quota
+Updated IndexerLevel - Indexer Queues May Have Issues (to be less sensitive to indexqueue issues)
 Corrected AllSplunkLevel - TCP Output Processor has paused the data flow
+Corrected ForwarderLevel - Splunk Universal Forwarders that are time shifting
 Removed AllSplunkEnterpriseLevel - Splunk Servers with time skew (replaced by Time skew on Splunk Servers)
 Removed SearchHead Level - Splunk Scheduler excessive delays in executing search (renamed)
 Removed SearchHeadLevel - Splunk Scheduler Skipped Searches and the reason (renamed)
