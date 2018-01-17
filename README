@@ -23,6 +23,7 @@ If you are running your Splunk enterprise installation on Windows or have custom
 Macros - required configuration
 ****************
 The various saved searches and dashboards use macros within their searches, you will need to update the macros to ensure the searches/dashboards work as expected
+To check the contents of the macros in Splunk 7 or newer, use CTRL-SHFT-E within the search window
 
 The macros are listed below, many expect a host=A OR host=B item to assist in narrowing down a search while others expect only a single value...
 
@@ -50,6 +51,9 @@ splunkadmins_mongo_source - this defaults to source=/opt/splunk/var/log/splunk/m
 
 The macros are used in various alerts which you can optionally enable, the alerts will raise a triggered alert only as emails are not allowed for Splunk app certification purposes 
 
+The vast majority of the alerts also have a macro(s) which you can customise to tweak the search results, for example the macro `splunkadmins_weekly_truncated` allows the alert, "IndexerLevel - Weekly Truncated Logs Report", to be customised without changing the alert itself. This will make upgrading to a new version of this app more straightforward
+I have attempted to provide an appropriate macro in any alert where I deemed it appropriate, feedback is welcome for any alert that you believe should have a macro or requires further improvement
+
 ****************
 Installation
 ****************
@@ -62,6 +66,7 @@ SearchHeadLevel - Scheduled searches not specifying an index
 SearchHeadLevel - User - Dashboards searching all indexes
 SearchHeadLevel - Scheduled Searches Configured with incorrect sharing
 SearchHeadLevel - Realtime Search Queries in dashboards
+SearchHeadLevel - Users exceeding the disk quota (recent jobs list uses a REST call so you may need to adjust the search)
 
 The following reports also are specific to a search head or search head cluster:
 SearchHeadLevel - Alerts that have not fired an action in X days
@@ -130,6 +135,20 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
+2.1
+Added macros which can be customised to the majority of alerts, this reduces the need to customise the alert itself and should make upgrading to new versions of the application easier...
+
+Update summary:
+New alert AllSplunkEnterpriseLevel - Unable to dispatch searches due to disk space
+New alert IndexerLevel - Unclean Shutdown - Fsck
+New macros - various macros introduced due to customer feedback about the requirement to customise the alerts
+Updated SearchHeadLevel - Users exceeding the disk quota to list top 10 consumers of disk
+Updated SearchHeadLevel - Scheduled Searches That Cannot Run (to ignore the above)
+Updated IndexerLevel - Failures To Parse Timestamp Correctly (excluding breaking issues) to list sources per sourcetype/host
+Updated ForwarderLevel - Splunk Insufficient Permissions to Read Files to include new macro, hint, invesQuery & to improve the accuracy
+Updated SearchHeadLevel - Detect MongoDB errors (customer feedback, includes F/fatal errors now)
+README and description updates for searches
+
 2.0
 Multiple searches now have an "investigationQuery" in them, the idea is that you can copy and paste the output into a search window and see results relevant to the particular alert
 The last few releases have been attempting to reduce false alarms from alerts related to server restarts
