@@ -135,6 +135,11 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
+2.2
+Minor update to reduce false alarms and improve investigationQuery searches
+IndexerLevel - Weekly Truncated Logs Report - hostnames wildcarded to deal with short names (for syslog for example)
+SearchHeadLevel - Detect MongoDB errors - timespan increased to 10 minutes and 5 minutes produces false alarms
+
 2.1
 Added macros which can be customised to the majority of alerts, this reduces the need to customise the alert itself and should make upgrading to new versions of the application easier...
 
