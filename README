@@ -149,6 +149,7 @@ Updated AllSplunkEnterpriseLevel - Splunk Scheduler excessive delays in executin
 Updated AllSplunkLevel - Unable To Distribute to Peer - to use shutdown macro
 Updated ForwarderLevel - Splunk forwarders are having issues with sending data to indexers - to use shutdown macro
 Updated ForwarderLevel - SplunkStream Errors - to use shutdown macro
+Updated ForwarderLevel - Unusual number of duplication alerts - to use shutdown macro & changed the alert to fire on >10 results per host
 Updated IndexerLevel - Weekly Truncated Logs Report - hostnames wildcarded to deal with short names (for syslog for example)
 Updated SearchHeadLevel - Detect MongoDB errors - timespan increased to 10 minutes and 5 minutes produces false alarms, and added shutdown macro
 Updated SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring - to use shutdown macro
