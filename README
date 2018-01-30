@@ -136,9 +136,22 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 Release Notes
 ****************
 2.2
-Minor update to reduce false alarms and improve investigationQuery searches
-IndexerLevel - Weekly Truncated Logs Report - hostnames wildcarded to deal with short names (for syslog for example)
-SearchHeadLevel - Detect MongoDB errors - timespan increased to 10 minutes and 5 minutes produces false alarms
+Attempt to reduce false alarms and improve investigationQuery searches
+Created macros for shutdown events for indexers/search heads/enterprise servers for excluding false alarms related to restarts
+
+Update summary:
+New macro splunkadmins_shutdown_list_enterprise
+New macro splunkadmins_shutdown_list_sh
+New macro splunkadmins_shutdown_time_indexers
+New macro splunkadmins_shutdown_time_sh
+Updated AllSplunkEnterpriseLevel - Splunk Scheduler skipped searches and the reason - to use shutdown macro
+Updated AllSplunkEnterpriseLevel - Splunk Scheduler excessive delays in executing search - to use shutdown macro
+Updated AllSplunkLevel - Unable To Distribute to Peer - to use shutdown macro
+Updated ForwarderLevel - Splunk forwarders are having issues with sending data to indexers - to use shutdown macro
+Updated ForwarderLevel - SplunkStream Errors - to use shutdown macro
+Updated IndexerLevel - Weekly Truncated Logs Report - hostnames wildcarded to deal with short names (for syslog for example)
+Updated SearchHeadLevel - Detect MongoDB errors - timespan increased to 10 minutes and 5 minutes produces false alarms, and added shutdown macro
+Updated SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring - to use shutdown macro
 
 2.1
 Added macros which can be customised to the majority of alerts, this reduces the need to customise the alert itself and should make upgrading to new versions of the application easier...
