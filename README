@@ -140,13 +140,11 @@ Attempt to reduce false alarms and improve investigationQuery searches
 Created macros for shutdown events for indexers/search heads/enterprise servers for excluding false alarms related to restarts
 
 Update summary:
-New macro splunkadmins_shutdown_list_enterprise
-New macro splunkadmins_shutdown_list_sh
-New macro splunkadmins_shutdown_time_indexers
-New macro splunkadmins_shutdown_time_sh
+New macro splunkadmins_shutdown_list 
+New macro splunkadmins_shutdown_time
 Updated AllSplunkEnterpriseLevel - Splunk Scheduler skipped searches and the reason - to use shutdown macro
 Updated AllSplunkEnterpriseLevel - Splunk Scheduler excessive delays in executing search - to use shutdown macro
-Updated AllSplunkLevel - TCP Output Processor has paused the data flow
+Updated AllSplunkLevel - TCP Output Processor has paused the data flow - to use shutdown macro
 Updated AllSplunkLevel - Unable To Distribute to Peer - to use shutdown macro
 Updated ForwarderLevel - Splunk forwarders are having issues with sending data to indexers - to use shutdown macro
 Updated ForwarderLevel - SplunkStream Errors - to use shutdown macro
