@@ -140,9 +140,11 @@ Minor updates to a few alerts and a new alert
 
 Update summary:
 New alert AllSplunkEnterpriseLevel - Detect LDAP groups that no longer exist
-Updated IndexerLevel - Failures To Parse Timestamp Correctly (excluding breaking issues) - to find most recent (not oldest example)
-Updated DeploymentServer - Unsupported attribute within DS config - to find most recent (not oldest example)
 Updated AllSplunkEnterpriseLevel - TCP or SSL Config Issue to find most recent (not oldest example)
+Updated AllSplunkLevel - TCP Output Processor has paused the data flow to use a stats command instead of raw/host information
+Updated DeploymentServer - Unsupported attribute within DS config - to find most recent (not oldest example)
+Updated IndexerLevel - Failures To Parse Timestamp Correctly (excluding breaking issues) - to find most recent (not oldest example)
+Updated SearchHeadLevel - Detect MongoDB errors - mild tweak to output data
 
 2.2
 Attempt to reduce false alarms and improve investigationQuery searches
