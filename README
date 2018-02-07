@@ -139,7 +139,7 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
-2.3
+2.3.0
 Minor updates to a few alerts and a new alert
 
 Update summary:
@@ -156,6 +156,7 @@ Updated SearchHeadLevel - Scheduled Searches That Cannot Run - to detect errors 
 Corrected SearchHeadLevel - User - Dashboards searching all indexes - a newline resulted in it working in search but not via the scheduler!
 
 2.2
+Not released, combined with 2.3.0
 Attempt to reduce false alarms and improve investigationQuery searches
 Created macros for shutdown events for indexers/search heads/enterprise servers for excluding false alarms related to restarts
 
