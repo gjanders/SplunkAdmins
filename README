@@ -77,6 +77,10 @@ The following dashboards are search head or search head cluster specific:
 Data Model Rebuild Monitor
 Data Model Status
 
+The following reports / alert must either run on the cluster master or a server where the cluster master is a peer:
+ClusterMasterLevel - Per index status
+ClusterMasterLevel - Primary bucket count per peer
+
 ****************
 Using the application
 ****************
@@ -140,11 +144,16 @@ Minor updates to a few alerts and a new alert
 
 Update summary:
 New alert AllSplunkEnterpriseLevel - Detect LDAP groups that no longer exist
+New alert ClusterMasterLevel - Per index status
+New report ClusterMasterLevel - Primary bucket count per peer
 Updated AllSplunkEnterpriseLevel - TCP or SSL Config Issue to find most recent (not oldest example)
+Updated AllSplunkEnterpriseLevel - Splunk Scheduler skipped searches and the reason to exclude the timewindow upto 10 minutes post-shutdown of an indexer
 Updated AllSplunkLevel - TCP Output Processor has paused the data flow to use a stats command instead of raw/host information
 Updated DeploymentServer - Unsupported attribute within DS config - to find most recent (not oldest example)
 Updated IndexerLevel - Failures To Parse Timestamp Correctly (excluding breaking issues) - to find most recent (not oldest example)
-Updated SearchHeadLevel - Detect MongoDB errors - mild tweak to output data
+Updated SearchHeadLevel - Detect MongoDB errors - mild tweak to output data, added customisation macros
+Updated SearchHeadLevel - Scheduled Searches That Cannot Run - to detect errors in splunkd related to saved searches
+Corrected SearchHeadLevel - User - Dashboards searching all indexes - a newline resulted in it working in search but not via the scheduler!
 
 2.2
 Attempt to reduce false alarms and improve investigationQuery searches
