@@ -61,16 +61,19 @@ The application is designed to work on a search head or search head cluster inst
 There are a few searches that use REST API calls which are specific to the search head cluster they run on. These alerts will have to be placed on each search head or search head cluster, alternatively any server with the required search peers will also work, the relevant alerts are:
 SearchHeadLevel - Accelerated DataModels with All Time Searching Enabled
 SearchHeadLevel - Realtime Scheduled Searches are in use
+SearchHeadLevel - Realtime Search Queries in dashboards
 SearchHeadLevel - Scheduled Searches without a configured earliest and latest time
 SearchHeadLevel - Scheduled searches not specifying an index
-SearchHeadLevel - User - Dashboards searching all indexes
+SearchHeadLevel - Scheduled searches not specifying an index macro version
 SearchHeadLevel - Scheduled Searches Configured with incorrect sharing
-SearchHeadLevel - Realtime Search Queries in dashboards
+SearchHeadLevel - Saved Searches with privileged owners and excessive write perms
+SearchHeadLevel - User - Dashboards searching all indexes
 SearchHeadLevel - Users exceeding the disk quota (recent jobs list uses a REST call so you may need to adjust the search)
 
 The following reports also are specific to a search head or search head cluster:
 SearchHeadLevel - Alerts that have not fired an action in X days
 SearchHeadLevel - Data Model Acceleration Completion Status
+SearchHeadLevel - Scheduled searches not specifying an index macro report
 What Access Do I Have?
 
 The following dashboards are search head or search head cluster specific:
@@ -139,6 +142,19 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
+2.3.1
+Update summary:
+New alert AllSplunkEnterpriseLevel - Non-existent roles are assigned to users
+New alert IndexerLevel - Index not defined
+New alert SearchHeadLevel - Scheduled searches not specifying an index macro version (detect lack of index= with 1 level of macro expansion)
+New alert SearchHeadLevel - Saved Searches with privileged owners and excessive write perms (detect 1 way of accessing data outside your level of access)
+New report SearchHeadLevel - Scheduled searches not specifying an index macro report (required by above alert)
+Updated AllSplunkEnterpriseLevel - TCP or SSL Config Issue to include an additional scenario as reported by a customer
+Updated SearchHeadLevel - Scheduled searches not specifying an index to not find searches with macros and to include example query
+Updated SearchHeadLevel - Scheduled Searches That Cannot Run to make the message field accurate in all situations
+Updated SearchHeadLevel - User - Dashboards searching all indexes to include example query to find indexes
+Corrected AllSplunkLevel - Unable To Distribute to Peer
+
 2.3.0
 Minor updates to a few alerts and a new alert
 
