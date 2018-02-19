@@ -153,6 +153,7 @@ Updated AllSplunkEnterpriseLevel - TCP or SSL Config Issue to include an additio
 Updated SearchHeadLevel - Scheduled searches not specifying an index to not find searches with macros and to include example query
 Updated SearchHeadLevel - Scheduled Searches That Cannot Run to make the message field accurate in all situations
 Updated SearchHeadLevel - User - Dashboards searching all indexes to include example query to find indexes
+Updated IndexerLevel - Failures To Parse Timestamp Correctly (excluding breaking issues) - to handle slight tweak to Splunk 7.x log formatting
 Corrected AllSplunkLevel - Unable To Distribute to Peer
 
 2.3.0
