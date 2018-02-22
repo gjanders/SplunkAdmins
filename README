@@ -49,6 +49,8 @@ splunkadmins_splunkuf_source - this defaults to source=*splunkd.log, you may wis
 
 splunkadmins_mongo_source - this defaults to source=/opt/splunk/var/log/splunk/mongod.log, if your mongodb log file is not in this directory please override this macro as appropriate
 
+splunkadmins_clustermaster_oshost - a host=... entry for the cluster master server (for example host=splunkclustermaster)
+
 The macros are used in various alerts which you can optionally enable, the alerts will raise a triggered alert only as emails are not allowed for Splunk app certification purposes 
 
 The vast majority of the alerts also have a macro(s) which you can customise to tweak the search results, for example the macro `splunkadmins_weekly_truncated` allows the alert, "IndexerLevel - Weekly Truncated Logs Report", to be customised without changing the alert itself. This will make upgrading to a new version of this app more straightforward
@@ -68,12 +70,13 @@ SearchHeadLevel - Scheduled searches not specifying an index macro version
 SearchHeadLevel - Scheduled Searches Configured with incorrect sharing
 SearchHeadLevel - Saved Searches with privileged owners and excessive write perms
 SearchHeadLevel - User - Dashboards searching all indexes
+SearchHeadLevel - User - Dashboards searching all indexes macro version
 SearchHeadLevel - Users exceeding the disk quota (recent jobs list uses a REST call so you may need to adjust the search)
 
 The following reports also are specific to a search head or search head cluster:
 SearchHeadLevel - Alerts that have not fired an action in X days
 SearchHeadLevel - Data Model Acceleration Completion Status
-SearchHeadLevel - Scheduled searches not specifying an index macro report
+SearchHeadLevel - Macro report
 What Access Do I Have?
 
 The following dashboards are search head or search head cluster specific:
@@ -146,15 +149,17 @@ Release Notes
 Update summary:
 New alert AllSplunkEnterpriseLevel - Non-existent roles are assigned to users
 New alert IndexerLevel - Index not defined
+New alert IndexerLevel - Search Failures
 New alert SearchHeadLevel - Scheduled searches not specifying an index macro version (detect lack of index= with 1 level of macro expansion)
 New alert SearchHeadLevel - Saved Searches with privileged owners and excessive write perms (detect 1 way of accessing data outside your level of access)
-New report SearchHeadLevel - Scheduled searches not specifying an index macro report (required by above alert)
+New alert SearchHeadLevel - User - Dashboards searching all indexes macro version
+New report SearchHeadLevel - Macro report (required by "macro version" alerts)
 Updated AllSplunkEnterpriseLevel - TCP or SSL Config Issue to include an additional scenario as reported by a customer
 Updated SearchHeadLevel - Scheduled searches not specifying an index to not find searches with macros and to include example query
 Updated SearchHeadLevel - Scheduled Searches That Cannot Run to make the message field accurate in all situations
-Updated SearchHeadLevel - User - Dashboards searching all indexes to include example query to find indexes
-Updated IndexerLevel - Failures To Parse Timestamp Correctly (excluding breaking issues) - to handle slight tweak to Splunk 7.x log formatting
+Updated SearchHeadLevel - User - Dashboards searching all indexes to include example query to find indexes, and to not find macro-based queries
 Corrected AllSplunkLevel - Unable To Distribute to Peer
+Corrected IndexerLevel - Failures To Parse Timestamp Correctly (excluding breaking issues) to correctly exclude broken events & to handle newer 7.0.2 errors
 
 2.3.0
 Minor updates to a few alerts and a new alert
