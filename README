@@ -155,7 +155,7 @@ New alert SearchHeadLevel - Captain Switchover Occurring
 Updated ForwarderLevel - Splunk Universal Forwarders that are time shifting to include "System time went backwards by..."
 Updated IndexerLevel - Failures To Parse Timestamp Correctly (excluding breaking issues) to show when the failure related to been outside the acceptable time window
 Updated SearchHeadLevel - User - Dashboards searching all indexes to simplify regex (ignore anything starting with a pipe symbol)
-SearchHeadLevel - User - Dashboards searching all indexes macro version to simplify regex (ignore anything starting with a pipe symbol)
+Updated SearchHeadLevel - User - Dashboards searching all indexes macro version to simplify regex (ignore anything starting with a pipe symbol)
 Corrected AllSplunkEnterpriseLevel - sendmodalert errors to not show random savedsearch_names when no match is found
 Corrected SearchHeadLevel - Alerts that have not fired an action in X days to only show alerts relevant to the current search head/cluster
 
