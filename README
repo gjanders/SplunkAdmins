@@ -33,6 +33,8 @@ heavyforwarderhosts - a host=... list of your heavy forwarders (for example host
 
 searchheadhosts - a host=... list of your search head(s) (for example host=searchhead1 OR host=searchhead2)
 
+localsearchheadhosts - a host=... list of your search head(s) within the cluster that these alerts are running on
+
 splunkenterprisehosts - a host=... list of any Splunk enterprise instance (for example host=indexer1 OR host=searchhead1 OR ...)
 
 deploymentserverhosts - a host=... list of deployment server(s) (for example host=splunkdeploymentserver)
@@ -145,6 +147,12 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
+2.3.3
+Update summary:
+New alert SearchHeadLevel - Disabled modular inputs are running
+Updated SearchHeadLevel - Detect MongoDB errors to timechart to have no limit on the number of hosts involved
+Updated the shutdown macros to find one additional scenarios
+
 2.3.2
 Due to resourcing issues on the search heads this includes a few warnings/errors related to performance issues
 
