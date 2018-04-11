@@ -147,6 +147,10 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
+2.3.4
+Update summary:
+Updated SearchHeadLevel - Scheduled searches not specifying an index to exclude 1 additional type of search
+
 2.3.3
 Update summary:
 New alert SearchHeadLevel - Disabled modular inputs are running
