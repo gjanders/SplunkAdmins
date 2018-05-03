@@ -150,6 +150,8 @@ Release Notes
 2.3.4
 Update summary:
 Updated SearchHeadLevel - Scheduled searches not specifying an index to exclude 1 additional type of search
+Updated SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring to detect a disconnected member scenario
+Updated Troubleshooting indexer CPU & drilldown dashboards to include commmas and the search head field (to make it easier to update to search head instead of indexer hosts) 
 
 2.3.3
 Update summary:

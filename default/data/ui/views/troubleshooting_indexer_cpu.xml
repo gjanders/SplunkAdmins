@@ -236,6 +236,7 @@
 | eval totalduration = tostring(totalRuntime, "duration"), averageduration = tostring(avgRuntime, "duration")
 | eval Started = strftime(searchStartTime,"%+")
 | eval avgCPUAcrossAllIndexers = round(avgCPUAcrossAllIndexers)
+| eval totalCPU=tostring(totalCPU,"commas"), avgCPUAcrossAllIndexers=tostring(avgCPUAcrossAllIndexers,"commas")
 | sort - totalCPU, totalMemUsed
 | fields Started, totalMemUsed, user, app, mode, type, averageduration, totalduration, totalCPU, avgCPUAcrossAllIndexers, totalReadMB</query>
           <earliest>$time_tok.earliest$</earliest>
@@ -274,6 +275,7 @@
 | eval totalduration = tostring(totalRuntime, "duration"), averageduration = tostring(avgRuntime, "duration")
 | eval Started = strftime(searchStartTime,"%+") 
 | eval avgCPUAcrossAllIndexers = round(avgCPUAcrossAllIndexers)
+| eval totalCPU=tostring(totalCPU,"commas"), avgCPUAcrossAllIndexers=tostring(avgCPUAcrossAllIndexers,"commas")
 | sort - totalCPU, totalMemUsed
 | fields Started, totalMemUsed, user, app, mode, type, averageduration, totalduration, totalCPU, avgCPUAcrossAllIndexers, totalReadMB</query>
           <earliest>$time_tok.earliest$</earliest>
@@ -322,12 +324,14 @@
 | eval read_mb = 'data.read_mb'
 | eval provenance='data.search_props.provenance'
 | eval label=coalesce(label, provenance)
+| eval search_head = 'data.search_props.search_head'
 | stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as Started, sum(cpuperc) AS totalCPU, max(read_mb) AS read_mb, avg(cpuperc) AS avgCPU by type, mode, app, user, label, host, data.pid
 | stats sum(avgCPU) AS totalAVGCPU, sum(mem_used) AS totalMemUsed, sum(runtime) AS totalRuntime, sum(read_mb) AS totalReadMB, sum(totalCPU) AS totalCPU by Started, type, "mode", app, user, label, host
 | eval totalMemUsed = round(totalMemUsed, 2)
 | eval Started=strftime(Started,"%+") 
 | eval duration = tostring(totalRuntime, "duration")
 | eval avgCPU = round(totalAVGCPU)
+| eval totalCPU=tostring(totalCPU,"commas"), avgCPU=tostring(avgCPU,"commas")
 | sort - $sort$
 | fields - totalRuntime, totalAVGCPU</query>
           <earliest>$time_tok.earliest$</earliest>
@@ -370,12 +374,14 @@
 | eval read_mb = 'data.read_mb'
 | eval provenance='data.search_props.provenance'
 | eval label=coalesce(label, provenance)
+| eval search_head = 'data.search_props.search_head'
 | stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as Started, sum(cpuperc) AS totalCPU, max(read_mb) AS read_mb, avg(cpuperc) AS avgCPU by type, mode, app, user, label, host, data.pid
 | stats sum(avgCPU) AS totalAVGCPU, sum(mem_used) AS totalMemUsed, sum(runtime) AS totalRuntime, sum(read_mb) AS totalReadMB, sum(totalCPU) AS totalCPU by Started, type, "mode", app, user, label, host
 | eval totalMemUsed = round(totalMemUsed, 2)
 | eval Started=strftime(Started,"%+") 
 | eval duration = tostring(totalRuntime, "duration")
 | eval avgCPU = round(totalAVGCPU)
+| eval totalCPU=tostring(totalCPU,"commas"), avgCPU=tostring(avgCPU,"commas")
 | sort - $sort2$
 | fields - totalRuntime, totalAVGCPU</query>
           <earliest>$time_tok.earliest$</earliest>
@@ -423,12 +429,14 @@
 | eval sid='data.search_props.sid'
 | eval provenance='data.search_props.provenance'
 | eval label=coalesce(label, provenance)
+| eval search_head = 'data.search_props.search_head'
 | stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as Started, sum(cpuperc) AS totalCPU, max(read_mb) AS read_mb, avg(cpuperc) AS avgCPUPerMinute by type, mode, app, user, label, host, data.pid, sid 
 | stats sum(avgCPUPerMinute) AS totalAVGCPUPerMinute, sum(mem_used) AS totalMemUsed, sum(runtime) AS totalRuntime, sum(read_mb) AS totalReadMB, sum(totalCPU) AS totalCPU by Started, type, "mode", app, user, label, host, sid, data.pid
 | eval totalMemUsed = round(totalMemUsed, 2)
 | eval Started=strftime(Started,"%+") 
 | eval duration = tostring(totalRuntime, "duration")
 | eval avgCPU = round(totalAVGCPUPerMinute)
+| eval totalCPU=tostring(totalCPU,"commas"), avgCPU=tostring(avgCPU,"commas")
 | sort - $sort3$
 | fields - totalRuntime, totalAVGCPUPerMinute, sid</query>
           <earliest>$time_tok.earliest$</earliest>
