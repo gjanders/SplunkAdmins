@@ -149,7 +149,12 @@ Release Notes
 ****************
 2.3.5
 Update summary:
-Updated IndexerLevel - Cold data location approaching size limits to handle only maxTotalDataSizeMB been set 
+Updated IndexerLevel - Cold data location approaching size limits to handle only maxTotalDataSizeMB been set
+Updated Future Dated Events that appeared in the last week to use +10y and 7.1 rejects +20y
+Corrected AllSplunkEnterpriseLevel - TCP or SSL Config Issue to remove extra ( symbol
+Corrected SearchHeadLevel - User - Dashboards searching all indexes macro version to refer to correct lookup name
+Corrected dashboard for troubleshooting indexer CPU to handle standalone server
+Inclusion of alternative app icons to work in 7.1
 
 2.3.4
 Update summary:

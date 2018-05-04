@@ -228,7 +228,7 @@
           <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::* "data.search_props.user"!=admin  "data.search_props.user"!=splunk-system-user
 | eval mem_used = 'data.mem_used' | eval app = 'data.search_props.app' | eval elapsed = 'data.elapsed' | eval label = 'data.search_props.label' 
 | eval type = 'data.search_props.type' | eval mode = 'data.search_props.mode' | eval user = 'data.search_props.user' | eval cpuperc = 'data.pct_cpu'
-| eval search_head = 'data.search_props.search_head' | eval read_mb = 'data.read_mb'
+| eval search_head = if(isnull('data.search_props.search_head'),"N/A",'data.search_props.search_head') | eval read_mb = 'data.read_mb'
 | eval provenance='data.search_props.provenance' | eval label=coalesce(label, provenance)
 | stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as searchStartTime, sum(cpuperc) AS totalCPU, avg(cpuperc) AS avgCPU, max(read_mb) AS read_mb by type, mode, app, user, label, host, search_head, data.pid
 | bin searchStartTime span=$interval$
@@ -267,7 +267,7 @@
           <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::* "data.search_props.user"=admin OR "data.search_props.user"=splunk-system-user
 | eval mem_used = 'data.mem_used' | eval app = 'data.search_props.app' | eval elapsed = 'data.elapsed' | eval label = 'data.search_props.label' 
 | eval type = 'data.search_props.type' | eval mode = 'data.search_props.mode' | eval user = 'data.search_props.user' | eval cpuperc = 'data.pct_cpu'
-| eval search_head = 'data.search_props.search_head' | eval read_mb = 'data.read_mb'
+| eval search_head = if(isnull('data.search_props.search_head'),"N/A",'data.search_props.search_head') | eval read_mb = 'data.read_mb'
 | eval provenance='data.search_props.provenance' | eval label=coalesce(label, provenance)
 | stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as searchStartTime, sum(cpuperc) AS totalCPU, avg(cpuperc) AS avgCPU, max(read_mb) AS read_mb by type, mode, app, user, label, host, search_head, data.pid
 | bin searchStartTime span=$interval$
@@ -324,7 +324,7 @@
 | eval read_mb = 'data.read_mb'
 | eval provenance='data.search_props.provenance'
 | eval label=coalesce(label, provenance)
-| eval search_head = 'data.search_props.search_head'
+| eval search_head = if(isnull('data.search_props.search_head'),"N/A",'data.search_props.search_head')
 | stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as Started, sum(cpuperc) AS totalCPU, max(read_mb) AS read_mb, avg(cpuperc) AS avgCPU by type, mode, app, user, label, host, data.pid
 | stats sum(avgCPU) AS totalAVGCPU, sum(mem_used) AS totalMemUsed, sum(runtime) AS totalRuntime, sum(read_mb) AS totalReadMB, sum(totalCPU) AS totalCPU by Started, type, "mode", app, user, label, host
 | eval totalMemUsed = round(totalMemUsed, 2)
@@ -374,7 +374,7 @@
 | eval read_mb = 'data.read_mb'
 | eval provenance='data.search_props.provenance'
 | eval label=coalesce(label, provenance)
-| eval search_head = 'data.search_props.search_head'
+| eval search_head = if(isnull('data.search_props.search_head'),"N/A",'data.search_props.search_head')
 | stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as Started, sum(cpuperc) AS totalCPU, max(read_mb) AS read_mb, avg(cpuperc) AS avgCPU by type, mode, app, user, label, host, data.pid
 | stats sum(avgCPU) AS totalAVGCPU, sum(mem_used) AS totalMemUsed, sum(runtime) AS totalRuntime, sum(read_mb) AS totalReadMB, sum(totalCPU) AS totalCPU by Started, type, "mode", app, user, label, host
 | eval totalMemUsed = round(totalMemUsed, 2)
@@ -429,7 +429,7 @@
 | eval sid='data.search_props.sid'
 | eval provenance='data.search_props.provenance'
 | eval label=coalesce(label, provenance)
-| eval search_head = 'data.search_props.search_head'
+| eval search_head = if(isnull('data.search_props.search_head'),"N/A",'data.search_props.search_head')
 | stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as Started, sum(cpuperc) AS totalCPU, max(read_mb) AS read_mb, avg(cpuperc) AS avgCPUPerMinute by type, mode, app, user, label, host, data.pid, sid 
 | stats sum(avgCPUPerMinute) AS totalAVGCPUPerMinute, sum(mem_used) AS totalMemUsed, sum(runtime) AS totalRuntime, sum(read_mb) AS totalReadMB, sum(totalCPU) AS totalCPU by Started, type, "mode", app, user, label, host, sid, data.pid
 | eval totalMemUsed = round(totalMemUsed, 2)
