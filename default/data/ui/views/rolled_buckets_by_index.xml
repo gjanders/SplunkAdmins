@@ -1,0 +1,230 @@
+<form>
+  <label>Rolled Buckets By Index</label>
+  <description>A very simple dashboard to determine which index is rolling the largest number of buckets and therefore may require some level of tuning</description>
+  <fieldset submitButton="false">
+    <input type="time" token="time">
+      <label>Time period for rolled bucket graphs</label>
+      <default>
+        <earliest>-3d</earliest>
+        <latest>@d</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="days">
+      <label>Days of data to look over</label>
+      <choice value="3">3</choice>
+      <choice value="7">7</choice>
+      <choice value="14">14</choice>
+      <choice value="30">30</choice>
+      <choice value="60">60</choice>
+      <default>7</default>
+      <prefix>-</prefix>
+      <suffix>d</suffix>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Number of buckets rolled from hot to warm</title>
+      <chart>
+        <title>Buckets rolled per day per index, top 15 indexes</title>
+        <search>
+          <query>index=_internal "HotBucketRoller" sourcetype=splunkd source=*splunkd.log `indexerhosts` "finished moving"
+| bin _time span=24h
+| chart limit=15 useother=false count by _time, idx</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <set token="indexname">$click.name2$</set>
+        </drilldown>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Buckets with largest timespan</title>
+      <table>
+        <title>Buckets sorted by longest average time period (often indicates a timestamp parsing issue as large time periods trigger the buckets to roll early)</title>
+        <search>
+          <query>| dbinspect index=*
+| eval timePeriod=(endEpoch-startEpoch)/60/60/24
+| stats avg(timePeriod) AS avgTimePeriod, max(timePeriod) AS maxTimePeriod by index
+| where avgTimePeriod&gt;5
+| sort - avgTimePeriod</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">false</option>
+        <drilldown>
+          <set token="indexname">$click.value$</set>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>License usage for index $indexname$</title>
+      <chart>
+        <title>Click on an index above for this drilldown to show which the license usage by a particular index</title>
+        <search>
+          <query>index=_internal `licensemasterhost` source="/opt/splunk/var/log/splunk/license_usage.log" idx=$indexname$
+| bin _time span=24h
+| stats sum(b) AS totalB by idx, _time
+| eval totalB=totalB/1024/1024/1024
+| chart avg(totalB) AS totalGB by _time, idx</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Bucket Info From DBInspect</title>
+      <table>
+        <title>Show the length of time for the average bucket from this particular index</title>
+        <search>
+          <query>| dbinspect index=$indexname$
+| eval timePeriod=(endEpoch-startEpoch)/60/60/24
+| stats avg(timePeriod) AS avgTimePeriod, min(timePeriod) AS minTimePeriod, max(timePeriod) AS maxTimePeriod, max(sizeOnDiskMB) AS maxSizeMB, avg(sizeOnDiskMB) AS avgSizeMB by index
+| append
+    [| rest `splunkindexerhostsvalue` /services/data/indexes
+    | search title=$indexname$
+    | head 1
+    | table maxDataSize ]</query>
+          <earliest>$days$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">false</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Sourcetype info for $indexname$</title>
+      <table>
+        <title>Click on any sourcetype to drilldown to the historic data in the past week for that sourcetype...</title>
+        <search>
+          <query>| tstats count where index=$indexname$ groupby sourcetype
+| sort - count</query>
+          <earliest>$days$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">false</option>
+        <drilldown>
+          <set token="sourcetype">$click.value2$</set>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Historic data for index $indexname$ indexed in the past $days$</title>
+      <event>
+        <title>Find data indexed in the past $days$ days that is at least 30 days old for sourcetype $sourcetype$ in index $indexname$</title>
+        <search>
+          <query>index=$indexname$ sourcetype=$sourcetype$ _index_earliest=-7d earliest=-300d  latest=-30d
+| eval indextime=strftime(_indextime, "%+")</query>
+          <earliest>$days$</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="list.drilldown">none</option>
+        <option name="list.wrap">0</option>
+        <option name="maxLines">100</option>
+        <option name="raw.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">1</option>
+        <option name="table.drilldown">none</option>
+        <option name="table.sortDirection">asc</option>
+        <option name="table.wrap">1</option>
+        <option name="type">list</option>
+      </event>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Future based data</title>
+      <event>
+        <title>Future based data for sourcetype $sourcetype$ in index $indexname$ indexed in the past $days$ days</title>
+        <search>
+          <query>index=$indexname$ sourcetype=$sourcetype$ earliest=+5m latest=+5y _index_earliest=$days$
+| eval indextime=strftime(_indextime, "%+")</query>
+          <earliest>-5m</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="list.drilldown">none</option>
+        <option name="list.wrap">0</option>
+        <option name="maxLines">100</option>
+        <option name="raw.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">1</option>
+        <option name="table.drilldown">none</option>
+        <option name="table.sortDirection">asc</option>
+        <option name="table.wrap">1</option>
+        <option name="type">list</option>
+      </event>
+    </panel>
+  </row>
+</form>
