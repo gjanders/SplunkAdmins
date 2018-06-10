@@ -147,7 +147,7 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
-2.3.6
+2.3.7
 New reports for diagnosing forwarder issues, alerts around bucket corruption and peer connection failures
 New dashboards for troubleshooting sourcetypes or buckets rolled per day
 
