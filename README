@@ -19,6 +19,8 @@ Please note that the all alerts & dashboards were tested on Linux-based Splunk i
 
 If you are running your Splunk enterprise installation on Windows or have customised your installation directory you will need to customise some of the macros such as splunkadmins_splunkd_source to point to the correct splunkd log file location
 
+Also note that this application contains a very large number of alerts which you can use, you may wish to utilise the "allow_skew" in savedsearches.conf to allow the scheduler to balance out the scheduled alerts execution times
+
 ****************
 Macros - required configuration
 ****************
@@ -147,19 +149,22 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
-2.3.7
+2.3.8
 New reports for diagnosing forwarder issues, alerts around bucket corruption and peer connection failures
 New dashboards for troubleshooting sourcetypes or buckets rolled per day
+Updated all alerts with an investigationQuery to use index=* explicitly rather than assume the admin has all indexes listed in the indexes searched by default list
 
 Update summary:
 New alert - IndexerLevel - Detect bucket corruption
 New alert - SearchHeadLevel - Indexer Peer Connection Failures
-New dashboard - Issues per sourcetype, a combination of timestamp parsing, future based and past data searches to look at a single problematic sourcetype
-New dashboard - Rolled buckets by index, a dashboard to assist with determing which index is rolling the most buckets
+Updated alert ClusterMasterLevel - Per index status to 5 minute intervals for certification purposes
+Renamed alert IndexerLevel - Detect bucket corruption to a report IndexerLevel - Report on bucket corruption (refer to IndexerLevel - Unclean Shutdown - Fsck for an alert)
 New report - ForwarderLevel - Forwarders connecting to a single endpoint for extended periods
 New report - ForwarderLevel - Forwarders connecting to a single endpoint for extended periods UF level
 New report - SearchHeadLevel - Determine query scan density
-Updated all alerts with an investigationQuery to use index=* explicitly rather than assume the admin has all indexes listed in the indexes searched by default list
+New report - SearchHeadLevel - Detect searches hitting corrupt buckets
+New dashboard - Issues per sourcetype, a combination of timestamp parsing, future based and past data searches to look at a single problematic sourcetype
+New dashboard - Rolled buckets by index, a dashboard to assist with determing which index is rolling the most buckets
 
 2.3.5
 Update summary:
