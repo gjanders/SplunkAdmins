@@ -75,7 +75,7 @@ SearchHeadLevel - Scheduled Searches Configured with incorrect sharing
 SearchHeadLevel - Saved Searches with privileged owners and excessive write perms
 SearchHeadLevel - User - Dashboards searching all indexes
 SearchHeadLevel - User - Dashboards searching all indexes macro version
-SearchHeadLevel - Users exceeding the disk quota (recent jobs list uses a REST call so you may need to adjust the search)
+SearchHeadLevel - Users exceeding the disk quota (recent jobs list uses a REST call so you may need to adjust the search), the SearchHeadLevel - Users exceeding the disk quota introspection is a non-search head specific alternative
 
 The following reports also are specific to a search head or search head cluster:
 SearchHeadLevel - Alerts that have not fired an action in X days
@@ -149,6 +149,15 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
+2.3.9
+Updated alert SearchHeadLevel - Detect searches hitting corrupt buckets to detect 1 more variation of the issue
+Updated alert SearchHeadLevel - Users exceeding the disk quota to include username
+Updated alert SearchHeadLevel - Scheduled Searches That Cannot Run to ignore the new report (SearchHeadLevel - Users exceeding the disk quota introspection) 
+Updated report ForwarderLevel - Forwarders connecting to a single endpoint for extended periods (and UF level version) to use the hostname/name parameters
+Renamed alert IndexerLevel - ERROR from linebreaker to IndexerLevel - Data parsing error
+New report SearchHeadLevel - Users exceeding the disk quota introspection 
+New report SearchHeadLevel - Users exceeding the disk quota introspection cleanup
+
 2.3.8
 New reports for diagnosing forwarder issues, alerts around bucket corruption and peer connection failures
 New dashboards for troubleshooting sourcetypes or buckets rolled per day
