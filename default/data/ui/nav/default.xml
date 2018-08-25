@@ -1,7 +1,238 @@
 <nav search_view="search" color="#65A637">
   <view name="search" default="true" />
-  <view name="datasets" />
   <view name="reports" />
   <view name="alerts" />
   <view name="dashboards" />
+	<collection label="AllSplunk*Level">  
+		<collection label="OS Level Issues">
+			<collection label="OS Config">
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%2520-%2520Core%2520Dumps%2520Disabled">Core Dumps Disabled</a>      					
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Transparent%20Huge%20Pages%20is%20enabled%20and%20should%20not%20be">Transparent Huge Pages is enabled and should not be</a>				
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20ulimit%20on%20Splunk%20enterprise%20servers%20is%20below%208192">ulimit on Splunk enterprise servers is below 8192</a>
+			</collection>   
+			<collection label="Failures">
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Low%20disk%20space">KVStore Process Terminated</a>			
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Unable%20to%20dispatch%20searches%20due%20to%20disk%20space">Unable to dispatch searches due to disk space</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Low%20disk%20space">Low disk space</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20KVStore%20Process%20Terminated">Splunkd Crash Logs Have Appeared in Production</a>
+			</collection>   
+			<collection label="Performance">		
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunk%20Servers%20with%20resource%20starvation">Splunk Servers with resource starvation</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20Time%20skew%20on%20Splunk%20Servers">Time skew on Splunk Servers</a>				
+			</collection>   
+		</collection>   
+		<collection label="Splunk Config Issues">
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Detect%20LDAP%20groups%20that%20no%20longer%20exist">Detect LDAP groups that no longer exist</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20File%20integrity%20check%20failure">File integrity check failure</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Non-existent%20roles%20are%20assigned%20to%20users">Non-existent roles are assigned to users</a>      
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20TCP%20or%20SSL%20Config%20Issue">TCP or SSL Config Issue</a> 
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20WARN%20iniFile%20Configuration%20Issues">WARN iniFile Configuration Issues</a> 
+		</collection>	
+		<collection label="Splunk Level Failures">
+			<collection label="Deployment Server Related">
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20Application%20Installation%20Failures%20From%20Deployment%20Manager">Application Installation Failures From Deployment Manager</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20DeploymentServer%20Application%20Installation%20Error">DeploymentServer Application Installation Error</a>	
+			</collection>							
+			<collection label="Input or Alert Failures">					
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Email%20Sending%20Failures">Email Sending Failures</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20sendmodalert%20errors">sendmodalert errors</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunk%20Servers%20throwing%20runScript%20errors">Splunk Servers throwing runScript errors</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20execprocessor%20errors">execprocessor errors</a>
+			</collection>    	
+			<collection label="Scheduler">
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunk%20Scheduler%20excessive%20delays%20in%20executing%20search">Splunk Scheduler excessive delays in executing search</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunk%20Scheduler%20skipped%20searches%20and%20the%20reason">Splunk Scheduler skipped searches and the reason</a>			
+			</collection>
+			<collection label="Splunk to Splunk failures">		
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Replication%20Failures">Replication Failures</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20Unable%20To%20Distribute%20to%20Peer">Unable To Distribute to Peer</a>
+			</collection>    			
+		</collection>    		
+	</collection>    				
+	<collection label="ClusterMasterLevel">  
+		<collection label="ClusterMaster Endpoint">  
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FClusterMasterLevel%20-%20Per%20index%20status">Per index status</a>
+			<saved name="ClusterMasterLevel - Primary bucket count per peer" />
+		</collection>
+		<collection label="Run Anywhere">  
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20ClusterMaster%20Advising%20SearchOrRep%20Factor%20Not%20Met">ClusterMaster Advising SearchOrRep Factor Not Met</a>
+		</collection>  
+	</collection>
+	<collection label="Deployment Server">  
+		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FDeploymentServer%20-%20Application%20Not%20Found%20On%20Deployment%20Server">Application Not Found On Deployment Server</a>
+		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FDeploymentServer%20-%20btool%20validation%20failures%20occurring%20on%20deployment%20server">btool validation failures occurring on deployment server</a>
+		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FDeploymentServer%20-%20Forwarder%20has%20changed%20properties%20on%20phone%20home">Forwarder has changed properties on phone home</a>
+		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FDeploymentServer%20-%20Unsupported%20attribute%20within%20DS%20config">Unsupported attribute within DS config</a>
+	</collection>
+
+	<collection label="ForwarderLevel">  
+		<collection label="OS Level Issues">  
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Forwarders%20in%20restart%20loop">Forwarders in restart loop</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Splunk%20Forwarder%20Down">Splunk Forwarder Down</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Splunk%20forwarders%20failing%20due%20to%20disk%20space%20issues">Splunk forwarders failing due to disk space issues</a>		
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Splunk%20Universal%20Forwarders%20that%20are%20time%20shifting">Splunk Universal Forwarders that are time shifting</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Splunk%20universal%20forwarders%20with%20ulimit%20issues">Splunk universal forwarders with ulimit issues</a>			
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Splunk%20Universal%20Forwarders%20Exceeding%20the%20File%20Descriptor%20Cache">Splunk Universal Forwarders Exceeding the File Descriptor Cache</a>			
+		</collection>		
+		<collection label="File Monitoring issues">
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20crcSalt%20or%20initCrcLength%20change%20may%20be%20required">crcSalt or initCrcLength change may be required</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20File%20Too%20Small%20to%20checkCRC%20occurring%20multiple%20times">File Too Small to checkCRC occurring multiple times</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Splunk%20Insufficient%20Permissions%20to%20Read%20Files">Splunk Insufficient Permissions to Read Files</a>	
+		</collection>			
+		<collection label="Deployment Server">
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20Splunk%20forwarders%20that%20are%20not%20talking%20to%20the%20deployment%20server">Splunk forwarders that are not talking to the deployment server</a>
+		</collection>
+		<collection label="Splunk Level Issues">
+			<collection label="Performance">
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Bandwidth%20Throttling%20Occurring">Bandwidth Throttling Occurring</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Read%20operation%20timed%20out%20expecting%20ACK">Read operation timed out expecting ACK</a>					
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Splunk%20forwarders%20are%20having%20issues%20with%20sending%20data%20to%20indexers">Splunk forwarders are having issues with sending data to indexers</a>								
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Splunk%20Heavy%20logging%20sources">Splunk Heavy logging sources</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20TCP%20Output%20Processor%20has%20paused%20the%20data%20flow">TCP Output Processor has paused the data flow</a>			
+			</collection>
+			<collection label="Data Balance">
+				<saved name="ForwarderLevel - Forwarders connecting to a single endpoint for extended periods UF level" />
+				<saved name="ForwarderLevel - Forwarders connecting to a single endpoint for extended periods" />
+			</collection>
+			<collection label="Failures">				
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Splunk%20HTTP%20Listener%20Overwhelmed">Splunk HTTP Listener Overwhelmed</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20SplunkStream%20Errors">SplunkStream Errors</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%2520-%2520SSL%2520Errors%2520In%2520Logs%2520%2528Potential%2520Universal%2520Forwarder%2520and%2520License%2520Issue%2529">SSL Errors In Logs (Potential Universal Forwarder and LicenseIssue)</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Unusual%20number%20of%20duplication%20alerts">Unusual number of duplication alerts</a>
+			</collection>							
+		</collection>
+	</collection>
+	<collection label="IndexerLevel">
+		<collection label="Bucket Related">
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Buckets%20are%20been%20frozen%20due%20to%20index%20sizing">Buckets are been frozen due to index sizing</a>
+			<saved name="IndexerLevel - Buckets changes per day" />          
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Buckets%20rolling%20more%20frequently%20than%20expected">Buckets rolling more frequently than expected</a>				
+			<saved name="IndexerLevel - Report on bucket corruption" />
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20These%20Indexes%20Are%20Approaching%20The%20warmDBCount%20limit">These Indexes Are Approaching The warmDBCount limit</a>
+			<view name="rolled_buckets_by_index" />								
+		</collection>
+		<collection label="Data Ingestion">			
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Data%20parsing%20error">Data parsing error</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20IndexConfig%20Warnings%20from%20Splunk%20indexers">IndexConfig Warnings from Splunk indexers</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Index%20not%20defined">Index not defined</a>
+		</collection>			
+		<collection label="Data Parsing">				
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Failures%20To%20Parse%20Timestamp%20Correctly%20%28excluding%20breaking%20issues%29">Failures To Parse Timestamp Correctly (excluding breaking issues)</a>			
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Future%20Dated%20Events%20that%20appeared%20in%20the%20last%20week">Future Dated Events that appeared in the last week</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Large%20multiline%20events%20using%20SHOULD_LINEMERGE%20setting">Large multiline events using SHOULD_LINEMERGE setting</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Old%20data%20appearing%20in%20Splunk%20indexes">Old data appearing in Splunk indexes</a>			
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Time%20format%20has%20changed%20multiple%20log%20types%20in%20one%20sourcetype">Time format has changed multiple log types in one sourcetype</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Timestamp%20parsing%20issues%20combined%20alert">Timestamp parsing issues combined alert</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Too%20many%20events%20with%20the%20same%20timestamp">Too many events with the same timestamp</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Valid%20Timestamp%20Invalid%20Parsed%20Time">Valid Timestamp Invalid Parsed Time</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Weekly%20Broken%20Events%20Report">Weekly Broken Events Report</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Weekly%20Truncated%20Logs%20Report">Weekly Truncated Logs Report</a>			
+			<view name="issues_per_sourcetype" />			
+		</collection>	
+		<collection label="Failures">		
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20S2SFileReceiver%20Error">S2SFileReceiver Error</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Splunk%20Indexers%20Losing%20Contact%20With%20Master">Splunk Indexers Losing Contact With Master</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Unclean%20Shutdown%20-%20Fsck">Unclean Shutdown - Fsck</a>
+		</collection>	
+		<collection label="Performance">
+			<collection label="Queues">			
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Indexer%20Queues%20May%20Have%20Issues">Indexer Queues May Have Issues</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Indexer%20replication%20queue%20issues%20to%20some%20peers">Indexer replication queue issues to some peers</a>
+				<view name="heavyforwarders_max_data_queue_sizes_by_name" />
+				<view name="indexer_max_data_queue_sizes_by_name" />			
+			</collection>
+			<collection label="Other">
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Indexer%20not%20accepting%20TCP%20Connections">Indexer not accepting TCP Connections</a>		
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Uneven%20Indexed%20Data%20Across%20The%20Indexers">Uneven Indexed Data Across The Indexers</a>
+				<view name="troubleshooting_indexer_cpu" />
+				<view name="indexer_data_spread" />
+			</collection>
+		</collection>		
+		<collection label="Search Related">			
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Peer%20will%20not%20return%20results%20due%20to%20outdated%20generation">Peer will not return results due to outdated generation</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Search%20Failures">Search Failures</a>			
+		</collection>	
+		<collection label="Sizing Related">		
+			<collection label="Volumes">
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Cold%20data%20location%20approaching%20size%20limits">Cold data location approaching size limits</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Volume%20%28Cold%29%20Has%20Been%20Exceeded">Volume (Cold) Has Been Exceeded</a>
+			</collection>				
+			<collection label="Other">				
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Indexer%20Out%20Of%20Disk%20Space">Indexer Out Of Disk Space</a>				
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Rolling%20Hot%20Bucket%20Failure">Rolling Hot Bucket Failure</a>
+			</collection>
+		</collection>
+	</collection>
+	<collection label="LicenseMaster">  
+		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FLicenseMaster%20-%20Duplicated%20License%20Situation">Duplicated License Situation</a>
+	</collection>
+	<collection label="SearchHeadLevel">
+		<collection label="Data Models">				
+			<saved name="SearchHeadLevel - Data Model Acceleration Completion Status" />
+			<view name="data_model_rebuild_monitor" />
+			<view name="data_model_status" />			
+		</collection>
+		<collection label="Failures">			
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Detect%20MongoDB%20errors">Detect MongoDB errors</a>
+			<saved name="SearchHeadLevel - Detect searches hitting corrupt buckets" />
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Indexer%20Peer%20Connection%20Failures">Indexer Peer Connection Failures</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20KVStore%20Or%20Conf%20Replication%20Issues%20Are%20Occurring">KVStore Or Conf Replication Issues Are Occurring</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Long%20filenames%20may%20be%20causing%20issues">Long filenames may be causing issues</a>						
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Script%20failures%20in%20the%20last%20day">Script failures in the last day</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20SHCluster%20Artifact%20Replication%20Issues">SHCluster Artifact Replication Issues</a>			
+		</collection>	
+		<collection label="Non best-practice">
+			<collection label="Realtime searches">
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Realtime%20Scheduled%20Searches%20are%20in%20use">Realtime Scheduled Searches are in use</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Realtime%20Search%20Queries%20in%20dashboards">Realtime Search Queries in dashboards</a>
+			</collection>
+			<collection label="Data Models">
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Accelerated%20DataModels%20with%20All%20Time%20Searching%20Enabled">Accelerated DataModels with All Time Searching Enabled</a>				
+			</collection>			
+			<collection label="Dashboards">
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20User%20-%20Dashboards%20searching%20all%20indexes%20macro%20version">User - Dashboards searching all indexes macro version</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20User%20-%20Dashboards%20searching%20all%20indexes">User - Dashboards searching all indexes</a>							
+			</collection>			
+			<collection label="Scheduled Searches">
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20not%20specifying%20an%20index%20macro%20version">Scheduled searches not specifying an index macro version</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20not%20specifying%20an%20index">Scheduled searches not specifying an index</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20without%20a%20configured%20earliest%20and%20latest%20time">Scheduled Searches without a configured earliest and latest time</a>
+			</collection>									
+		</collection>
+		<collection label="Performance Issues">
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Captain%20Switchover%20Occurring">Captain Switchover Occurring</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Disabled%20modular%20inputs%20are%20running">Disabled modular inputs are running</a>						
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Long%20Running%20Searches%20Found">Long Running Searches Found</a>			
+			<view name="search_head_scheduledsearches_distribution" />			
+		</collection>		
+		<collection label="Proactive">			
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20LDAP%20users%20have%20been%20disabled%20or%20left%20the%20company%20cleanup%20required">LDAP users have been disabled or left the company cleanup required</a>		
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Saved%20Searches%20with%20privileged%20owners%20and%20excessive%20write%20perms">Saved Searches with privileged owners and excessive write perms</a>						
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20Configured%20with%20incorrect%20sharing">Scheduled Searches Configured with incorrect sharing</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20login%20attempts%20from%20users%20that%20do%20not%20have%20any%20LDAP%20roles">Splunk login attempts from users that do not have any LDAP roles</a>
+		</collection>	
+		<collection label="Quotas">			
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20Max%20Historic%20Search%20Limits%20Reached">Splunk Max Historic Search Limits Reached</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20Users%20Violating%20the%20Search%20Quota">Splunk Users Violating the Search Quota</a>						            
+            <saved name="SearchHeadLevel - Users exceeding the disk quota introspection" />
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Users%20exceeding%20the%20disk%20quota">Users exceeding the disk quota</a>
+		</collection>						
+		<collection label="Reports">	
+			<saved name="SearchHeadLevel - Alerts that have not fired an action in X days" />                    
+            <saved name="SearchHeadLevel - Audit log search example only" />
+			<saved name="SearchHeadLevel - Determine query scan density" />
+		</collection>	
+		<collection label="Scheduled Search Failures">			
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20failing%20in%20cluster%20with%20404%20error">Scheduled searches failing in cluster with 404 error</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20That%20Cannot%20Run">Scheduled Searches That Cannot Run</a>		
+		</collection>									
+		<collection label="SupportingReports">				
+			<saved name="SearchHeadLevel - Macro report" />          
+			<saved name="SearchHeadLevel - Users exceeding the disk quota introspection cleanup" />
+		</collection>		
+	</collection>
+	<collection label="Users">		
+      <saved name="What Access Do I Have?" />
+	</collection>
 </nav>
+

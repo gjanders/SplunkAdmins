@@ -1,5 +1,5 @@
 <form>
-  <label>Data Model Status</label>
+  <label>Dashboard - Data Model Status</label>
   <description>Originally based on the work on URL https://conf.splunk.com/files/2017/slides/running-enterprise-security-at-capacity-tuning-es-with-data-model-acceleration.pdf modified to work without the macros (and misc tweaks)</description>
   <fieldset submitButton="false">
     <input type="time" token="timepicker1">

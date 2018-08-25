@@ -1,5 +1,5 @@
 <form>
-  <label>Troubleshooting Indexer CPU</label>
+  <label>Dashboard - Troubleshooting Indexer CPU</label>
   <fieldset submitButton="false">
     <input type="time" token="time_tok">
       <label>General Time Picker</label>

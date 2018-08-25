@@ -1,5 +1,5 @@
 <form>
-  <label>Rolled Buckets By Index</label>
+  <label>Dashboard - Rolled Buckets By Index</label>
   <description>A very simple dashboard to determine which index is rolling the largest number of buckets and therefore may require some level of tuning</description>
   <fieldset submitButton="false">
     <input type="time" token="time">

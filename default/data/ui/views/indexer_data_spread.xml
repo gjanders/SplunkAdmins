@@ -1,5 +1,5 @@
 <form>
-  <label>Indexer Data Spread</label>
+  <label>Dashboard - Indexer Data Spread</label>
   <description>Indexer Data Spread</description>
   <fieldset submitButton="false">
     <input type="time" token="thetime">

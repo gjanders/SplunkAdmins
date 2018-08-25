@@ -1,5 +1,5 @@
 <form>
-  <label>Issues Per Sourcetype</label>
+  <label>Dashboard - Issues Per Sourcetype</label>
   <description>Detect time-parsing, event breaking or truncation issues for a particular sourcetype. Please note that the investigation query is something you can copy &amp; paste into a new search window in Splunk to find example events, it does not work 100% of the time...</description>
   <fieldset submitButton="false">
     <input type="time" token="time">

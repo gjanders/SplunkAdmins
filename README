@@ -149,6 +149,19 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
+2.4.0
+Introduced an updated navigation menu to navigate around the alerts, reports and dashboards available in the app
+Changed label of all dashboards to have Dashboard - ... this is just to make the navigation menu work as expected
+
+New alert IndexerLevel - Buckets changes per day
+New alert IndexerLevel - Timestamp parsing issues combined alert
+New report SearchHeadLevel - Audit log search example only
+Updated alert IndexerLevel - Future Dated Events that appeared in the last week to +10y instead of +20y
+Updated alert IndexerLevel - Indexer Queues May Have Issues - to work with multiple pipelines
+Updated alert IndexerLevel - Buckets rolling more frequently than expected with an improved regex
+Updated alert SearchHeadLevel - Captain Switchover Occurring - to ignore manual captain transfers
+Corrected alert SearchHeadLevel - Determine query scan density with a relevant query 
+
 2.3.9
 Updated alert SearchHeadLevel - Detect searches hitting corrupt buckets to detect 1 more variation of the issue
 Updated alert SearchHeadLevel - Users exceeding the disk quota to include username

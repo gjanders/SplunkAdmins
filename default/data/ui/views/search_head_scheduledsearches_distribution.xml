@@ -1,5 +1,5 @@
 <form>
-  <label>Search Head ScheduledSearches Distribution</label>
+  <label>Dashboard - Search Head ScheduledSearches Distribution</label>
   <description>Number of scheduler searches per search head</description>
   <fieldset submitButton="false">
     <input type="time" token="time">

@@ -1,5 +1,5 @@
 <form>
-  <label>HeavyForwarders Max Data Queue Sizes By Name</label>
+  <label>Dashboard - HeavyForwarders Max Data Queue Sizes By Name</label>
   <fieldset submitButton="false">
     <input type="time" token="time">
       <label></label>

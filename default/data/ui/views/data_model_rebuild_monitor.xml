@@ -1,5 +1,5 @@
 <form>
-  <label>Data Model Rebuild Monitor</label>
+  <label>Dashboard - Data Model Rebuild Monitor</label>
   <description>Originally based on the work on URL https://conf.splunk.com/files/2017/slides/running-enterprise-security-at-capacity-tuning-es-with-data-model-acceleration.pdf modified to work without the macros and corrected the datamodel sizing (and misc tweaks).</description>
   <fieldset submitButton="false">
     <input type="dropdown" token="dm">
