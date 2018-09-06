@@ -149,6 +149,17 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
+2.4.3
+A very minor release, the app inspect CLI and REST API provided different results on what needed to be fixed
+
+Updated alert SearchHeadLevel - Users exceeding the disk quota introspection to not throw an error in the map command for no results
+Updated alert SearchHeadLevel - Users exceeding the disk quota to not throw an error in the map command for no results
+
+2.4.2
+A very minor release, the app inspect badge does not allow external dependencies so changing 1 alert to get the badge
+
+Updated alert SearchHeadLevel - Users exceeding the disk quota introspection to comment out sendresults command
+
 2.4.1
 Introduced an updated navigation menu to navigate around the alerts, reports and dashboards available in the app
 Changed label of all dashboards to have Dashboard - ... this is just to make the navigation menu work as expected
