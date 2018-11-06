@@ -146,6 +146,7 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Uneven%20Indexed%20Data%20Across%20The%20Indexers">Uneven Indexed Data Across The Indexers</a>
 				<view name="troubleshooting_indexer_cpu" />
 				<view name="indexer_data_spread" />
+                                <view name="troubleshooting_resource_usage_per_user" />
 			</collection>
 		</collection>		
 		<collection label="Search Related">			
@@ -167,6 +168,14 @@
 		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FLicenseMaster%20-%20Duplicated%20License%20Situation">Duplicated License Situation</a>
 	</collection>
 	<collection label="SearchHeadLevel">
+		<collection label="Analytics">				
+             	        <saved name="SearchHeadLevel - Search Queries Per Day Audit Logs" />
+                        <saved name="SearchHeadLevel - Search Queries By Type Audit Logs" />         
+                        <saved name="SearchHeadLevel - Search Queries By Type Audit Logs macro version" />                   
+                        <saved name="SearchHeadLevel - Search Queries By Type Audit Logs macro version other" />                             
+                        <saved name="SearchHeadLevel - Search Queries summary exact match" />                                       
+                        <saved name="SearchHeadLevel - Search Queries summary non-exact match" />                                                 
+		</collection>      
 		<collection label="Data Models">				
 			<saved name="SearchHeadLevel - Data Model Acceleration Completion Status" />
 			<view name="data_model_rebuild_monitor" />
@@ -214,25 +223,29 @@
 		<collection label="Quotas">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20Max%20Historic%20Search%20Limits%20Reached">Splunk Max Historic Search Limits Reached</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20Users%20Violating%20the%20Search%20Quota">Splunk Users Violating the Search Quota</a>						            
-            <saved name="SearchHeadLevel - Users exceeding the disk quota introspection" />
+                        <saved name="SearchHeadLevel - Users exceeding the disk quota introspection" />
+                        <saved name="SearchHeadLevel - Users with auto-finalized searches" />
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Users%20exceeding%20the%20disk%20quota">Users exceeding the disk quota</a>
 		</collection>						
 		<collection label="Reports">	
 			<saved name="SearchHeadLevel - Alerts that have not fired an action in X days" />                    
             <saved name="SearchHeadLevel - Audit log search example only" />
 			<saved name="SearchHeadLevel - Determine query scan density" />
+            <saved name="SearchHeadLevel - Role access list by user" />          
 		</collection>	
 		<collection label="Scheduled Search Failures">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20failing%20in%20cluster%20with%20404%20error">Scheduled searches failing in cluster with 404 error</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20That%20Cannot%20Run">Scheduled Searches That Cannot Run</a>		
 		</collection>									
 		<collection label="SupportingReports">				
+            <saved name="SearchHeadLevel - Index access list by user" />
+            <saved name="SearchHeadLevel - Index list report" />
 			<saved name="SearchHeadLevel - Macro report" />          
-			<saved name="SearchHeadLevel - Users exceeding the disk quota introspection cleanup" />
+			<saved name="SearchHeadLevel - Users exceeding the disk quota introspection cleanup" />                      
 		</collection>		
 	</collection>
 	<collection label="Users">		
-      <saved name="What Access Do I Have?" />
+            <saved name="What Access Do I Have?" />
+	    <saved name="What Access Do I Have Without REST?" />
 	</collection>
 </nav>
-

@@ -142,6 +142,26 @@ SearchHeadLevel - User - Dashboards searching all indexes
 Are all well suited to an automated email using the sendresults command or a similar function as they involve end user configuration which the individual can change/fix
 
 ****************
+Custom search commands
+****************
+Due to the current SPL not handling a particular task well, and the lookup commands not supporting regular expressions, I found that the only workable solution was to create a custom lookup command.
+
+Two exist:
+streamfilter - based on a single (or multivalue) field name, and a single (or multivalue) field with patterns, apply the regular expression in the pattern field against the nominated field(s)
+streamfilterwildcard - identical to streamfilter except that this takes a field name with wildcards, and assumes an index-style expression, so * becomes (?i)^[^_].*$, and example* becomes (?i)^example.*$
+
+Search help is available and these are used within the reports in this application. The Splunk python SDK version 1.6.5 is also included as this is required as part of the app, an example from the reports is:
+| streamfilterwildcard pattern=indexes fieldname=indexes srchIndexesAllowed
+
+Where indexes is a field name containing a list of wildcards (_int*, _aud*) or similar, indexes is the output field name, srchIndexesAllowed is the field name which the indexes field will be compared to.
+Each entry in the pattern field will be compared to each entry in the srchIndexesAllowed field in this example
+
+****************
+KVStore Usage
+****************
+Some CSV lookups are now replaced with kvstore entries due to the ability to sync the kvstore across multiple search head or search head cluster(s) via apps like TA-SyncKVStore https://splunkbase.splunk.com/app/3519/
+
+****************
 Feedback?
 ****************
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
@@ -149,6 +169,33 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
+2.4.4
+New command - streamfilter
+New command - streamfilterwildcard 
+New dashboard - Troubleshooting Resource Usage Per User
+New dashboard - Troubleshooting Resource Usage Per User Drilldown
+New report - SearchHeadLevel - Index access list by user
+New report - SearchHeadLevel - Index list report
+New report - SearchHeadLevel - Role access list by user
+New report - SearchHeadLevel - Scheduled Search Efficiency
+New report - SearchHeadLevel - Search Queries Per Day Audit Logs
+New report - SearchHeadLevel - Search Queries By Type Audit Logs
+New report - SearchHeadLevel - Search Queries By Type Audit Logs macro version
+New report - SearchHeadLevel - Search Queries By Type Audit Logs macro version other
+New report - SearchHeadLevel - Search Queries summary exact match
+New report - SearchHeadLevel - Search Queries summary non-exact match
+New report - SearchHeadLevel - Users with auto-finalized searches
+New report - What Access Do I Have Without REST? To work without the dispatch_rest_to_indexers
+Updated alert - AllSplunkEnterpriseLevel - Email Sending Failures - to make it easier to automate
+Updated alert - SearchHeadLevel - Captain Switchover Occurring - to ignore a harmless warning message (NOT_LEADER)
+Updated alert SearchHeadLevel - Scheduled Searches That Cannot Run to no longer ignore map alerts from this app
+Updated alert - SearchHeadLevel - Scheduled searches not specifying an index macro version - to use an improved macro match
+Updated alert - SearchHeadLevel - User - Dashboards searching all indexes macro version - to use an improved macro match
+Updated dashboard Troubleshooting indexer CPU as sort was not working
+Updated report - SearchHeadLevel - Macro report - to use splunk_server=local
+Updated report - What Access Do I Have? to use splunk_server=local
+Updated report - What Access Do I Have Without REST? to supply index list
+
 2.4.3
 A very minor release, the app inspect CLI and REST API provided different results on what needed to be fixed
 

@@ -1,0 +1,91 @@
+<form>
+  <label>Dashboard - Troubleshooting Resource Usage Per User</label>
+  <description>This dashboard attempts to assist with finding which queries are using excessive amounts of CPU, memory, disk IOPS at the indexing tier and the queries behind them</description>
+  <fieldset submitButton="true" autoRun="false">
+    <input type="time" token="time">
+      <label></label>
+      <default>
+        <earliest>-4h@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="radio" token="exclusion">
+      <label>Exclude system users?</label>
+      <choice value="&quot;data.search_props.user&quot;!=admin &quot;data.search_props.user&quot;!=splunk-system-user">Yes</choice>
+      <choice value="&quot;&quot;">No</choice>
+      <default>"data.search_props.user"!=admin "data.search_props.user"!=splunk-system-user</default>
+      <initialValue>"data.search_props.user"!=admin "data.search_props.user"!=splunk-system-user</initialValue>
+    </input>
+    <input type="dropdown" token="sort">
+      <label>sort</label>
+      <choice value="totalCPU">totalCPU</choice>
+      <choice value="avgCPUPerIndexer">avgCPUPerIndexer</choice>
+      <choice value="totalduration">totalduration</choice>
+      <choice value="averageduration">averageduration</choice>
+      <choice value="totalMemUsed">totalMemUsed</choice>
+      <choice value="totalReadMB">totalReadMB</choice>
+      <choice value="count">count</choice>
+      <initialValue>totalCPU</initialValue>
+    </input>
+    <input type="text" token="timespan">
+      <label>timespan</label>
+      <default>60m</default>
+    </input>
+    <input type="text" token="filter">
+      <label>Free Text Filter</label>
+      <default></default>
+      <initialValue>""</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Resource Usage Per User</title>
+      <table>
+        <title>count is the number of searches triggered during that time period (dashboards may have multiple searches), introspection is measured in 10 second blocks (so sometimes no stats are available)</title>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::* $exclusion$
+| eval mem_used = 'data.mem_used'
+| eval app = 'data.search_props.app'
+| eval elapsed = 'data.elapsed'
+| eval label = 'data.search_props.label'
+| eval type = 'data.search_props.type'
+| eval mode = 'data.search_props.mode'
+| eval user = 'data.search_props.user'
+| eval cpuperc = 'data.pct_cpu'
+| eval search_head = 'data.search_props.search_head'
+| eval read_mb = 'data.read_mb'
+| eval provenance='data.search_props.provenance'
+| eval label=coalesce(label, provenance)
+| eval sid='data.search_props.sid'
+| search $filter$
+| rex field=sid "^remote_[^_]+_(?P&lt;sid&gt;.*)"
+| eval sid = "'" . sid . "'"
+| fillnull search_head value="*"
+| stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as searchStartTime, sum(cpuperc) AS totalCPU, avg(cpuperc) AS avgCPU, max(read_mb) AS read_mb, values(sid) AS sids by type, mode, app, user, label, host, search_head, data.pid
+| bin searchStartTime span=$timespan$
+| stats dc(sids) AS count, sum(totalCPU) AS totalCPU, sum(mem_used) AS totalMemUsed, max(runtime) AS maxRunTime, avg(runtime) AS avgRuntime, avg(avgCPU) AS avgCPUPerIndexer, sum(read_mb) AS totalReadMB, values(sids) AS sids by searchStartTime, type, mode, app, user, search_head, label
+| eval maxduration = tostring(maxRunTime, "duration"), averageduration = tostring(avgRuntime, "duration")
+| eval Started = strftime(searchStartTime,"%+")
+| eval avgCPUPerIndexer = round(avgCPUPerIndexer)
+| sort - $sort$
+| eval totalCPU=tostring(totalCPU,"commas"), avgCPUAcrossAllIndexers=tostring(avgCPUAcrossAllIndexers,"commas"), totalReadMB=tostring(totalReadMB, "commas"), totalMemUsed=tostring(totalMemUsed, "commas")
+| table Started, count, user, app, label, averageduration, maxduration, totalCPU, avgCPUPerIndexer, totalReadMB, totalMemUsed, search_head, sids, mode, type</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">false</option>
+        <fields>["Started","count","user","app","label","averageduration","maxduration","totalCPU","avgCPUPerIndexer","totalReadMB","totalMemUsed","mode","type"]</fields>
+        <drilldown>
+          <link target="_blank">/app/SplunkAdmins/troubleshooting_resource_usage_per_user_drilldown?form.sid=$row.sids$&amp;form.host=$row.search_head$&amp;form.app=$row.app$&amp;form.label=$row.label$&amp;form.time.earliest=$time.earliest$&amp;form.time.latest=$time.latest$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</form>
