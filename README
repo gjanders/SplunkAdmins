@@ -169,6 +169,13 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
+2.4.5
+Minor corrections
+
+Updated SearchHeadLevel - Search Queries By Type Audit Logs - minor tweak to macroWithIndexClause
+Updated SearchHeadLevel - Search Queries By Type Audit Logs macro version - minor tweak to macroWithIndexClause and hasMacro
+Updated SearchHeadLevel - Search Queries By Type Audit Logs macro version other - minor tweak to macroWithIndexClause and hasMacro
+
 2.4.4
 New command - streamfilter
 New command - streamfilterwildcard 
