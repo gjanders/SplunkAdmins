@@ -245,7 +245,6 @@
 		</collection>		
 	</collection>
 	<collection label="Users">		
-            <saved name="What Access Do I Have?" />
 	    <saved name="What Access Do I Have Without REST?" />
 	</collection>
 </nav>

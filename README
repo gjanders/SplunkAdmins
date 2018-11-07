@@ -169,6 +169,12 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ****************
 Release Notes
 ****************
+2.4.6
+New macro - whataccessdoihave - can be used with | `whataccessdoihave` by users
+Updated dashboard - Troubleshooting Resource Usage Per User Drilldown - now uses search_et/search_lt
+Removed report - What access do I have? (Replaced by macro/What access do I have without REST)
+
+
 2.4.5
 Minor corrections
 

@@ -1,4 +1,3 @@
-
 <form>
   <label>Troubleshooting Resource Usage Per User Drilldown</label>
   <description>Drilldown for Troubleshooting Resource Usage Per User (Splunk 6.6+ only due to the use of the IN keyword)</description>
@@ -30,9 +29,8 @@
         <search>
           <query>index=_audit host=$host$ "info=granted" OR "info=completed" OR "info=canceled" search_id IN ($sid$)
 | rex ", search='(?P&lt;search&gt;[\S+\s+]+?)', "
-| stats min(timestamp) AS time, values(user) AS user, values(total_run_time) AS total_run_time, values(result_count) AS result_count, values(search) AS search, values(host) AS host, values(api_et) AS startTime, values(api_lt) AS endTime, values(info) AS info, values(savedsearch_name) AS savedsearch_name by search_id
+| stats min(timestamp) AS time, values(user) AS user, values(total_run_time) AS total_run_time, values(result_count) AS result_count, values(search) AS search, values(host) AS host, values(search_et) AS startTime, values(search_lt) AS endTime, values(info) AS info, values(savedsearch_name) AS savedsearch_name by search_id
 | eval app="$app$", label="$label$"
-| eval start=strptime(startTime, "'%a %b %d %H:%M:%S %Y"), end=strptime(endTime, "'%a %b %d %H:%M:%S %Y")
 | eval period=tostring(round(endTime-startTime), "duration")
 | eval startTime=strftime(startTime, "%Y-%m-%d %H:%M:%S"), endTime=strftime(endTime, "%Y-%m-%d %H:%M:%S")
 | fillnull value="All Time" startTime endTime period
