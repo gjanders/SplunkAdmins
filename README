@@ -170,10 +170,14 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 Release Notes
 ****************
 2.4.6
+New alert - AllSplunkLevel - Data Loss on shutdown
 New macro - whataccessdoihave - can be used with | `whataccessdoihave` by users
+New report - SearchHeadLevel - Dashboard load times
+New report - SearchHeadLevel - Scheduled searches status
 Updated dashboard - Troubleshooting Resource Usage Per User Drilldown - now uses search_et/search_lt
 Removed report - What access do I have? (Replaced by macro/What access do I have without REST)
 
+Upgraded Splunk python SDK to 1.6.6, note if this causes problems with other applications removing the bin directory only disables the "Search Queries summary non-exact match" report 
 
 2.4.5
 Minor corrections

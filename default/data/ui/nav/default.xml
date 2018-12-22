@@ -38,6 +38,7 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20sendmodalert%20errors">sendmodalert errors</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunk%20Servers%20throwing%20runScript%20errors">Splunk Servers throwing runScript errors</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20execprocessor%20errors">execprocessor errors</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%2520-%2520Data%2520Loss%2520on%2520shutdown">Data Loss on shutdown</a>
 			</collection>    	
 			<collection label="Scheduler">
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunk%20Scheduler%20excessive%20delays%20in%20executing%20search">Splunk Scheduler excessive delays in executing search</a>
@@ -46,6 +47,7 @@
 			<collection label="Splunk to Splunk failures">		
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Replication%20Failures">Replication Failures</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20Unable%20To%20Distribute%20to%20Peer">Unable To Distribute to Peer</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%2520-%2520Data%2520Loss%2520on%2520shutdown">Data Loss on shutdown</a>
 			</collection>    			
 		</collection>    		
 	</collection>    				
@@ -229,9 +231,12 @@
 		</collection>						
 		<collection label="Reports">	
 			<saved name="SearchHeadLevel - Alerts that have not fired an action in X days" />                    
-            <saved name="SearchHeadLevel - Audit log search example only" />
+			<saved name="SearchHeadLevel - Audit log search example only" />
 			<saved name="SearchHeadLevel - Determine query scan density" />
-            <saved name="SearchHeadLevel - Role access list by user" />          
+                        <saved name="SearchHeadLevel - Role access list by user" />          
+              		<saved name="Scheduled Search Efficiency" />
+                        <saved name="SearchHeadLevel - Dashboard load times" />
+			<saved name="SearchHeadLevel - Scheduled searches status" />
 		</collection>	
 		<collection label="Scheduled Search Failures">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20failing%20in%20cluster%20with%20404%20error">Scheduled searches failing in cluster with 404 error</a>
