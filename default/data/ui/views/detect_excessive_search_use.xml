@@ -1,0 +1,140 @@
+<form>
+  <label>Dashboard - Detect Excessive Search Use</label>
+  <description>Detect repeated search use for the same search query by a particular user during a period of time</description>
+  <fieldset submitButton="false">
+    <input type="time" token="time">
+      <label>Time Period</label>
+      <default>
+        <earliest>-4h@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="span">
+      <label>Span</label>
+      <default>10m</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Searches occurring more often than expected in the audit logs</title>
+      <table>
+        <title>Click any line for drilldown per-username</title>
+        <search>
+          <query>index=_audit info=granted "search='" NOT "savedsearch_name=\"Threat - Correlation Searches - Lookup Gen\"" NOT "savedsearch_name=\"Bucket Copy Trigger\"" NOT "search='| copybuckets" NOT "search='search index=_telemetry sourcetype=splunk_telemetry | spath" NOT "savedsearch_name=\"_ACCELERATE_*"
+| rex ", search='(?P&lt;search&gt;[\S+\s+]+?)', "
+| regex search!="\|\s+(rest|inputlookup|makeresults|tstats count AS \"Count of [^\"]+\"\s+ from sid=)"
+| rex "apiEndTime='[^,]+, savedsearch_name=\"(?P&lt;savedsearch_name&gt;[^\"]+)"
+| eval apiEndTime=strptime(apiEndTime, "'%a %B %d %H:%M:%S %Y'"), apiStartTime=strptime(apiStartTime, "'%a %B %d %H:%M:%S %Y'")
+| eval timePeriod=apiEndTime-apiStartTime
+| bin _time span=$span$
+| stats count, values(host) AS hostList, values(savedsearch_name) AS savedSearchName, values(ttl) AS ttl by search, user, _time, timePeriod
+| eval frequency = ceil((10*60)/timePeriod)
+| fillnull frequency
+| where count&gt;4 AND count&gt;frequency
+| eval timePeriod=tostring(timePeriod,"duration")
+| stats sum(count) AS count, max(count) AS "maxCountPerSpan", values(user) AS userList, values(hostList) AS hostList, values(savedSearchName) AS savedSearchName, values(ttl) AS ttl, earliest(_time) AS firstSeen, latest(_time) AS mostRecent, values(timePeriod) AS timePeriods by search
+| eval firstSeen=strftime(firstSeen, "%+"), mostRecent=strftime(mostRecent, "%+")
+| eval search=substr(search,0,60)
+| sort - count</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">50</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">false</option>
+        <drilldown>
+          <set token="username">$row.userList$</set>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>User Information for $username$</title>
+      <table>
+        <search>
+          <query>| ldapsearch search="(&amp;(CN=$username$)(objectClass=organizationalPerson))" attrs="mail,givenName,sn,displayName,description,manager"
+| eval name=if(isnotnull(givenName), givenName . " " . sn, displayName . " _ " . description), username="$username$"
+| rex field=manager "CN=(?P&lt;managerid&gt;[^,]+)"
+| ldapfilter search="(&amp;(CN=$$managerid$$)(objectClass=organizationalPerson))" attrs="givenName,sn"
+| eval managerName = givenName . " " . sn
+| table name, mail, username, managerName</query>
+          <earliest>-15m</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Results from access logs for $username$</title>
+      <table>
+        <title>Note: cluster command in use, introspection data may better list all dashboards in use</title>
+        <search>
+          <query>index=_internal (sourcetype=splunkd_access (method="GET" AND "/services/search/jobs/export") OR method="POST") OR (sourcetype=splunkd_ui_access method=POST "/report?" OR "/search?" OR "/search/jobs" OR "/saved/searches" NOT "/search/parser HTTP" NOT "/user-prefs/data/user-prefs/") OR (sourcetype=splunkd_ui_access method=GET "/app/" NOT "/search HTTP" NOT "/dashboards HTTP" NOT "/alerts HTTP" NOT "/reports HTTP") user IN ($username$)
+| cluster t=0.95 showcount=true
+| rex field=uri "/servicesNS/[^/]+/(?P&lt;app&gt;[^/]+)"
+| rex field=uri "/[^/]+/app/(?P&lt;app&gt;[^/]+)/(?P&lt;dashboard_name&gt;[^/\?]+)"
+| sort - cluster_count
+| table cluster_count, app, uri_path, user, dashboard_name, clientip, sourcetype</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Introspection data for this $username$</title>
+      <table>
+        <title>Click for drilldown</title>
+        <search>
+          <query>index=_introspection `indexerhosts` sourcetype=splunk_resource_usage data.search_props.sid::* data.search_props.user IN ($username$)
+| eval mem_used = 'data.mem_used'
+| eval app = 'data.search_props.app'
+| eval elapsed = 'data.elapsed'
+| eval label = 'data.search_props.label'
+| eval type = 'data.search_props.type'
+| eval mode = 'data.search_props.mode'
+| eval user = 'data.search_props.user'
+| eval cpuperc = 'data.pct_cpu'
+| eval search_head = 'data.search_props.search_head'
+| eval read_mb = 'data.read_mb'
+| eval provenance='data.search_props.provenance'
+| eval label=coalesce(label, provenance)
+| eval sid='data.search_props.sid'
+| rex field=sid "^remote_[^_]+_(?P&lt;sid&gt;.*)"
+| eval sid = "'" . sid . "'"
+| fillnull search_head value="*"
+| stats max(elapsed) as runtime max(mem_used) as mem_used earliest(_time) as searchStartTime, sum(cpuperc) AS totalCPU, avg(cpuperc) AS avgCPU, max(read_mb) AS read_mb, values(sid) AS sids by type, mode, app, user, label, host, search_head, data.pid
+| bin searchStartTime span=1m
+| stats dc(sids) AS count, sum(totalCPU) AS totalCPU, sum(mem_used) AS totalMemUsed, max(runtime) AS maxRunTime, avg(runtime) AS avgRuntime, avg(avgCPU) AS avgCPUPerIndexer, sum(read_mb) AS totalReadMB, values(sids) AS sids by searchStartTime, type, mode, app, user, search_head, label
+| eval maxduration = tostring(maxRunTime, "duration"), averageduration = tostring(avgRuntime, "duration")
+| eval Started = strftime(searchStartTime,"%+")
+| table Started, count, user, app, label, averageduration, maxduration, search_head, sids, mode, type</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+        <fields>["Started","count","user","app","label","averageduration","maxduration","mode","type"]</fields>
+        <drilldown>
+          <link target="_blank">/app/SplunkAdmins/troubleshooting_resource_usage_per_user_drilldown?form.username=$username$&amp;form.sid=$row.sids$&amp;form.app=$row.app$&amp;form.host=*&amp;form.label=*&amp;form.time.earliest=$time.earliest$&amp;form.time.latest=$time.latest$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</form>

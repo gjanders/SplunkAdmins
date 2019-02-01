@@ -8,19 +8,27 @@
         <latest>now</latest>
       </default>
     </input>
+    <input type="text" token="span">
+      <label>span</label>
+      <default>1m</default>
+    </input>
+    <input type="text" token="hosts">
+      <label>hosts</label>
+      <default>`heavyforwarderhosts`</default>
+    </input>
   </fieldset>
   <row>
     <panel>
       <title>Parsing Queue Fill Size</title>
       <chart>
         <search>
-          <query>index=_internal `heavyforwarderhosts` source=*metrics.log sourcetype=splunkd group=queue (name=parsingqueue)
+          <query>index=_internal $hosts$ source=*metrics.log sourcetype=splunkd group=queue (name=parsingqueue)
 | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
 | eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
 | eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
 | eval fill_perc=round((curr/max)*100,2) 
 | eval combined = host . "_pipe_" . ingest_pipe
-| timechart limit=20 useother=false span=1m  max(fill_perc) by combined</query>
+| timechart limit=20 useother=false span=$span$  max(fill_perc) by combined</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
         </search>
@@ -41,13 +49,13 @@
       <title>Aggregation Queue Fill Size</title>
       <chart>
         <search>
-          <query>index=_internal `heavyforwarderhosts` source=*metrics.log sourcetype=splunkd group=queue (name=aggqueue)
+          <query>index=_internal $hosts$ source=*metrics.log sourcetype=splunkd group=queue (name=aggqueue)
 | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
 | eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
 | eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
 | eval fill_perc=round((curr/max)*100,2) 
 | eval combined = host . "_pipe_" . ingest_pipe
-| timechart limit=20 useother=false span=1m  Max(fill_perc) by combined</query>
+| timechart limit=20 useother=false span=$span$  Max(fill_perc) by combined</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
         </search>
@@ -64,13 +72,13 @@
       <title>Typing Queue Fill Size</title>
       <chart>
         <search>
-          <query>index=_internal `heavyforwarderhosts` source=*metrics.log sourcetype=splunkd group=queue (name=typingqueue)
+          <query>index=_internal $hosts$ source=*metrics.log sourcetype=splunkd group=queue (name=typingqueue)
 | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
 | eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
 | eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
 | eval fill_perc=round((curr/max)*100,2) 
 | eval combined = host . "_pipe_" . ingest_pipe
-| timechart limit=20 useother=false span=1m  Max(fill_perc) by combined</query>
+| timechart limit=20 useother=false span=$span$  Max(fill_perc) by combined</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
         </search>
@@ -87,7 +95,7 @@
       <title>Index Queue Size</title>
       <chart>
         <search>
-          <query>index=_internal `heavyforwarderhosts` source=*metrics.log sourcetype=splunkd group=queue (name=indexqueue)
+          <query>index=_internal $hosts$ source=*metrics.log sourcetype=splunkd group=queue (name=indexqueue)
 | eval name=case(name=="aggqueue","2 - Aggregation Queue",
  name=="indexqueue", "4 - Indexing Queue",
  name=="parsingqueue", "1 - Parsing Queue",
@@ -97,7 +105,7 @@
 | eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
 | eval fill_perc=round((curr/max)*100,2) 
 | eval combined = host . "_pipe_" . ingest_pipe
-| timechart limit=20 useother=false span=1m  Max(fill_perc) by combined</query>
+| timechart limit=20 useother=false span=$span$  Max(fill_perc) by combined</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -135,13 +143,13 @@
       <title>TCPOut Queue Sizes</title>
       <chart>
         <search>
-          <query>index=_internal `heavyforwarderhosts` source=*metrics.log sourcetype=splunkd group=queue (name=tcpout_*)
+          <query>index=_internal $hosts$ source=*metrics.log sourcetype=splunkd group=queue (name=tcpout_*)
 | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
 | eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
 | eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
 | eval fill_perc=round((curr/max)*100,2) 
 | eval combined = host . "_pipe_" . ingest_pipe
-| timechart limit=20 useother=false span=1m  max(fill_perc) by combined</query>
+| timechart limit=20 useother=false span=$span$  max(fill_perc) by combined</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -180,7 +188,7 @@
       <title>Blocked Forwarder Queues</title>
       <chart>
         <search>
-          <query>index=_internal `heavyforwarderhosts` source=*metrics.log sourcetype=splunkd group=queue max_size_kb&gt;0 | stats count(eval(isnotnull(blocked))) AS blockedCount, count by name, host, _time | eval percBlocked=(100/count)*blockedCount | eval hostQueue = host . "_" . name | where percBlocked&gt;0 | timechart limit=50 useOther=false span=10m avg(percBlocked) by hostQueue</query>
+          <query>index=_internal $hosts$ source=*metrics.log sourcetype=splunkd group=queue max_size_kb&gt;0 | stats count(eval(isnotnull(blocked))) AS blockedCount, count by name, host, _time | eval percBlocked=(100/count)*blockedCount | eval hostQueue = host . "_" . name | where percBlocked&gt;0 | timechart limit=50 useOther=false span=$span$ avg(percBlocked) by hostQueue</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -215,10 +223,50 @@
   </row>
   <row>
     <panel>
-      <title>TcpOut Kbps per forwarder</title>
+      <title>TcpOut KB per second per forwarder</title>
       <chart>
         <search>
-          <query>index=_internal `heavyforwarderhosts` group=tcpout_connections | timechart minspan=30s per_second(kb) as tcp_KBps by host</query>
+          <query>`comment("During testing in v7, kb != tcp_kbps, often it's not even close with non-standard metric intervals so utilising tcp_KBps instead")` index=_internal $hosts$ group=tcpout_connections sourcetype=splunkd
+| timechart limit=20 useother=false span=$span$ eval(sum(tcp_KBps)/case(substr("$span$",-1)=="m",tonumber(substr("$span$",0,len("$span$")-1))*`splunkadmins_metrics_permin`,substr("$span$",-1)=="h",tonumber(substr("$span$",0,len("$span$")-1))*60*`splunkadmins_metrics_permin`,substr("$span$",-1)=="d",tonumber(substr("$span$",0,len("$span$")-1))*24*60*`splunkadmins_metrics_permin`)) by host</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">1</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="height">404</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Forced closures on restart</title>
+      <chart>
+        <title>A potential indicator of data loss</title>
+        <search>
+          <query>| tstats count where index=_internal sourcetype=splunkd $hosts$ `splunkadmins_splunkd_source` TERM("Forcing") groupby _time, host span=1s | timechart sum(count) by host
+</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
           <sampleRatio>1</sampleRatio>

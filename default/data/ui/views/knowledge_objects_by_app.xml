@@ -1,0 +1,103 @@
+<form>
+  <label>Knowledge Objects By App</label>
+  <description>List of knowledge objects per app</description>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="app">
+      <label>Application Name</label>
+      <fieldForLabel>app</fieldForLabel>
+      <fieldForValue>app</fieldForValue>
+      <search>
+        <query>| rest /services/apps/local search="disabled=0" count=0 f=title splunk_server=local
+| rename title as app
+| table app</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+    <input type="dropdown" token="type">
+      <label>Knowledge Object Type (based on app)</label>
+      <choice value="*">all</choice>
+      <choice value="datamodel">datamodel</choice>
+      <choice value="calcfields">calcfields</choice>
+      <choice value="macros">macros</choice>
+      <fieldForLabel>type</fieldForLabel>
+      <fieldForValue>type</fieldForValue>
+      <search>
+        <query>| rest "/servicesNS/-/$app$/directory" count=0 splunk_server=local
+| search eai:acl.app=$app$
+| rename eai:type AS type
+| search type!="macros" `comment("macros only appears in really new versions of Splunk via the directory endpoint, so assume it doesn't exist in this query")`
+| stats count by type
+| fields - count</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+      <default>all</default>
+      <initialValue>*</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Knowledge object summary</title>
+      <table>
+        <search>
+          <query>| rest "/servicesNS/-/$app$/directory" count=0 splunk_server=local
+| search eai:acl.app=$app$
+| eval updatedEpoch=strptime(updated,"%Y-%m-%dT%H:%M:%S%:z")
+| rename eai:type AS type, eai:acl.app AS app, eai:location AS location
+| append [ rest splunk_server=local /servicesNS/-/$app$/datamodel/model count=0 f=updated f=eai:appName  | rename eai:appName AS app | eval type="datamodel" ]
+| append [ | rest splunk_server=local /servicesNS/-/$app$/data/props/calcfields count=0  | eval type="calcfields" | rename eai:acl.app AS app]
+| append [ | rest splunk_server=local /servicesNS/-/$app$/configs/conf-macros count=0  | rename eai:appName AS app | eval type="macros"]
+| fillnull location value="N/A"
+| search app=$app$
+| stats count by type, app, location</query>
+          <earliest>-4h@m</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">false</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Knowledge Objects by app semi-detailed</title>
+      <table>
+        <title>Click any row for the drilldown...</title>
+        <search>
+          <query>| rest "/servicesNS/-/$app$/directory" count=0 splunk_server=local
+| search eai:acl.app=$app$
+| eval updatedEpoch=strptime(updated,"%Y-%m-%dT%H:%M:%S%:z")
+| rename eai:type AS type, eai:acl.app AS app, eai:location AS location
+| append [ rest splunk_server=local /servicesNS/-/$app$/datamodel/model count=0 f=updated f=eai:appName  | rename eai:appName AS app | eval type="datamodel" ]
+| append [ | rest splunk_server=local /servicesNS/-/$app$/data/props/calcfields count=0  | eval type="calcfields" | rename eai:acl.app AS app]
+| append [ | rest splunk_server=local /servicesNS/-/$app$/configs/conf-macros count=0  | rename eai:appName AS app | eval type="macros"]
+| fillnull location value="N/A"
+| search app=$app$, type=$type$
+| stats values(title) AS names, values(updated) AS updated by eai:acl.owner, eai:acl.sharing, type
+| rename eai:acl.sharing AS sharing, eai:acl.owner AS owner</query>
+          <earliest>-4h@m</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">false</option>
+        <drilldown>
+          <link target="_blank">/app/monitoring/knowledge_objects_by_app_drilldown?form.app=$app$&amp;form.type=$row.type$&amp;form.sharing=$row.sharing$&amp;form.owner=$row.owner$</link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</form>

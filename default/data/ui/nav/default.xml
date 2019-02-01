@@ -58,6 +58,7 @@
 		</collection>
 		<collection label="Run Anywhere">  
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20ClusterMaster%20Advising%20SearchOrRep%20Factor%20Not%20Met">ClusterMaster Advising SearchOrRep Factor Not Met</a>
+                        <view name="ClusterMasterJobs" />
 		</collection>  
 	</collection>
 	<collection label="Deployment Server">  
@@ -103,6 +104,10 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Unusual%20number%20of%20duplication%20alerts">Unusual number of duplication alerts</a>
 			</collection>							
 		</collection>
+                <collection label="Performance">
+                    <view name="heavyforwarders_max_data_queue_sizes_by_name" />
+                    <view name="indexer_max_data_queue_sizes_by_name" />
+		</collection>
 	</collection>
 	<collection label="IndexerLevel">
 		<collection label="Bucket Related">
@@ -111,6 +116,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Buckets%20rolling%20more%20frequently%20than%20expected">Buckets rolling more frequently than expected</a>				
 			<saved name="IndexerLevel - Report on bucket corruption" />
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20These%20Indexes%20Are%20Approaching%20The%20warmDBCount%20limit">These Indexes Are Approaching The warmDBCount limit</a>
+			<saved name="IndexerLevel - Corrupt buckets via DBInspect" />
 			<view name="rolled_buckets_by_index" />								
 		</collection>
 		<collection label="Data Ingestion">			
@@ -144,11 +150,12 @@
 				<view name="indexer_max_data_queue_sizes_by_name" />			
 			</collection>
 			<collection label="Other">
-				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Indexer%20not%20accepting%20TCP%20Connections">Indexer not accepting TCP Connections</a>		
-				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Uneven%20Indexed%20Data%20Across%20The%20Indexers">Uneven Indexed Data Across The Indexers</a>
-				<view name="troubleshooting_indexer_cpu" />
-				<view name="indexer_data_spread" />
+                                <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Indexer%20not%20accepting%20TCP%20Connections">Indexer not accepting TCP Connections</a>		
+                                <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Uneven%20Indexed%20Data%20Across%20The%20Indexers">Uneven Indexed Data Across The Indexers</a>
+                                <view name="troubleshooting_indexer_cpu" />
+                                <view name="indexer_data_spread" />
                                 <view name="troubleshooting_resource_usage_per_user" />
+                                <view name="detect_excessive_search_use" />
 			</collection>
 		</collection>		
 		<collection label="Search Related">			
@@ -211,10 +218,11 @@
 			</collection>									
 		</collection>
 		<collection label="Performance Issues">
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Captain%20Switchover%20Occurring">Captain Switchover Occurring</a>
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Disabled%20modular%20inputs%20are%20running">Disabled modular inputs are running</a>						
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Long%20Running%20Searches%20Found">Long Running Searches Found</a>			
-			<view name="search_head_scheduledsearches_distribution" />			
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Captain%20Switchover%20Occurring">Captain Switchover Occurring</a>
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Disabled%20modular%20inputs%20are%20running">Disabled modular inputs are running</a>						
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Long%20Running%20Searches%20Found">Long Running Searches Found</a>			
+                        <view name="search_head_scheduledsearches_distribution" />			
+                        <view name="detect_excessive_search_use" />
 		</collection>		
 		<collection label="Proactive">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20LDAP%20users%20have%20been%20disabled%20or%20left%20the%20company%20cleanup%20required">LDAP users have been disabled or left the company cleanup required</a>		
@@ -237,14 +245,18 @@
               		<saved name="Scheduled Search Efficiency" />
                         <saved name="SearchHeadLevel - Dashboard load times" />
 			<saved name="SearchHeadLevel - Scheduled searches status" />
+			<saved name="SearchHeadLevel - Detect changes to knowledge objects" />
+                        <saved name="SearchHeadLevel - Detect changes to knowledge objects directory" />
+                        <saved name="SearchHeadLevel - Detect changes to knowledge objects non-directory" />
+			<view name="knowledge_objects_by_app" />
 		</collection>	
 		<collection label="Scheduled Search Failures">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20failing%20in%20cluster%20with%20404%20error">Scheduled searches failing in cluster with 404 error</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20That%20Cannot%20Run">Scheduled Searches That Cannot Run</a>		
 		</collection>									
 		<collection label="SupportingReports">				
-            <saved name="SearchHeadLevel - Index access list by user" />
-            <saved name="SearchHeadLevel - Index list report" />
+                        <saved name="SearchHeadLevel - Index access list by user" />
+                        <saved name="SearchHeadLevel - Index list report" />
 			<saved name="SearchHeadLevel - Macro report" />          
 			<saved name="SearchHeadLevel - Users exceeding the disk quota introspection cleanup" />                      
 		</collection>		
