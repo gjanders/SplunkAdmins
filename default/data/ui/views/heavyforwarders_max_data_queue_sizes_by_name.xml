@@ -226,8 +226,9 @@
       <title>TcpOut KB per second per forwarder</title>
       <chart>
         <search>
-          <query>`comment("During testing in v7, kb != tcp_kbps, often it's not even close with non-standard metric intervals so utilising tcp_KBps instead")` index=_internal $hosts$ group=tcpout_connections sourcetype=splunkd
-| timechart limit=20 useother=false span=$span$ eval(sum(tcp_KBps)/case(substr("$span$",-1)=="m",tonumber(substr("$span$",0,len("$span$")-1))*`splunkadmins_metrics_permin`,substr("$span$",-1)=="h",tonumber(substr("$span$",0,len("$span$")-1))*60*`splunkadmins_metrics_permin`,substr("$span$",-1)=="d",tonumber(substr("$span$",0,len("$span$")-1))*24*60*`splunkadmins_metrics_permin`)) by host</query>
+          <query>index=_internal $hosts$ source=*metrics.log sourcetype=splunkd group=thruput name=cooked_output OR name=uncooked_output
+		  | timechart useother=false span=$span$ limit=20 per_second(kb) by host 
+          </query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
           <sampleRatio>1</sampleRatio>

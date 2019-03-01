@@ -1,5 +1,5 @@
 <form>
-  <label>Knowledge Objects By App</label>
+  <label>Dashboard - Knowledge Objects By App</label>
   <description>List of knowledge objects per app</description>
   <fieldset submitButton="false">
     <input type="dropdown" token="app">

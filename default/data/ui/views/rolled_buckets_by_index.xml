@@ -77,7 +77,7 @@
       <chart>
         <title>Click on an index above for this drilldown to show which the license usage by a particular index</title>
         <search>
-          <query>index=_internal `licensemasterhost` source="/opt/splunk/var/log/splunk/license_usage.log" idx=$indexname$
+          <query>index=_internal `licensemasterhost` `splunkadmins_license_usage_source` idx=$indexname$
 | bin _time span=24h
 | stats sum(b) AS totalB by idx, _time
 | eval totalB=totalB/1024/1024/1024

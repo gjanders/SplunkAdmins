@@ -123,6 +123,7 @@ There are many Splunk conf talks available on this subject in various conference
 - SearchHeadLevel - Scheduled Searches without a configured earliest and latest time
 - SearchHeadLevel - Users exceeding the disk quota
 - SearchHeadLevel - User - Dashboards searching all indexes
+- SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated
 
 Are all well suited to an automated email using the sendresults command or a similar function as they involve end user configuration which the individual can change/fix
 
@@ -148,6 +149,29 @@ Some CSV lookups are now replaced with kvstore entries due to the ability to syn
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.4.8
+New alert - `ForwarderLevel - Splunk HEC issues`
+
+New dashboard - `Lookups in use finder`
+
+New macro - `splunkadmins_license_usage_source`
+
+New report - `IndexerLevel - Maximum memory utilisation per search`
+
+New report - `SearchHeadLevel - Lookup updates within SHC`
+
+New report - `SearchHeadLevel - Maximum memory utilisation per search`
+
+New report - `SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated`
+
+Updated alert - `AllSplunkEnterpriseLevel - Replication Failures` to match more results
+
+Updated alert - `ForwarderLevel - Splunk HTTP Listener Overwhelmed` comment/description update
+
+Updated dashboard - `Rolled buckets by index` - to no longer hardcode Linux paths to the license usage log
+
+Updated dashboard - `Heavy Forwarders Max Data Queue Sizes by name` to use the thruput in the metrics.log
+
 ### 2.4.7
 New README (README.md replaces README)
 New dashboard `Detect excessive search usage`

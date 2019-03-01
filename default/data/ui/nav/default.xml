@@ -102,6 +102,7 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20SplunkStream%20Errors">SplunkStream Errors</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%2520-%2520SSL%2520Errors%2520In%2520Logs%2520%2528Potential%2520Universal%2520Forwarder%2520and%2520License%2520Issue%2529">SSL Errors In Logs (Potential Universal Forwarder and LicenseIssue)</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Unusual%20number%20of%20duplication%20alerts">Unusual number of duplication alerts</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%2520-%2520Splunk%2520HEC%2520issues">Splunk HEC issues</a>
 			</collection>							
 		</collection>
                 <collection label="Performance">
@@ -160,7 +161,8 @@
 		</collection>		
 		<collection label="Search Related">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Peer%20will%20not%20return%20results%20due%20to%20outdated%20generation">Peer will not return results due to outdated generation</a>
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Search%20Failures">Search Failures</a>			
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Search%20Failures">Search Failures</a>	
+			<saved name="IndexerLevel - Maximum memory utilisation per search" />
 		</collection>	
 		<collection label="Sizing Related">		
 			<collection label="Volumes">
@@ -223,6 +225,8 @@
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Long%20Running%20Searches%20Found">Long Running Searches Found</a>			
                         <view name="search_head_scheduledsearches_distribution" />			
                         <view name="detect_excessive_search_use" />
+			<saved name="SearchHeadLevel - Maximum memory utilisation per search" />
+			<saved name="SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated" />
 		</collection>		
 		<collection label="Proactive">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20LDAP%20users%20have%20been%20disabled%20or%20left%20the%20company%20cleanup%20required">LDAP users have been disabled or left the company cleanup required</a>		
@@ -248,7 +252,9 @@
 			<saved name="SearchHeadLevel - Detect changes to knowledge objects" />
                         <saved name="SearchHeadLevel - Detect changes to knowledge objects directory" />
                         <saved name="SearchHeadLevel - Detect changes to knowledge objects non-directory" />
+			<saved name="SearchHeadLevel - Lookup updates within SHC" />
 			<view name="knowledge_objects_by_app" />
+			<view name="lookups_in_use_finder" />
 		</collection>	
 		<collection label="Scheduled Search Failures">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20failing%20in%20cluster%20with%20404%20error">Scheduled searches failing in cluster with 404 error</a>

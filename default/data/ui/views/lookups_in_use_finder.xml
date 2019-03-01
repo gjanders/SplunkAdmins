@@ -1,0 +1,117 @@
+<form>
+  <label>Dashboard - Lookup in use finder</label>
+  <description>Attempt to detect if a lookup file in question is in use within Splunk</description>
+  <fieldset submitButton="false">
+    <input type="text" token="lookup_name">
+      <label>Lookup Name (CSV file name or similar)</label>
+    </input>
+    <input type="dropdown" token="app">
+      <label>App</label>
+      <choice value="-">All</choice>
+      <default>-</default>
+      <initialValue>-</initialValue>
+      <fieldForLabel>app</fieldForLabel>
+      <fieldForValue>app</fieldForValue>
+      <search>
+        <query>| rest /services/apps/local search="disabled=0" count=0 f=title splunk_server=local
+| rename title as app
+| table app</query>
+        <earliest>-15m</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+    <input type="time" token="time">
+      <label>Audit Logs Time Period</label>
+      <default>
+        <earliest>-60m@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Dashboard or Scheduled Search lookups</title>
+      <table>
+        <search>
+          <query>| makeresults
+| eval filename="$lookup_name$", lookupDefName=null()
+| fields - _time
+| append
+    [| rest splunk_server=local "/servicesNS/-/$app$/data/transforms/lookups" f=eai:* f=filename f=title f=updated
+    | search filename="$lookup_name$"
+    | fields title
+    | rename title AS lookupDefName ]
+| tail 1
+| fillnull lookupDefName value="youwontfindthisone"
+| appendpipe
+[ | map
+    [| rest /servicesNS/-/$app$/data/ui/views splunk_server=local f=eai:* f=label f=title
+    | fields eai:acl.app, label, title, updated, eai:acl.owner, eai:data
+    | regex eai:data="(input|output)?lookup\s+($lookup_name$|$$lookupDefName$$)"
+    | eval type="dashboard"
+    | fields - eai:data ] ]
+| appendpipe [ | map
+        [| rest /servicesNS/-/$app$/saved/searches splunk_server=local f=eai:* f=title f=search f=updated
+        | fields eai:acl.owner, title, search, updated, eai:acl.app
+        | regex search="(input|output)?lookup\s+($lookup_name$|$$lookupDefName$$)"
+        | eval type="report"
+        | fields - search ]]
+| where isnotnull('eai:acl.app')
+| eval searchedApp="$app$"
+| where 'eai:acl.app'==searchedApp OR "$app$"=="-"
+| fields - filename, lookupDefName
+| rename eai:acl.app AS app, eai:acl.owner AS owner</query>
+          <earliest>-5m</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+       <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">false</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Audit Logs Check (note no app context available)</title>
+      <table>
+        <search>
+          <query>| makeresults
+| eval filename="$lookup_name$", lookupDefName=null()
+| fields - _time
+| append
+    [| rest splunk_server=local "/servicesNS/-/$app$/data/transforms/lookups" f=eai:* f=filename f=title f=updated
+    | search filename="$lookup_name$"
+    | fields title
+    | rename title AS lookupDefName ]
+| tail 1
+| fillnull lookupDefName value="youwontfindthisone"
+| appendpipe
+    [ map
+        [ search index=_audit "info=granted" "search='search " $lookup_name$ search_id!="'ta_*"
+        | rex ", search='(?P&lt;search&gt;[\S+\s+]+?)', "
+        | regex search="(input|output)?lookup\s+($lookup_name$|$$lookupDefName$$)"
+        | fields user, search, search_id, savedsearch_name] ]
+| where isnotnull(user)
+| table user, search, search_id, savedsearch_name</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">false</option>
+      </table>
+    </panel>
+  </row>
+</form>
