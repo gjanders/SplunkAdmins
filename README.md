@@ -149,6 +149,9 @@ Some CSV lookups are now replaced with kvstore entries due to the ability to syn
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.4.9
+Updated alert - `SearchHeadLevel - Detect MongoDB errors` to include " W " based on git feedback
+
 ### 2.4.8
 New alert - `ForwarderLevel - Splunk HEC issues`
 
