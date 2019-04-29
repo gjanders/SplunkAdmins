@@ -1,0 +1,193 @@
+<form>
+  <label>Dashboard - HEC Performance</label>
+  <description>Based on the original version from  https://github.com/camrunr/hec_perf_report/blob/master/hec_perf_report.xml</description>
+  <search id="by_token">
+    <query>index=_introspection (`indexerhosts`) OR (`heavyforwarderhosts`) source=*http_event_collector_metrics.log http_event_collector_token
+| bucket _time span=$dd_span$
+| stats sum(data.num_of_events) as Events sum(data.total_bytes_received) as Bytes by _time data.token_name</query>
+    <earliest>$timepicker.earliest$</earliest>
+    <latest>$timepicker.latest$</latest>
+    <sampleRatio>1</sampleRatio>
+    <refresh>$refreshinterval$</refresh>
+  </search>
+  <search id="by_host">
+    <query>index=_introspection (`indexerhosts`) OR (`heavyforwarderhosts`) source=*http_event_collector_metrics.log http_event_collector_token
+| bucket _time span=$dd_span$
+| stats sum(data.num_of_events) as Events sum(data.total_bytes_received) as Bytes by _time host
+| eval host=replace(host,"\..*","")</query>
+    <earliest>$timepicker.earliest$</earliest>
+    <latest>$timepicker.latest$</latest>
+    <sampleRatio>1</sampleRatio>
+    <refresh>$refreshinterval$</refresh>
+  </search>
+  <fieldset submitButton="false">
+    <input type="time" token="timepicker">
+      <label>Time</label>
+      <default>
+        <earliest>-4h@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="dd_span">
+      <label>span</label>
+      <choice value="1min">1 minute</choice>
+      <choice value="5min">5 minutes</choice>
+      <choice value="30m">30 minutes</choice>
+      <choice value="1h">1 hour</choice>
+      <choice value="1d">1 day</choice>
+      <default>1min</default>
+    </input>
+    <input type="text" token="hostcount">
+      <label>Timechart host limit</label>
+      <default>15</default>
+    </input>
+    <input type="text" token="refreshinterval" searchWhenChanged="true">
+      <label>Refresh Interval</label>
+      <default>300</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Events/sec by host</title>
+      <chart>
+        <search base="by_host">
+          <query>timechart limit=$hostcount$ span=$dd_span$ per_second(Events) as Events/sec by host</query>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Bytes/sec by host</title>
+      <chart>
+        <search base="by_host">
+          <query>timechart limit=$hostcount$ span=$dd_span$ per_second(Bytes) as Bytes/sec by host</query>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Events/sec by input/group</title>
+      <chart>
+        <search base="by_token">
+          <query>timechart span=$dd_span$ per_second(Events) as Events/sec by data.token_name</query>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Bytes/sec by input/group</title>
+      <chart>
+        <search base="by_token">
+          <query>timechart span=$dd_span$ per_second(Bytes) as Bytes/sec by data.token_name</query>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>HEC Batching Efficiency</title>
+      <table>
+        <search>
+          <refresh>$refreshinterval$</refresh>
+          <query>index=_introspection (`indexerhosts`) OR (`heavyforwarderhosts`) source=*http_event_collector_metrics.log http_event_collector_token
+| eval EpR='data.num_of_events'/'data.num_of_requests'
+| bucket _time span=5m
+| stats sum(data.num_of_events) as events avg(EpR) as events_per_POST sum(data.num_of_requests) as reqs sum(data.total_bytes_received) as Bytes by _time data.token_name
+| eval reqs_per_sec=reqs/300, bytes_per_post=Bytes/reqs
+| rename data.token_name as token_name
+| stats sum(eval(Bytes/1024/1024)) as MBytes sum(events) as Events p50(events_per_POST) as events_per_post p50(bytes_per_post) as bytes_per_post p90(reqs_per_sec) as posts_per_sec by token_name
+| eval MBytes = tostring(round(MBytes, 2),"commas"), events_per_post=tostring(round(events_per_post,2),"commas"), bytes_per_post=tostring(round(bytes_per_post,2),"commas"), posts_per_sec=tostring(round(posts_per_sec,2),"commas"), Events=tostring(Events,"commas")
+| sort - posts_per_sec</query>
+          <earliest>$timepicker.earliest$</earliest>
+          <latest>$timepicker.latest$</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="color" field="events_per_POST">
+          <colorPalette type="list">[#DC4E41,#DC4E41,#F8BE34,#53A051]</colorPalette>
+         <scale type="threshold">0,5,10</scale>
+        </format>
+        <format type="color" field="reqs_per_sec">
+          <colorPalette type="list">[#53A051,#F8BE34,#DC4E41]</colorPalette>
+          <scale type="threshold">10,50</scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+</form>

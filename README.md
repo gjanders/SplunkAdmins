@@ -149,6 +149,23 @@ Some CSV lookups are now replaced with kvstore entries due to the ability to syn
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.5.0
+New dashboard `HEC Performance` (original from [camrunr's github](https://github.com/camrunr/hec_perf_report/blob/master/hec_perf_report.xml))
+
+New macro - `splunkadmins_shutdown_keyword`
+
+New report - `IndexerLevel - Knowledge bundle upload stats`
+
+Updated alert - `AllSplunkEnterpriseLevel - Replication Failures` with new criteria and excluded shutdowns
+
+Updated alert - `AllSplunkEnterpriseLevel - Splunk Scheduler skipped searches and the reason` to handle another skipped scenario
+
+Updated alert - `AllSplunkEnterpriseLevel - Splunk Servers with resource starvation` with new comments 
+
+Updated alert - `SearchHeadLevel - Detect MongoDB errors` with update to handle tstats issue in Splunk (issue #3 in github)
+
+Moved splunklib into "lib" directory of app as per updated appinspect recommendations
+
 ### 2.4.9
 Updated alert - `SearchHeadLevel - Detect MongoDB errors` to include " W " based on git feedback
 

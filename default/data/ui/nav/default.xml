@@ -108,6 +108,7 @@
                 <collection label="Performance">
                     <view name="heavyforwarders_max_data_queue_sizes_by_name" />
                     <view name="indexer_max_data_queue_sizes_by_name" />
+                    <view name="hec_performance" />
 		</collection>
 	</collection>
 	<collection label="IndexerLevel">
@@ -157,6 +158,8 @@
                                 <view name="indexer_data_spread" />
                                 <view name="troubleshooting_resource_usage_per_user" />
                                 <view name="detect_excessive_search_use" />
+                                <view name="hec_performance" />
+                                <saved name="IndexerLevel - Knowledge bundle upload stats" />
 			</collection>
 		</collection>		
 		<collection label="Search Related">			
