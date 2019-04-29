@@ -17,8 +17,11 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from splunklib.searchcommands import dispatch, StreamingCommand, Configuration, Option, validators
 import sys
+import os
+sys.path.append(os.environ['SPLUNK_HOME'] + "/etc/apps/SplunkAdmins/lib/")
+
+from splunklib.searchcommands import dispatch, StreamingCommand, Configuration, Option, validators
 from splunklib import six
 import types
 import re
