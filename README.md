@@ -149,6 +149,11 @@ Some CSV lookups are now replaced with kvstore entries due to the ability to syn
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.5.1
+Updated alert - `SearchHeadLevel - Scheduled Searches That Cannot Run` tweak to find more results
+
+Updated streamfilter/streamfilterwildcard python files to import lib relative to the current app name
+
 ### 2.5.0
 New dashboard `HEC Performance` (original from [camrunr's github](https://github.com/camrunr/hec_perf_report/blob/master/hec_perf_report.xml))
 
