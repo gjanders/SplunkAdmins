@@ -154,7 +154,7 @@ Updated alert - `SearchHeadLevel - Scheduled Searches That Cannot Run` tweak to 
 
 Updated dashboard `issues per sourcetype` to handle message becoming event_message in newer Splunk versions (7.1 or 7.2)
 
-Updated macros `splunkadmins_shutdown_list`, `splunkadmins_shutdown_keyword, `splunkadmins_shutdown_time`, `splunkadmins_transfer_captain_times` to handle message becoming event_message in newer Splunk versions (7.1 or 7.2)
+Updated macros `splunkadmins_shutdown_list`, `splunkadmins_shutdown_keyword`, `splunkadmins_shutdown_time`, `splunkadmins_transfer_captain_times` to handle message becoming event_message in newer Splunk versions (7.1 or 7.2)
 
 Updated python files streamfilter/streamfilterwildcard to import lib relative to the current app name
 
