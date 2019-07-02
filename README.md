@@ -152,7 +152,38 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 ### 2.5.1
 Updated alert - `SearchHeadLevel - Scheduled Searches That Cannot Run` tweak to find more results
 
-Updated streamfilter/streamfilterwildcard python files to import lib relative to the current app name
+Updated dashboard `issues per sourcetype` to handle message becoming event_message in newer Splunk versions (7.1 or 7.2)
+
+Updated macros `splunkadmins_shutdown_list`, `splunkadmins_shutdown_keyword, `splunkadmins_shutdown_time`, `splunkadmins_transfer_captain_times` to handle message becoming event_message in newer Splunk versions (7.1 or 7.2)
+
+Updated python files streamfilter/streamfilterwildcard to import lib relative to the current app name
+
+Updated alerts / reports:
+ - `AllSplunkLevel execprocessor errors`
+ - `AllSplunkLevel - TCP Output Processor has paused the data flow`
+ - `AllSplunkEnterpriseLevel - Detect LDAP groups that no longer exist`
+ - `AllSplunkEnterpriseLevel - Email Sending Failures`
+ - `AllSplunkEnterpriseLevel - File integrity check failure`
+ - `AllSplunkEnterpriseLevel - Non-existent roles are assigned to users`
+ - `AllSplunkEnterpriseLevel - Replication Failures`
+ - `AllSplunkEnterpriseLevel - TCP or SSL Config Issue`
+ - `AllSplunkEnterpriseLevel - Unable to dispatch searches due to disk space`
+ - `DeploymentServer - btool validation failures occurring on deployment server`
+ - `DeploymentServer - Unsupported attribute within DS config`
+ - `ForwarderLevel - crcSalt or initCrcLength change may be required`
+ - `ForwarderLevel - Splunk Universal Forwarders Exceeding the File Descriptor Cache`
+ - `IndexerLevel - Buckets are been frozen due to index sizing`
+ - `IndexerLevel - IndexConfig Warnings from Splunk indexers`
+ - `IndexerLevel - Index not defined`
+ - `IndexerLevel - Peer will not return results due to outdated generation`
+ - `IndexerLevel - Time format has changed multiple log types in one sourcetype`
+ - `IndexerLevel - Too many events with the same timestamp`
+ - `IndexerLevel - Valid Timestamp Invalid Parsed Time`
+ - `SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring`
+ - `SearchHeadLevel - LDAP users have been disabled or left the company cleanup required`
+ - `SearchHeadLevel - Scheduled Searches That Cannot Run`
+ - `SearchHeadLevel - Scheduled searches failing in cluster with 404 error`
+To handle message becoming event_message in newer Splunk versions (7.1 or 7.2)
 
 ### 2.5.0
 New dashboard `HEC Performance` (original from [camrunr's github](https://github.com/camrunr/hec_perf_report/blob/master/hec_perf_report.xml))
