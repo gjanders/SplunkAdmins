@@ -145,10 +145,43 @@ To make this command work the Splunk python SDK is bundled into the app, if the 
 ## KVStore Usage
 Some CSV lookups are now replaced with kvstore entries due to the ability to sync the kvstore across multiple search head or search head cluster(s) via apps like [TA-SyncKVStore](https://splunkbase.splunk.com/app/3519/)
 
+##Lookup Watcher
+The Lookup Watcher is a modular input designed to work in either search head clusters or standalone Splunk instances to determine the modification time and size of all lookup files on the filesystem of the Splunk servers.
+In a search head cluster the input will run on the captain only by running a rest call on each run, on a non-search head cluster it will always run.
+To use this, on a non-search head cluster simply go to Settings -> Inputs and create the Lookup Watcher modular input, the name of the input does not matter, you just need to create 1 input. 
+Note that the debugMode is optional and defaults to false, enabling this generates more logs for troubleshooting.
+
+Under the more settings button choose an index to send the data to and an interval to run the script
+
+On a search head cluster you will need to push an inputs.conf via the deployer server (if you are unsure of the syntax create one on a standalone server first)
+
+Once done the additional logs can be used to determine how often lookups are updated and how big they are
+
+Tested on Windows & Linux on Splunk 7.x.
+
+Lookup Watcher generates a log file is created in $SPLUNK_HOME/var/log/splunk/ and will also be in the internal index with the name lookup_watcher.log
+
 ## Feedback?
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.5.2
+New modular input - Lookup Watcher - details in the README.md file
+Introduced a new sub-menu in the navigation menu for Search Head Level "Recommended (externally hosted)" with links to external dashboards 
+
+Updated reports:
+`SearchHeadLevel - Search Queries By Type Audit Logs`
+`SearchHeadLevel - Search Queries By Type Audit Logs macro version`
+`SearchHeadLevel - Search Queries By Type Audit Logs macro version other`
+
+To reduce the number of unknown queries
+
+Updated reports:
+`SearchHeadLevel - Search Queries summary exact match`
+`SearchHeadLevel - Search Queries summary non-exact match`
+
+To improve the statistics around indexes found
+
 ### 2.5.1
 Updated alert - `SearchHeadLevel - Scheduled Searches That Cannot Run` tweak to find more results
 

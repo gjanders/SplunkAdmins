@@ -268,7 +268,11 @@
                         <saved name="SearchHeadLevel - Index list report" />
 			<saved name="SearchHeadLevel - Macro report" />          
 			<saved name="SearchHeadLevel - Users exceeding the disk quota introspection cleanup" />                      
-		</collection>		
+		</collection>	
+		<collection label="Recommended (externally hosted)">
+			<a href="https://github.com/dpaper-splunk/public/tree/master/dashboards" target="_blank">Extended Search Reporting (and others)</a>
+			<a href="https://github.com/nicovdw/splunk_concurrency_helper" target="_blank">Search Scheduler Tuning searches</a>
+		</collection>
 	</collection>
 	<collection label="Users">		
 	    <saved name="What Access Do I Have Without REST?" />
