@@ -111,7 +111,7 @@ OR "is suspiciously far away from the previous event's time" $sourcetype$
         <search>
           <query>`comment("This search detects when the time format has changed within the files 1 or more times, the time format per sourcetype should be consistent")`
 index=_internal "DateParserVerbose - Accepted time format has changed" sourcetype=splunkd (`indexerhosts`) OR (`heavyforwarderhosts`) $sourcetype$
-| rex "source::(?P&lt;source&gt;[^|]+)\|host::(?P&lt;host&gt;[^|]+)\|(?P&lt;sourcetype&gt;[^|]+)"
+| rex "source(?:=|::)(?P&lt;source&gt;[^|]+)\|host(?:=|::)(?P&lt;host&gt;[^|]+)\|(?P&lt;sourcetype&gt;[^|]+)"
 | eval message=coalesce(message,event_message)
 | stats count, min(_time) AS firstSeen, max(_time) AS lastSeen by host, source, sourcetype, message
 | eval invesMaxTime=if(firstSeen=lastSeen,lastSeen+1,lastSeen)

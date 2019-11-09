@@ -188,7 +188,12 @@
                         <saved name="SearchHeadLevel - Search Queries By Type Audit Logs macro version" />                   
                         <saved name="SearchHeadLevel - Search Queries By Type Audit Logs macro version other" />                             
                         <saved name="SearchHeadLevel - Search Queries summary exact match" />                                       
-                        <saved name="SearchHeadLevel - Search Queries summary non-exact match" />                                                 
+                        <saved name="SearchHeadLevel - Search Queries summary non-exact match" /> 
+                        <saved name="SearchHeadLevel - Search Queries summary exact match 73" />
+                        <saved name="SearchHeadLevel - Search Queries summary exact match 73 by user" />
+                        <saved name="SearchHeadLevel - Search Queries summary exact match 73 by index" />
+                        <saved name="SearchHeadLevel - Search Queries summary non-exact match 73" />
+                        <saved name="SearchHeadLevel - IndexesPerUser Report" />
 		</collection>      
 		<collection label="Data Models">				
 			<saved name="SearchHeadLevel - Data Model Acceleration Completion Status" />
@@ -266,6 +271,8 @@
 		<collection label="SupportingReports">				
                         <saved name="SearchHeadLevel - Index access list by user" />
                         <saved name="SearchHeadLevel - Index list report" />
+                        <saved name="SearchHeadLevel - IndexesPerRole Remote Report" />
+                        <saved name="SearchHeadLevel - IndexesPerRole Report" />
 			<saved name="SearchHeadLevel - Macro report" />          
 			<saved name="SearchHeadLevel - Users exceeding the disk quota introspection cleanup" />                      
 		</collection>	

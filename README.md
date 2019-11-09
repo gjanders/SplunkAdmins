@@ -165,6 +165,61 @@ Lookup Watcher generates a log file is created in $SPLUNK_HOME/var/log/splunk/ a
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.5.3
+Lookup files are now included (zero sized), note that you will need to re-generate them after install if you overwrite the lookups used by some reports...
+
+New macros:
+
+`splunkadmins_audit_logs_macro_sub`
+
+`splunkadmins_remote_macros` (this macro requires TA-webtools)
+
+`splunkadmins_remote_roles` (this macro requires TA-webtools)
+
+New reports:
+
+`SearchHeadLevel - IndexesPerRole Remote Report`
+
+`SearchHeadLevel - IndexesPerRole Report`
+
+`SearchHeadLevel - IndexesPerRole srchIndexesallowed Report`
+
+`SearchHeadLevel - IndexesPerRole srchIndexesdefault Report`
+
+`SearchHeadLevel - Search Queries summary exact match 73`
+
+`SearchHeadLevel - Search Queries summary exact match 73 by user` (uses Search Queries summary exact match 73 as base)
+
+`SearchHeadLevel - Search Queries summary exact match 73 by index` (uses Search Queries summary exact match 73 as base)
+
+`SearchHeadLevel - Search Queries summary non-exact match 73`
+
+`SearchHeadLevel - IndexesPerUser Report`
+
+Updated alerts:
+
+`IndexerLevel - Time format has changed multiple log types in one sourcetype`
+
+`IndexerLevel - Timestamp parsing issues combined alert`
+
+Updated dashboard:
+
+`issues_per_sourcetype`
+
+Updated report:
+
+`Updated report SearchHeadLevel - Macro report`
+
+With new regex due to change in newer Splunk versions (credit to woodcock for the update)
+
+
+Lookup file `splunkadmins_macros_temp.csv` renamed to `splunkadmins_macros.csv`
+
+
+Changes for python3 compatability
+
+Updated python SDK to 1.6.11 (from 1.6.6)
+
 ### 2.5.2
 New modular input - Lookup Watcher - details in the README.md file
 Introduced a new sub-menu in the navigation menu for Search Head Level "Recommended (externally hosted)" with links to external dashboards 

@@ -80,6 +80,7 @@ def _parse_cookies(cookie_str, dictionary):
     then updates the the dictionary with any key-value pairs found.
 
     **Example**::
+
         dictionary = {}
         _parse_cookies('my=value', dictionary)
         # Now the following is True
@@ -1368,7 +1369,7 @@ def handler(key_file=None, cert_file=None, timeout=None, verify=False):
         head = {
             "Content-Length": str(len(body)),
             "Host": host,
-            "User-Agent": "splunk-sdk-python/1.6.6",
+            "User-Agent": "splunk-sdk-python/1.6.11",
             "Accept": "*/*",
             "Connection": "Close",
         } # defaults

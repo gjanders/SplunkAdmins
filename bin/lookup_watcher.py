@@ -1,3 +1,5 @@
+from __future__ import print_function
+from six.moves import range
 import requests
 import logging
 from logging.config import dictConfig
@@ -67,12 +69,12 @@ def get_validation_data():
 
 # prints XML error data to be consumed by Splunk
 def print_error(s):
-    print "<error><message>%s</message></error>" % xml.sax.saxutils.escape(s)
+    print("<error><message>%s</message></error>" % xml.sax.saxutils.escape(s))
 
 #Run an OS process with a timeout, this way if a command gets "stuck" waiting for input it is killed
 def runOSProcess(command, timeout=10):
     p = Popen(command, stdout=PIPE, stderr=PIPE, shell=True)
-    for t in xrange(timeout):
+    for t in range(timeout):
         sleep(1)
         if p.poll() is not None:
             #return p.communicate()
@@ -91,7 +93,7 @@ def validate_arguments():
 
 #Print the scheme
 def do_scheme():
-    print SCHEME
+    print(SCHEME)
     
 splunkLogsDir = os.environ['SPLUNK_HOME'] + "/var/log/splunk"
 #Setup the logging

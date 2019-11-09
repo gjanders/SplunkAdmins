@@ -91,9 +91,9 @@ class LookupWatcher:
                                 logger.debug("i=\"%s\" XML: \"%s\"=\"%s\"" % (shortName, param_name, data))
 
             if not config:
-                raise Exception, "Invalid configuration received from Splunk."
-        except Exception, e:
-            raise Exception, "Error getting Splunk configuration via STDIN: %s" % str(e)
+                raise Exception("Invalid configuration received from Splunk.")
+        except Exception as e:
+            raise Exception("Error getting Splunk configuration via STDIN: %s" % str(e))
 
         return config
 

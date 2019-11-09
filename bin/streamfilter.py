@@ -69,9 +69,9 @@ class StreamFilterCommand(StreamingCommand):
     def thefilter(self, record, pattern):
         values = ""
         for fieldname in self.fieldnames:
-            #multivalue fields come through as a ListType, iterate through the list and run the regex against each entry
+            #multivalue fields come through as a list, iterate through the list and run the regex against each entry
             #in the multivalued field
-            if isinstance(record[fieldname], types.ListType):
+            if isinstance(record[fieldname], list):
                 for aRecord in record[fieldname]:
                     matches = pattern.findall(six.text_type(aRecord.decode("utf-8")))
                     for match in matches:
@@ -88,10 +88,10 @@ class StreamFilterCommand(StreamingCommand):
         for record in records:
             values = ""
             pattern = self.pattern
-            if not record.has_key(pattern):
+            if pattern not in record:
                self.logger.warn("StreamFilterCommand: pattern field is %s but cannot find this field" % (pattern), self)
                sys.exit(-1)
-            if isinstance(record[pattern], types.ListType):
+            if isinstance(record[pattern], list):
                 for aPattern in record[pattern]:
                     pattern = re.compile(aPattern)
                     values = values + self.thefilter(record, pattern)
