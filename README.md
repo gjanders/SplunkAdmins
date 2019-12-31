@@ -165,6 +165,35 @@ Lookup Watcher generates a log file is created in $SPLUNK_HOME/var/log/splunk/ a
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.5.6
+Further updates to the new reports from 2.5.5 relating to platform stats, improved accuracy with identifying dashboard usage vs ad-hoc searches
+
+Updated `SearchHeadLevel - platform_stats access summary` to include searches triggered (which are often coming from dashboard usage)
+
+New report:
+
+`SearchHeadLevel - platform_stats.remote_searches metrics populating search`
+
+Updated reports:
+
+`IndexerLevel - platform_stats.counters hosts`
+
+`IndexerLevel - platform_stats.counters hosts 24hour`
+
+`IndexerLevel - platform_stats.indexers totalgb measurement`
+
+`SearchHeadLevel - SHC conf log summary`
+
+`SearchHeadLevel - platform_stats.audit metrics`
+
+`SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search`
+
+`SearchHeadLevel - platform_stats access summary`
+
+New macro:
+
+`search_type_from_sid`
+
 ### 2.5.5
 Lookup Watcher now imports six from lib directory (allows this to work on older Splunk versions)
 Minor update to props.conf for splunk:search:info as in 7.3 auto-finalized messages are now INFO level
