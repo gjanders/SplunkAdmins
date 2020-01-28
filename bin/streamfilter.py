@@ -20,7 +20,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import sys
 import os
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "lib"))
 
 from splunklib.searchcommands import dispatch, StreamingCommand, Configuration, Option, validators
 from splunklib import six
@@ -47,7 +47,7 @@ class StreamFilterCommand(StreamingCommand):
 
     ##Example
 
-    Return the regular expression matches in the `text` of each tweet in tweets.csv and store the result in `word_count`.
+    Return the regular expression matches in the `text` field (field named text) of each tweet in tweets.csv and store the result in `word_count`.
 
     .. code-block::
         | inputlookup tweets | eval pattern="\\w+" | streamfilter fieldname=word_count pattern=pattern text

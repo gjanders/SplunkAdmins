@@ -9,7 +9,7 @@ from subprocess import Popen, PIPE
 from time import sleep
 from lookup_watcher_class import LookupWatcher 
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "lib"))
 
 from splunklib.six.moves import range
 

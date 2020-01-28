@@ -165,6 +165,60 @@ Lookup Watcher generates a log file is created in $SPLUNK_HOME/var/log/splunk/ a
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.5.7
+Moved lib directory to bin/lib (as this does not distribute to the indexers otherwise, sent feedback on https://dev.splunk.com/enterprise/docs/python/sdk-python/howtousesplunkpython/howtocreatemodpy/ so this gets updated)
+
+New macro:
+
+`base64decode` this macro requires decrypt or a similar app to be useful but the searches utilising this will work fine without it...
+
+New reports:
+`SearchHeadLevel - platform_stats.audit metrics searches`
+
+`SearchHeadLevel - platform_stats.audit metrics users`
+
+`SearchHeadLevel - platform_stats.audit metrics api`
+
+The above 3 replace `SearchHeadLevel - platform_stats.audit metrics` which is now removed.
+
+New reports continued:
+
+`IndexerLevel - RemoteSearches Indexes Stats`
+
+`SearchHeadLevel - DataModel Fields`
+
+`SearchHeadLevel - Dashboard refresh intervals`
+
+`SearchHeadLevel - Dashboards using depends and running searches in the background`
+
+`SearchHeadLevel - Summary searches using realtime search scheduling`
+
+`SearchHeadLevel - Searches dispatched as owner by other users`
+
+Updated reports:
+
+`SearchHeadLevel - Search Queries summary exact match`
+
+`SearchHeadLevel - Search Queries summary non-exact match`
+
+Minor tweaks to the regex for both the above
+
+`SearchHeadLevel - Search Queries summary exact match 73`
+
+`SearchHeadLevel - Search Queries summary non-exact match 73`
+
+The above now attempt to handle append, join, appendcols, multisearch
+
+Also updated reports:
+
+`SearchHeadLevel - platform_stats.remote_searches metrics populating search` to ignore pretypeahead/copybuckets searches, and default acceleration searches
+
+`SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search` to include indexer cluster as a field
+
+`SearchHeadLevel - Scheduled Searches That Cannot Run` to handle additional failure scenarios
+
+Updated `streamfilter.py`, `lookup_watcher.py` and `streamfilterwildcard.py` so they include the libraries from bin/lib
+
 ### 2.5.6
 Further updates to the new reports from 2.5.5 relating to platform stats, improved accuracy with identifying dashboard usage vs ad-hoc searches
 

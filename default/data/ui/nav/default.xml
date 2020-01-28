@@ -178,13 +178,16 @@
 			</collection>
 		</collection>
 	        <collection label="Summary_Reports">
-                    <saved name="SearchHeadLevel - platform_stats.audit metrics" />
+		    <saved name="SearchHeadLevel - platform_stats.audit metrics searches" />
+		    <saved name="SearchHeadLevel - platform_stats.audit metrics users" />	
+                    <saved name="SearchHeadLevel - platform_stats.audit metrics api" />
                     <saved name="SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search" />
                     <saved name="SearchHeadLevel - platform_stats access summary" />
 		    <saved name="SearchHeadLevel - platform_stats.remote_searches metrics populating search" />
                     <saved name="IndexerLevel - platform_stats.counters hosts" />
                     <saved name="IndexerLevel - platform_stats.counters hosts 24hour" />
                     <saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
+                    <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
                 </collection>
 	</collection>
 	<collection label="LicenseMaster">  
@@ -206,6 +209,7 @@
 		</collection>      
 		<collection label="Data Models">				
 			<saved name="SearchHeadLevel - Data Model Acceleration Completion Status" />
+			<saved name="SearchHeadLevel - DataModel Fields" />
 			<view name="data_model_rebuild_monitor" />
 			<view name="data_model_status" />			
 		</collection>
@@ -230,11 +234,14 @@
 			<collection label="Dashboards">
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20User%20-%20Dashboards%20searching%20all%20indexes%20macro%20version">User - Dashboards searching all indexes macro version</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20User%20-%20Dashboards%20searching%20all%20indexes">User - Dashboards searching all indexes</a>							
+				<saved name="SearchHeadLevel - Dashboard refresh intervals" />
+                                <saved name="SearchHeadLevel - Dashboards using depends and running searches in the background" />
 			</collection>			
 			<collection label="Scheduled Searches">
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20not%20specifying%20an%20index%20macro%20version">Scheduled searches not specifying an index macro version</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20not%20specifying%20an%20index">Scheduled searches not specifying an index</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20without%20a%20configured%20earliest%20and%20latest%20time">Scheduled Searches without a configured earliest and latest time</a>
+			<saved name="SearchHeadLevel - Summary searches using realtime search scheduling" />
 			</collection>									
 		</collection>
 		<collection label="Performance Issues">
@@ -272,17 +279,21 @@
                         <saved name="SearchHeadLevel - Detect changes to knowledge objects non-directory" />
 			<saved name="SearchHeadLevel - Lookup updates within SHC" />
                         <saved name="SearchHeadLevel - SHC conf log summary" />
+			<saved name="SearchHeadLevel - Searches dispatched as owner by other users" />
 			<view name="knowledge_objects_by_app" />
 			<view name="lookups_in_use_finder" />
 		</collection>	
 		<collection label="Summary_Reports">
-                        <saved name="SearchHeadLevel - platform_stats.audit metrics" />
+        		<saved name="SearchHeadLevel - platform_stats.audit metrics searches" />
+	                <saved name="SearchHeadLevel - platform_stats.audit metrics users" />
+     			<saved name="SearchHeadLevel - platform_stats.audit metrics api" />			
                         <saved name="SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search" />
                         <saved name="SearchHeadLevel - platform_stats access summary" />
 			<saved name="SearchHeadLevel - platform_stats.remote_searches metrics populating search" />
 			<saved name="IndexerLevel - platform_stats.counters hosts" />
 			<saved name="IndexerLevel - platform_stats.counters hosts 24hour" />
 			<saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
+	                <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
 		</collection>
 		<collection label="Scheduled Search Failures">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20failing%20in%20cluster%20with%20404%20error">Scheduled searches failing in cluster with 404 error</a>
@@ -302,13 +313,16 @@
 		</collection>
 	</collection>
         <collection label="Summary_Reports">
-                <saved name="SearchHeadLevel - platform_stats.audit metrics" />
+		<saved name="SearchHeadLevel - platform_stats.audit metrics searches" />
+                <saved name="SearchHeadLevel - platform_stats.audit metrics users" />
+                <saved name="SearchHeadLevel - platform_stats.audit metrics api" />
                 <saved name="SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search" />
                 <saved name="SearchHeadLevel - platform_stats access summary" />
 		<saved name="SearchHeadLevel - platform_stats.remote_searches metrics populating search" />
                 <saved name="IndexerLevel - platform_stats.counters hosts" />
                 <saved name="IndexerLevel - platform_stats.counters hosts 24hour" />
                 <saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
+		<saved name="IndexerLevel - RemoteSearches Indexes Stats" />
         </collection>
         <collection label="Users">
             <saved name="What Access Do I Have Without REST?" />
