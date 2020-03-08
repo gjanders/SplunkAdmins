@@ -54,6 +54,7 @@
 	<collection label="ClusterMasterLevel">  
 		<collection label="ClusterMaster Endpoint">  
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FClusterMasterLevel%20-%20Per%20index%20status">Per index status</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FClusterMasterLevel%20-%20excess%20buckets%20on%20master">Excess buckets on master</a>
 			<saved name="ClusterMasterLevel - Primary bucket count per peer" />
 		</collection>
 		<collection label="Run Anywhere">  
@@ -113,7 +114,7 @@
 	</collection>
 	<collection label="IndexerLevel">
 		<collection label="Bucket Related">
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Buckets%20are%20been%20frozen%20due%20to%20index%20sizing">Buckets are been frozen due to index sizing</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Buckets%20have%20being%20frozen%20due%20to%20index%20sizing">Buckets have being frozen due to index sizing</a>
 			<saved name="IndexerLevel - Buckets changes per day" />          
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Buckets%20rolling%20more%20frequently%20than%20expected">Buckets rolling more frequently than expected</a>				
 			<saved name="IndexerLevel - Report on bucket corruption" />
@@ -236,12 +237,14 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20User%20-%20Dashboards%20searching%20all%20indexes">User - Dashboards searching all indexes</a>							
 				<saved name="SearchHeadLevel - Dashboard refresh intervals" />
                                 <saved name="SearchHeadLevel - Dashboards using depends and running searches in the background" />
+				<saved name="SearchHeadLevel - Dashboards using special characters" />
 			</collection>			
 			<collection label="Scheduled Searches">
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20not%20specifying%20an%20index%20macro%20version">Scheduled searches not specifying an index macro version</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20not%20specifying%20an%20index">Scheduled searches not specifying an index</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20without%20a%20configured%20earliest%20and%20latest%20time">Scheduled Searches without a configured earliest and latest time</a>
 			<saved name="SearchHeadLevel - Summary searches using realtime search scheduling" />
+			<saved name="SearchHeadLevel - SavedSearches using special characters" />
 			</collection>									
 		</collection>
 		<collection label="Performance Issues">
