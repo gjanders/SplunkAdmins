@@ -165,6 +165,12 @@ Lookup Watcher generates a log file is created in $SPLUNK_HOME/var/log/splunk/ a
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.5.9
+New alerts:
+`AllSplunkLevel - Unexpected termination of a Splunk process windows`
+
+`AllSplunkLevel - Unexpected termination of a Splunk process unix`
+
 ### 2.5.8
 New alerts:
 `ClusterMasterLevel - excess buckets on master`
