@@ -1,0 +1,177 @@
+<form>
+  <label>Dashboard - Lookup Audit</label>
+  <description>Dashboard for displaying lookup table files on a Search Head. Created to easily identify large tables which might disrupt Splunk uptime. Created by Discovered Intelligence -- https://discoveredintelligence.ca, modifications by Gareth Anderson</description>
+  <search id="base">
+    <query>| rest /servicesNS/nobody/$appselection_rest$/data/lookup-table-files splunk_server=local
+| rename eai:acl.app as appname
+| regex appname=^$appselection$$
+| dedup appname
+| map maxsearches=5000 search=" | rest /servicesNS/-/$appselection_rest$/admin/file-explorer/$splunk_dir|u$%2Fapps%2F$$appname$$%2Flookups splunk_server=local | eval appname=\"$$appname$$\""</query>
+  </search>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="dropdown" token="filter" searchWhenChanged="true">
+      <label>Select Lookup Filter</label>
+      <choice value="*">Show All Lookups</choice>
+      <choice value="NonBlackList">Exclude Blacklisted Lookups</choice>
+      <choice value="Blacklist">Show Only Blacklisted Lookups</choice>
+      <change>
+        <condition value="Blacklist">
+          <set token="blacklist">
+            <![CDATA[(
+    [| rest /servicesNS/-/-/configs/conf-distsearch splunk_server=local
+    | where title="replicationBlacklist"
+    | transpose 0 header_field=title
+    | where like(replicationBlacklist,"apps%") OR like(replicationBlacklist,"%csv")
+    | eval replicationBlacklist=replace(replicationBlacklist,"\.\.\.","*")
+    | eval replicationBlacklist=replace(replicationBlacklist,"\[|\]|\\\\","")
+    | rename replicationBlacklist AS title
+    | fields title])]]>
+          </set>
+        </condition>
+        <condition value="NonBlackList">
+          <set token="blacklist">
+            <![CDATA[NOT (
+    [| rest /servicesNS/-/-/configs/conf-distsearch splunk_server=local
+    | where title="replicationBlacklist"
+    | transpose 0 header_field=title
+    | where like(replicationBlacklist,"apps%") OR like(replicationBlacklist,"%csv")
+    | eval replicationBlacklist=replace(replicationBlacklist,"\.\.\.","*")
+    | eval replicationBlacklist=replace(replicationBlacklist,"\[|\]|\\\\","")
+    | rename replicationBlacklist AS title
+    | fields title]) ]]>
+          </set>
+        </condition>
+        <condition value="*">
+          <set token="blacklist">*</set>
+        </condition>
+      </change>
+      <default>NonBlackList</default>
+      <initialValue>NonBlackList</initialValue>
+    </input>
+    <input type="dropdown" token="appselection" searchWhenChanged="true">
+      <label>Select App</label>
+      <choice value=".*">All</choice>
+      <fieldForLabel>appname</fieldForLabel>
+      <fieldForValue>appname</fieldForValue>
+      <search>
+        <query>| rest /servicesNS/-/-/data/lookup-table-files splunk_server=local
+| where like(title,"%csv")
+| rename eai:acl.app as appname
+| dedup appname
+| sort appname</query>
+        <earliest>-15m</earliest>
+        <latest>now</latest>
+      </search>
+      <change>
+        <condition value=".*">
+          <set token="appselection_rest">-</set>
+        </condition>
+        <condition>
+          <set token="appselection_rest">$value$</set>
+        </condition>
+      </change>
+    </input>
+    <input type="dropdown" token="priv_lookup" searchWhenChanged="true">
+      <label>Private User Lookup</label>
+      <choice value="*">All</choice>
+      <choice value="Yes">Yes</choice>
+      <choice value="No">No</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="text" token="splunk_dir">
+      <label>Splunk Etc Dir (use \\\\ for Windows paths or / for Unix). C:\\\\program files\\\\splunk\\\\etc (for example)</label>
+      <initialValue>/opt/splunk/etc</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Lookup Files by App</title>
+      <table>
+        <search base="base">
+          <query>| rex field=title "[\\\\/]apps[\\\\/](?P&lt;App&gt;.+)[\\\\/]lookups" 
+| sort - lastModifiedTime 
+| eval "Last Modified" = strftime(lastModifiedTime,"%b %d, %Y %H:%M"), fileSize_MB=round((fileSize/1024),3) 
+| fillnull value=0.000 fileSize_MB 
+| fields App name fileSize_MB "Last Modified" title 
+| rex field=title "(?&lt;title&gt;apps.*)$" 
+| search $blacklist$ 
+| join type=left name 
+    [| rest /servicesNS/nobody/$appselection_rest$/data/lookup-table-files splunk_server=local 
+    | rename title AS name 
+    | fields + name author] 
+| eval private_lookup="No" 
+| append 
+    [| rest /servicesNS/-/$appselection_rest$/data/lookup-table-files splunk_server=local 
+    | regex eai:data="[\\\\/]users[\\\\/]$appselection$[\\\\/][^\\\\/]+[\\\\/]lookups[/\\\\]" 
+    | rename eai:acl.app as appname, eai:userName AS user 
+    | search appname=* 
+    | dedup appname 
+    | map maxsearches=5000 search=" | rest /servicesNS/-/$appselection_rest$/admin/file-explorer/$splunk_dir|u$%2Fusers%2F$$user$$%2F$$appname$$%2Flookups splunk_server=local" 
+    | rex field=title "[\\\\/]users[\\\\/]$appselection$[\\\\/](?&lt;App&gt;.+)[\\\\/]lookups[\\\\/]"
+    | sort - lastModifiedTime 
+    | eval "Last Modified" = strftime(lastModifiedTime,"%b %d, %Y %H:%M"), fileSize_MB=round((fileSize/1024),3) 
+    | fillnull value=0.000 fileSize_MB 
+    | fields App name fileSize_MB "Last Modified" title 
+    | rex field=title "(?&lt;title&gt;users.*)$" 
+    | search $blacklist$ 
+    | join type=left name 
+        [| rest /servicesNS/-/$appselection_rest$/data/lookup-table-files splunk_server=local 
+        | regex eai:data="$splunk_dir$[\\\\/]users[\\\\/]$appselection$[\\\\/]"
+        | rename title AS name 
+        | fields + name author] 
+    | eval private_lookup="Yes"
+        ] 
+| rename title AS path 
+| search private_lookup="$priv_lookup$" 
+| sort - fileSize_MB</query>
+        </search>
+        <option name="count">100</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Lookup Subdirectories by App</title>
+      <table>
+        <title>Note: blacklist does not work for this panel and the last modified is directory modification date. If the author is blank then no matching lookup definition of type geo was found. Finally, as per the open ideas, the sub-directories under the lookups directory are never reaped by Splunk as of 8.0.3, it is upto the administrator to remove them as required. Also note they are not blacklisted from the knowledge bundle to the search peers, and finally they are created when the geom command is used so can be different per-search head!</title>
+        <search base="base">
+          <query>| eval last_modified = strftime(lastModifiedTime,"%b %d, %Y %H:%M") 
+| search hasSubNodes=1 
+| map maxsearches=5000 search=" | rest /servicesNS/-/$appselection_rest$/admin/file-explorer/$splunk_dir|u$%2Fapps%2F$$appname$$%2Flookups%2F$$name$$ splunk_server=local | eval last_modified=\"$$last_modified$$\"" 
+| rex field=title "(?P&lt;path&gt;[^/\\\\]+[/\\\\](?P&lt;App&gt;[^/\\\\]+)[/\\\\][^/\\\\]+[/\\\\](?P&lt;dirname&gt;[^/\\\\]+))[/\\\\][^/\\\\]+$" 
+| stats sum(fileSize) AS fileSize, values(last_modified) AS "Last Modified" by dirname, App, path 
+| append 
+    [| rest /servicesNS/-/$appselection_rest$/data/lookup-table-files splunk_server=local 
+    | regex eai:data="$splunk_dir$[\\\\/]users[/\\\\][^/\\\\]+[/\\\\]$appselection$[\\\\/]" 
+    | rename eai:acl.app as appname, eai:userName AS user 
+    | search appname=* 
+    | dedup appname
+    | map maxsearches=5000 search=" | rest /servicesNS/-/$appselection_rest$/admin/file-explorer/$splunk_dir|u$%2Fusers%2F$$user$$%2F$$appname$$%2Flookups splunk_server=local | eval appname=\"$$appname$$\", user=\"$$user$$\"" 
+    | search NOT ignoreme="true"
+    | search hasSubNodes=1 
+    | eval last_modified = strftime(lastModifiedTime,"%b %d, %Y %H:%M") 
+    | map maxsearches=5000 search=" | rest /servicesNS/-/$appselection_rest$/admin/file-explorer/$splunk_dir|u$%2Fusers%2F$$user$$%2F$$appname$$%2Flookups%2F$$name$$ splunk_server=local | eval last_modified=\"$$last_modified$$\"" 
+    | rex field=title "(?P&lt;path&gt;([^/\\\\]+[/\\\\]){2}(?P&lt;App&gt;[^/\\\\]+)[/\\\\][^/\\\\]+[/\\\\](?P&lt;dirname&gt;[^/\\\\]+))[/\\\\][^/\\\\]+$" 
+    | stats sum(fileSize) AS fileSize, values(last_modified) AS "Last Modified" by dirname, App, path ] 
+| eval fileSize_MB=round((fileSize/1024),3) 
+| table App, dirname, fileSize_MB, "Last Modified" path 
+| join type=left dirname 
+    [| rest /servicesNS/-/$appselection_rest$/data/transforms/lookups splunk_server=local search="type=geo" f=title 
+    | fields + dirname author] 
+| sort - fileSize_MB</query>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>

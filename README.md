@@ -165,6 +165,31 @@ Lookup Watcher generates a log file is created in $SPLUNK_HOME/var/log/splunk/ a
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.5.9
+New alerts:
+`AllSplunkLevel - Unexpected termination of a Splunk process windows`
+
+`AllSplunkLevel - Unexpected termination of a Splunk process unix`
+
+`IndexerLevel - strings_metadata triggering bucket rolling`
+
+New reports:
+`ForwarderLevel - Data dropping duration`
+
+`SearchHeadLevel - Lookup CSV size`
+
+New dashboards:
+`lookup_audit`
+
+New macro:
+`mylookups` (7.3.3+ only)
+
+New nav menu items:
+Hyperlink to https://github.com/silkyrich/cluster_health_tools
+
+Updated to Splunk python SDK 1.6.12
+
+
 ### 2.5.8
 New alerts:
 `ClusterMasterLevel - excess buckets on master`
