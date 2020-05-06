@@ -188,7 +188,7 @@ New nav menu items:
 Hyperlink to https://github.com/silkyrich/cluster_health_tools
 
 Updated to Splunk python SDK 1.6.12
-
+Set `python.version = python3` within inputs.conf.spec as per appinspect requirement
 
 ### 2.5.8
 New alerts:
