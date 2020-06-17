@@ -41,6 +41,7 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunk%20Servers%20throwing%20runScript%20errors">Splunk Servers throwing runScript errors</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20execprocessor%20errors">execprocessor errors</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%2520-%2520Data%2520Loss%2520on%2520shutdown">Data Loss on shutdown</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20TailReader%20Ignoring%20Path">AllSplunkLevel - TailReader Ignoring Path</a>
 			</collection>    	
 			<collection label="Scheduler">
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunk%20Scheduler%20excessive%20delays%20in%20executing%20search">Splunk Scheduler excessive delays in executing search</a>
@@ -112,7 +113,8 @@
                 <collection label="Performance">
                     <view name="heavyforwarders_max_data_queue_sizes_by_name" />
                     <view name="indexer_max_data_queue_sizes_by_name" />
-                    <view name="hec_performance" />
+		    <view name="hec_performance" />
+		    <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">ForwarderLevel - Channel churn issues</a>
 		</collection>
 	</collection>
 	<collection label="IndexerLevel">
@@ -155,6 +157,7 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Indexer%20replication%20queue%20issues%20to%20some%20peers">Indexer replication queue issues to some peers</a>
 				<view name="heavyforwarders_max_data_queue_sizes_by_name" />
 				<view name="indexer_max_data_queue_sizes_by_name" />			
+  	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">ForwarderLevel - Channel churn issues</a>
 			</collection>
 			<collection label="Other">
                                 <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Indexer%20not%20accepting%20TCP%20Connections">Indexer not accepting TCP Connections</a>		
@@ -241,7 +244,8 @@
 			</collection>			
 			<collection label="Dashboards">
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20User%20-%20Dashboards%20searching%20all%20indexes%20macro%20version">User - Dashboards searching all indexes macro version</a>
-				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20User%20-%20Dashboards%20searching%20all%20indexes">User - Dashboards searching all indexes</a>							
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20User%20-%20Dashboards%20searching%20all%20indexes">User - Dashboards searching all indexes</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%2520-%2520Dashboards%2520with%2520all%2520time%2520searches%2520set">SearchHeadLevel - Dashboards with all time searches set</a>
 				<saved name="SearchHeadLevel - Dashboard refresh intervals" />
                                 <saved name="SearchHeadLevel - Dashboards using depends and running searches in the background" />
 				<saved name="SearchHeadLevel - Dashboards using special characters" />
@@ -252,7 +256,10 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20without%20a%20configured%20earliest%20and%20latest%20time">Scheduled Searches without a configured earliest and latest time</a>
 			<saved name="SearchHeadLevel - Summary searches using realtime search scheduling" />
 			<saved name="SearchHeadLevel - SavedSearches using special characters" />
-			</collection>									
+	  		</collection>									
+			<collection label="Other">
+	                        <saved name="SearchHeadLevel - audit logs showing all time searches" />
+			</collection>
 		</collection>
 		<collection label="Performance Issues">
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Captain%20Switchover%20Occurring">Captain Switchover Occurring</a>
@@ -291,6 +298,7 @@
                         <saved name="SearchHeadLevel - SHC conf log summary" />
 			<saved name="SearchHeadLevel - Searches dispatched as owner by other users" />
 			<saved name="SearchHeadLevel - Lookup CSV size" />
+			<saved name="SearchHeadLevel - audit logs showing all time searches" />
 			<view name="knowledge_objects_by_app" />
 			<view name="lookups_in_use_finder" />
 			<view name="lookup_audit" />

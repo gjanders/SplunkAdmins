@@ -165,6 +165,29 @@ Lookup Watcher generates a log file is created in $SPLUNK_HOME/var/log/splunk/ a
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.5.10
+Updated to Splunk python SDK 1.6.13 (previous 2.5.9 did not include this update)
+
+New alerts:
+`AllSplunkLevel - TailReader Ignoring Path`
+
+`ForwarderLevel - Channel churn issues`
+
+`SearchHeadLevel - Dashboards with all time searches set`
+
+New reports:
+`SearchHeadLevel - audit logs showing all time searches`
+
+Updated reports:
+`SearchHeadLevel - Macro report` to use the new macro
+
+`SearchHeadLevel - Search Queries summary exact match 73` to use the new macro
+
+`SearchHeadLevel - Search Queries summary non-exact match 73` to use the new macro
+
+New macros:
+`splunkadmins_splunk_server_name`
+
 ### 2.5.9
 New alerts:
 `AllSplunkLevel - Unexpected termination of a Splunk process windows`

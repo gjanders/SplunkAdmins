@@ -158,6 +158,7 @@
     | search NOT ignoreme="true"
     | search hasSubNodes=1 
     | eval last_modified = strftime(lastModifiedTime,"%b %d, %Y %H:%M") 
+    | fillnull last_modified
     | map maxsearches=5000 search=" | rest /servicesNS/-/$appselection_rest$/admin/file-explorer/$splunk_dir|u$%2Fusers%2F$$user$$%2F$$appname$$%2Flookups%2F$$name$$ splunk_server=local | eval last_modified=\"$$last_modified$$\"" 
     | rex field=title "(?P&lt;path&gt;([^/\\\\]+[/\\\\]){2}(?P&lt;App&gt;[^/\\\\]+)[/\\\\][^/\\\\]+[/\\\\](?P&lt;dirname&gt;[^/\\\\]+))[/\\\\][^/\\\\]+$" 
     | stats sum(fileSize) AS fileSize, values(last_modified) AS "Last Modified" by dirname, App, path ] 
