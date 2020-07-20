@@ -324,7 +324,10 @@
                         <saved name="SearchHeadLevel - Index list report" />
                         <saved name="SearchHeadLevel - IndexesPerRole Remote Report" />
                         <saved name="SearchHeadLevel - IndexesPerRole Report" />
-			<saved name="SearchHeadLevel - Macro report" />          
+			<saved name="SearchHeadLevel - Macro report" />
+			<saved name="SearchHeadLevel - DataModels report" />
+			<saved name="SearchHeadLevel - Tags report" />
+			<saved name="SearchHeadLevel - EventTypes report" />
 			<saved name="SearchHeadLevel - Users exceeding the disk quota introspection cleanup" />                      
 		</collection>	
 		<collection label="Recommended (externally hosted)">

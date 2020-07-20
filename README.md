@@ -165,6 +165,54 @@ Lookup Watcher generates a log file is created in $SPLUNK_HOME/var/log/splunk/ a
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.5.11
+Added notes around the `log_search_messages` property under [search] in limits.conf
+
+New macros:
+`conf_rest_endpoint`
+
+`splunkadmins_epoch`
+
+`splunkadmins_audit_logs_datamodel_sub`
+
+`splunkadmins_audit_logs_eventtypes_sub`
+
+`splunkadmins_audit_logs_macro_sub_v8` - note this version uses mvmap so Splunk v8+, the `splunkadmins_audit_logs_macro_sub` still exists for pre-version 8 but can only replace 1 macro per run...
+
+`splunkadmins_audit_logs_tags_sub`
+
+New reports:
+`SearchHeadLevel - DataModels report`
+
+`SearchHeadLevel - Tags report`
+
+`SearchHeadLevel - EventTypes report`
+
+Updated dashboard `troubleshooting_resource_usage_per_user_drilldown` to display the correct time range for more searches
+
+Updated reports:
+`IndexerLevel - RemoteSearches Indexes Stats` - to summarize indexes stats
+
+`SearchHeadLevel - Scheduled searches not specifying an index macro version`
+
+`SearchHeadLevel - User - Dashboards searching all indexes macro version`
+
+`SearchHeadLevel - Search Queries By Type Audit Logs macro version`
+
+`SearchHeadLevel - Search Queries By Type Audit Logs macro version other`
+
+`SearchHeadLevel - Dashboards with all time searches set`
+
+To use the new macro `splunkadmins_audit_logs_macro_sub_v8`
+
+Upated reports:
+`SearchHeadLevel - Search Queries summary exact match 73`
+
+`SearchHeadLevel - Search Queries summary non-exact match 73`
+
+To use the new macros `splunkadmins_audit_logs_macro_sub_v8`, `splunkadmins_audit_logs_eventtypes_sub`, `splunkadmins_audit_logs_datamodel_sub`, `splunkadmins_audit_logs_tags_sub`
+
+
 ### 2.5.10
 Updated to Splunk python SDK 1.6.13 (previous 2.5.9 did not include this update)
 
@@ -355,9 +403,9 @@ New macros:
 
 `splunkadmins_audit_logs_macro_sub`
 
-`splunkadmins_remote_macros` (this macro requires TA-webtools)
+`splunkadmins_remote_macros` (this macro requires TA-webtools), alternatively you can you the Mothership app (SplunkBase)
 
-`splunkadmins_remote_roles` (this macro requires TA-webtools)
+`splunkadmins_remote_roles` (this macro requires TA-webtools), alternatively you can you the Mothership app (SplunkBase)
 
 New reports:
 

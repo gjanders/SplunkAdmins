@@ -29,8 +29,9 @@
         <search>
           <query>index=_audit host=$host$ "info=granted" OR "info=completed" OR "info=canceled" search_id IN ($sid$)
 | rex ", search='(?P&lt;search&gt;[\S+\s+]+?)', "
-| stats min(timestamp) AS time, values(user) AS user, values(total_run_time) AS total_run_time, values(result_count) AS result_count, values(search) AS search, values(host) AS host, values(search_et) AS startTime, values(search_lt) AS endTime, values(info) AS info, values(savedsearch_name) AS savedsearch_name by search_id
+| stats min(_time) AS time, max(_time) AS max_timestamp, values(user) AS user, values(total_run_time) AS total_run_time, values(result_count) AS result_count, values(search) AS search, values(host) AS host, values(search_et) AS startTime, values(search_lt) AS endTime, values(info) AS info, values(savedsearch_name) AS savedsearch_name by search_id
 | eval app="$app$", label="$label$"
+| eval endTime=if((info=="completed" OR info=="canceled") AND endTime=="N/A",max_timestamp,endTime)
 | eval period=tostring(round(endTime-startTime), "duration")
 | eval startTime=strftime(startTime, "%Y-%m-%d %H:%M:%S"), endTime=strftime(endTime, "%Y-%m-%d %H:%M:%S")
 | fillnull value="All Time" startTime endTime period
