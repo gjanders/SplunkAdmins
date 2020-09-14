@@ -165,6 +165,34 @@ Lookup Watcher generates a log file is created in $SPLUNK_HOME/var/log/splunk/ a
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.5.12
+New alerts:
+`SearchHeadLevel - splunk_search_messages dispatch`
+
+`SearchHeadLevel - WLM aborted searches`
+
+`SearchHeadLevel - dispatch metadata files may need removal`
+
+Minor changes to reports:
+`SearchHeadLevel - Search Queries summary exact match 73`
+
+`SearchHeadLevel - Search Queries summary non-exact match 73`
+
+And macro:
+`splunkadmins_audit_logs_datamodel_sub`
+
+Updated alert:
+`SearchHeadLevel - Dashboards with all time searches set` to look for earliest= in tokens and to ignore that case
+
+Updated reports:
+`SearchHeadLevel - Indexer Peer Connection Failures`
+
+`SearchHeadLevel - Detect searches hitting corrupt buckets`
+
+The above were updated to use `splunk_search_messages` sourcetype
+
+`IndexerLevel - Knowledge bundle upload stats` updated to handle cascading bundle replication
+
 ### 2.5.11
 Added notes around the `log_search_messages` property under [search] in limits.conf
 

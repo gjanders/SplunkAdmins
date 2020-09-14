@@ -233,6 +233,8 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Script%20failures%20in%20the%20last%20day">Script failures in the last day</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20SHCluster%20Artifact%20Replication%20Issues">SHCluster Artifact Replication Issues</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20SHC%20Captain%20unable%20to%20establish%20common%20bundle">SearchHeadLevel - SHC Captain unable to establish common bundle</a>
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20splunk_search_messages%20dispatch">SearchHeadLevel - splunk_search_messages dispatch</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20dispatch%20metadata%20files%20may%20need%20removal">SearchHeadLevel - dispatch metadata files may need removal</a>
 		</collection>	
 		<collection label="Non best-practice">
 			<collection label="Realtime searches">
@@ -282,6 +284,7 @@
                         <saved name="SearchHeadLevel - Users exceeding the disk quota introspection" />
                         <saved name="SearchHeadLevel - Users with auto-finalized searches" />
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Users%20exceeding%20the%20disk%20quota">Users exceeding the disk quota</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20WLM%20aborted%20searches">SearchHeadLevel - WLM aborted searches</a>
 		</collection>						
 		<collection label="Reports">	
 			<saved name="SearchHeadLevel - Alerts that have not fired an action in X days" />                    
