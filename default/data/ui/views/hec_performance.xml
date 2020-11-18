@@ -171,7 +171,7 @@
 | eval reqs_per_sec=reqs/300, bytes_per_post=Bytes/reqs
 | rename data.token_name as token_name
 | stats sum(eval(Bytes/1024/1024)) as MBytes sum(events) as Events p50(events_per_POST) as events_per_post p50(bytes_per_post) as bytes_per_post p90(reqs_per_sec) as posts_per_sec by token_name
-| eval MBytes = tostring(round(MBytes, 2),"commas"), events_per_post=tostring(round(events_per_post,2),"commas"), bytes_per_post=tostring(round(bytes_per_post,2),"commas"), posts_per_sec=tostring(round(posts_per_sec,2),"commas"), Events=tostring(Events,"commas")
+| eval MBytes = round(MBytes, 2), events_per_post=round(events_per_post,2), bytes_per_post=round(bytes_per_post,2), posts_per_sec=round(posts_per_sec,2)
 | sort - posts_per_sec</query>
           <earliest>$timepicker.earliest$</earliest>
           <latest>$timepicker.latest$</latest>
@@ -181,11 +181,18 @@
         <option name="refresh.display">progressbar</option>
         <format type="color" field="events_per_POST">
           <colorPalette type="list">[#DC4E41,#DC4E41,#F8BE34,#53A051]</colorPalette>
-         <scale type="threshold">0,5,10</scale>
+          <scale type="threshold">0,5,10</scale>
         </format>
         <format type="color" field="reqs_per_sec">
           <colorPalette type="list">[#53A051,#F8BE34,#DC4E41]</colorPalette>
           <scale type="threshold">10,50</scale>
+        </format>
+        <format type="number" field="MBytes"></format>
+        <format type="number" field="events_per_post"></format>
+        <format type="number" field="bytes_per_post"></format>
+        <format type="number" field="posts_per_sec"></format>
+        <format type="number" field="Events">
+          <option name="precision">0</option>
         </format>
       </table>
     </panel>
