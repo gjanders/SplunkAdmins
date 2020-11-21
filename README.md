@@ -165,6 +165,15 @@ Lookup Watcher generates a log file is created in $SPLUNK_HOME/var/log/splunk/ a
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.5.14
+Update Splunk python SDK to 1.6.14
+
+New alerts:
+`IndexerLevel - Slow peer from remote searches`
+
+Updated dashboard:
+`hec_performance` as per pull request from jordanfelle
+
 ### 2.5.13
 Minor fixes for app inspect (new empty lookup file)
 

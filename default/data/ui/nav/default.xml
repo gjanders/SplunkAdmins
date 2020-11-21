@@ -155,6 +155,7 @@
 			<collection label="Queues">			
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Indexer%20Queues%20May%20Have%20Issues">Indexer Queues May Have Issues</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Indexer%20replication%20queue%20issues%20to%20some%20peers">Indexer replication queue issues to some peers</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Slow%20peer%20from%20remote%20searches">Slow peer from remote searches</a>
 				<view name="heavyforwarders_max_data_queue_sizes_by_name" />
 				<view name="indexer_max_data_queue_sizes_by_name" />			
   	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">ForwarderLevel - Channel churn issues</a>
@@ -271,6 +272,8 @@
                         <view name="detect_excessive_search_use" />
 			<saved name="SearchHeadLevel - Maximum memory utilisation per search" />
 			<saved name="SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated" />
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20SHC%20Captain%20unable%20to%20establish%20common%20bundle">SearchHeadLevel - SHC Captain unable to establish common bundle</a>
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Slow%20peer%20from%20remote%20searches">Slow peer from remote searches</a>
 		</collection>		
 		<collection label="Proactive">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20LDAP%20users%20have%20been%20disabled%20or%20left%20the%20company%20cleanup%20required">LDAP users have been disabled or left the company cleanup required</a>		
