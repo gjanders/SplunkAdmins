@@ -13,13 +13,16 @@ The powerpoint should it be required is available [here](https://github.com/gjan
 
 There are many potential alerts that might cause an issue so this application has all alerts disabled by default, post-installation once the required macros are configured you can enable the alerts you wish to use and add the required actions
 
-There are also a few dashboards for investigating indexer performance, heavy forwarder queue usage and data model acceleration issues
+There are also dashboards for investigating indexer performance, heavy forwarder queue usage, data model acceleration issues among other items that may be of interest to a Splunk admin
 
 Please note that the all alerts & dashboards were tested on Linux-based Splunk infrastructure, with AIX, Linux and Windows forwarders
 
 If you are running your Splunk enterprise installation on Windows or have customised your installation directory you will need to customise some of the macros such as `splunkadmins_splunkd_source` to point to the correct splunkd log file location
 
 Also note that this application contains a very large number of alerts which you can use, you may wish to utilise the `allow_skew` in savedsearches.conf to allow the scheduler to balance out the scheduled alerts execution times
+
+Finally, the application has evolved over the years, more recent releases have resulted in very generic alerts such as `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only`, this is designed as a "catch all" to cover many splunkd log messages. The older alerts are very specific as the team I worked in was new to Splunk and required a more specific outcome/action based on each alert
+Feel free to use either, and feedback or contributions via github or email are always welcome
 
 ## Macros - required configuration
 The various saved searches and dashboards use macros within their searches, you will need to update the macros to ensure the searches/dashboards work as expected
@@ -89,11 +92,12 @@ The following reports / alert must either run on the cluster master or a server 
 - ClusterMasterLevel - Primary bucket count per peer
 
 ## Using the application
-Once the application is installed, *all* alerts are disabled by default and you can enable those you require or want to test in your local environment
+Once the application is installed, **all** alerts are disabled by default and you can enable those you require or want to test in your local environment
 If you choose not to customise the macros then many searches will search for all hosts, which will make the alerts and dashboards inaccurate!
 
 ## Which alerts should be enabled?
-The alerts are all useful for detecting a variety of different scenarios which may or may not be applicable within your Splunk environment
+The alerts are all useful for detecting a variety of different scenarios which may or may not be applicable within your Splunk environment, in many ways this application has evolved into a library of possible alerts or explanation of alerts, it does not make sense to turn on all the alerts as such as some overlap
+
 The description field has an (extremely) simple way of determining if an alert will require action, there are three levels:
   - Low - the alert is informational and likely relates to a potential issue, these alerts may produce false alarms
   - Moderate - the alert is a warning, most likely further action will need to be taken, a moderate chance of false alarms
@@ -122,8 +126,18 @@ There are many Splunk conf talks available on this subject in various conference
 - SearchHeadLevel - Scheduled Searches That Cannot Run
 - SearchHeadLevel - Scheduled Searches without a configured earliest and latest time
 - SearchHeadLevel - Users exceeding the disk quota
+- SearchHeadLevel - Users with auto-finalized searches
 - SearchHeadLevel - User - Dashboards searching all indexes
 - SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated
+- SearchHeadLevel - WLM aborted searches
+- SearchHeadLevel - Dashboards with all time searches set
+- SearchHeadLevel - SavedSearches using special characters
+- SearchHeadLevel - Dashboards using special characters
+- SearchHeadLevel - Dashboards using depends and running searches in the background
+= SearchHeadLevel - Summary searches using realtime search scheduling
+- SearchHeadLevel - Searches dispatched as owner by other users
+- SearchHeadLevel - Search Messages user level
+- SearchHeadLevel - audit logs showing all time searches
 
 Are all well suited to an automated email using the sendresults command or a similar function as they involve end user configuration which the individual can change/fix
 
@@ -143,9 +157,9 @@ Each entry in the pattern field will be compared to each entry in the srchIndexe
 To make this command work the Splunk python SDK is bundled into the app, if the bin directory is wiped due to issues with other applications this only disables the two commands which are used in `Search Queries summary non-exact match` so far 
 
 ## KVStore Usage
-Some CSV lookups are now replaced with kvstore entries due to the ability to sync the kvstore across multiple search head or search head cluster(s) via apps like [TA-SyncKVStore](https://splunkbase.splunk.com/app/3519/)
+Some CSV lookups are now replaced with kvstore entries due to the ability to sync the kvstore across multiple search head or search head cluster(s) via apps like [KV Store Tools Redux](https://splunkbase.splunk.com/app/5328/)
 
-##Lookup Watcher
+## Lookup Watcher
 The Lookup Watcher is a modular input designed to work in either search head clusters or standalone Splunk instances to determine the modification time and size of all lookup files on the filesystem of the Splunk servers.
 In a search head cluster the input will run on the captain only by running a rest call on each run, on a non-search head cluster it will always run.
 To use this, on a non-search head cluster simply go to Settings -> Inputs and create the Lookup Watcher modular input, the name of the input does not matter, you just need to create 1 input. 
@@ -159,12 +173,124 @@ Once done the additional logs can be used to determine how often lookups are upd
 
 Tested on Windows & Linux on Splunk 7.x.
 
-Lookup Watcher generates a log file is created in $SPLUNK_HOME/var/log/splunk/ and will also be in the internal index with the name lookup_watcher.log
+Lookup Watcher generates a log file is created in `$SPLUNK_HOME/var/log/splunk/` and will also be in the internal index with the name `lookup_watcher.log`
+
+## platform_stats reports
+There are a number of reports with the keyword "platform_stats" in the title, these were designed to run mcollect commands and to collect data into a metric index
+The metrics then contain detailed information around the number of users using Splunk per-search head cluster, data indexed at the indexing tier, resource usage per user et cetera.
+There is plenty of detail in here but dashboards were not included for the information built from them, contributions welcome
+
+## Detecting which indexes are searched by Splunk users
+As of version 8.0.7 there is still no accurate way to detect which indexes were searched by a user based on their level of access, the audit logs simply do not record which indexes were accessed
+Therefore the following searches:
+
+`SearchHeadLevel - Search Queries summary exact match`
+
+`SearchHeadLevel - Search Queries summary non-exact match`
+
+Were created on version 7.2.x, however there were logging changes that resulted in a more accurate match so the reports were superseded by:
+
+`SearchHeadLevel - Search Queries summary exact match 73`
+
+`SearchHeadLevel - Search Queries summary non-exact match 73`
+
+As per the description they both require reports such as `SearchHeadLevel - Macro report`, the description details the various reports they rely on to make them work.
+
+However they will not be 100% accurate, another version such as `IndexerLevel - RemoteSearches Indexes Stats` doesn't need to do macro substitution but then cannot you be sure of which user ran the search in all cases so you also have an accuracy issue...
+
+Either way the search head level version seems to be "good enough" to determine who is searching which index in most cases
 
 ## Feedback?
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.0
+Various README.md updates
+
+New alerts:
+
+`AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` this generic alert is designed to capture a variety of splunkd log messages that warrant further investigation or show an issue exists that should be fixed. This alert is generic and captures many errors.
+
+`DeploymentServer - Error Found On Deployment Server` this alert captures deployment server errors, this is more generic than the current alert and designed to catch more scenarios
+
+`SearchHeadLevel - Dashboards invalid character in splunkd` this alert finds errors in splunkd related to invalid characters in a dashboard
+
+`SearchHeadLevel - savedsearches invalid character in splunkd` this alert finds errors in splunkd related to invalid characters in a saved search
+
+`SearchHeadLevel - datamodel errors in splunkd` this alert finds errors related to data models in the splunkd logs
+
+`SearchHeadLevel - Search Messages user level` this alert is designed to be combined with an app like sendresults.
+This searches the splunk search messages and looks for errors that should be actionable by a end user
+This is designed to be a generic alert covering many failure scenarios
+
+`SearchHeadLevel - Search Messages admins only` this alert searches the splunk search messages but is designed to find errors that cannot be fixed by end users, the user level version is for end user level errors
+
+New lookup file:
+
+`splunkadmins_rmd5_to_savedsearchname.csv`
+
+New reports:
+
+`SearchHeadLevel - RMD5 to savedsearch_name lookupgen report` new helper report for translating rmd5 names in the search id back to a report name.
+
+`SearchHeadLevel - Search Messages field extractor slow` looks for messages about a slow field extractor in the splunk search messages
+
+Updated macro:
+
+`search_type_from_sid` to work with real-time searches 
+
+Updated alerts:
+
+`AllSplunkLevel - Application Installation Failures From Deployment Manager` updated to handle download failures and use cluster command
+
+`AllSplunkEnterpriseLevel - Email Sending Failures` updated to work on logging changes in 8.0.x
+
+`AllSplunkEnterpriseLevel - Splunk Servers throwing runScript errors` updated to work on logging changes in 8.0.x
+ 
+`AllSplunkEnterpriseLevel - Splunk Servers with resource starvation` now includes an additional error/warning message
+
+`AllSplunkEnterpriseLevel - Replication Failures` now includes more types of knowledge bundle replication issues and uses cluster command
+
+`IndexerLevel - IndexConfig Warnings from Splunk indexers` updated to include error level messages 
+
+`IndexerLevel - Slow peer from remote searches` updated to remove special double quote characters
+
+`IndexerLevel - Peer will not return results due to outdated generation` to update description to refer to `AllSplunkEnterpriseLevel - Losing Contact With Master Node `
+
+`IndexerLevel - Data parsing error` now includes csv and json line breaker errors, now uses stats instead of cluster 
+
+`SearchHeadLevel - Script failures in the last day` expanded to handle modular alerts and script errors in one alert. Also attempts to translate base64 or encoded report names back to human readable versions
+
+`SearchHeadLevel - Macro report` updated crontab to all days of the week 
+
+`SearchHeadLevel - Users with auto-finalized searches` description update 
+
+`SearchHeadLevel - Search Queries summary exact match 73` minor update to deal with real-time searches in regex
+
+`SearchHeadLevel - Search Queries summary non-exact match 73` minor update to deal with real-time searches in regex
+
+`SearchHeadLevel - SHC Captain unable to establish common bundle` updated to include one more error/warning message
+
+`SearchHeadLevel - platform_stats access summary` updated to deal with real-time searches in regex
+
+`SearchHeadLevel - Dashboards using special characters` added ignore for trackme and network diagram viz as this was breaking the rex command, also removed an extra rex line 
+
+`SearchHeadLevel - splunk_search_messages dispatch` comment update only 
+
+`SearchHeadLevel - dispatch metadata files may need removal` update to use macro
+
+`SearchHeadLevel - Search Queries summary exact match 73` description/comment update
+
+`SearchHeadLevel - Search Queries summary non-exact match 73` description/comment update
+
+Renamed alert:
+
+`IndexerLevel - Splunk Indexers Losing Contact With Master` to `AllSplunkEnterpriseLevel - Losing Contact With Master Node` alert renamed and now includes search head to master node and indexers to master node in one alert
+
+Removed alert:
+
+`IndexerLevel - Unable to replicate thawed directories in a cluster`
+
 ### 2.5.14
 Update Splunk python SDK to 1.6.14
 

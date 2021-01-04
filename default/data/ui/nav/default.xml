@@ -51,7 +51,11 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Replication%20Failures">Replication Failures</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20Unable%20To%20Distribute%20to%20Peer">Unable To Distribute to Peer</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%2520-%2520Data%2520Loss%2520on%2520shutdown">Data Loss on shutdown</a>
+	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Losing%20Contact%20With%20Master%20Node">Losing Contact With Master Node</a>
 			</collection>    			
+			<collection label="Generic">
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
+			</collection>
 		</collection>    		
 	</collection>    				
 	<collection label="ClusterMasterLevel">  
@@ -63,6 +67,8 @@
 		<collection label="Run Anywhere">  
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20ClusterMaster%20Advising%20SearchOrRep%20Factor%20Not%20Met">ClusterMaster Advising SearchOrRep Factor Not Met</a>
                         <view name="ClusterMasterJobs" />
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Losing%20Contact%20With%20Master%20Node">Losing Contact With Master Node</a>
 		</collection>  
 	</collection>
 	<collection label="Deployment Server">  
@@ -70,8 +76,12 @@
 		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FDeploymentServer%20-%20btool%20validation%20failures%20occurring%20on%20deployment%20server">btool validation failures occurring on deployment server</a>
 		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FDeploymentServer%20-%20Forwarder%20has%20changed%20properties%20on%20phone%20home">Forwarder has changed properties on phone home</a>
 		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FDeploymentServer%20-%20Unsupported%20attribute%20within%20DS%20config">Unsupported attribute within DS config</a>
+                <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20Application%20Installation%20Failures%20From%20Deployment%20Manager">Application Installation Failures From Deployment Manager</a>
+                <collection label="Generic">
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
+	                <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FDeploymentServer%20-%20Error%20Found%20On%20Deployment%20Server">Error Found On Deployment Server</a>
+                </collection>
 	</collection>
-
 	<collection label="ForwarderLevel">  
 		<collection label="OS Level Issues">  
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Forwarders%20in%20restart%20loop">Forwarders in restart loop</a>
@@ -108,6 +118,9 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Unusual%20number%20of%20duplication%20alerts">Unusual number of duplication alerts</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%2520-%2520Splunk%2520HEC%2520issues">Splunk HEC issues</a>
                                 <saved name="ForwarderLevel - Data dropping duration" />
+		                <collection lable="Generic">
+		                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
+		                </collection>
 			</collection>							
 		</collection>
                 <collection label="Performance">
@@ -148,8 +161,11 @@
 		</collection>	
 		<collection label="Failures">		
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20S2SFileReceiver%20Error">S2SFileReceiver Error</a>
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Splunk%20Indexers%20Losing%20Contact%20With%20Master">Splunk Indexers Losing Contact With Master</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Unclean%20Shutdown%20-%20Fsck">Unclean Shutdown - Fsck</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Losing%20Contact%20With%20Master%20Node">AllSplunkEnterpriseLevel - Losing Contact With Master Node</a>
+	                <collection lable="Generic">
+	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
+	                </collection>			
 		</collection>	
 		<collection label="Performance">
 			<collection label="Queues">			
@@ -168,7 +184,8 @@
                                 <view name="troubleshooting_resource_usage_per_user" />
                                 <view name="detect_excessive_search_use" />
                                 <view name="hec_performance" />
-                                <saved name="IndexerLevel - Knowledge bundle upload stats" />
+				<saved name="IndexerLevel - Knowledge bundle upload stats" />
+	                        <saved name="SearchHeadLevel - Search Messages field extractor slow" />
 			</collection>
 		</collection>		
 		<collection label="Search Related">			
@@ -222,6 +239,7 @@
 		<collection label="Data Models">				
 			<saved name="SearchHeadLevel - Data Model Acceleration Completion Status" />
 			<saved name="SearchHeadLevel - DataModel Fields" />
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20datamodel%20errors%20in%20splunkd">datamodel errors in splunkd</a>			
 			<view name="data_model_rebuild_monitor" />
 			<view name="data_model_status" />			
 		</collection>
@@ -233,9 +251,17 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Long%20filenames%20may%20be%20causing%20issues">Long filenames may be causing issues</a>						
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Script%20failures%20in%20the%20last%20day">Script failures in the last day</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20SHCluster%20Artifact%20Replication%20Issues">SHCluster Artifact Replication Issues</a>
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20SHC%20Captain%20unable%20to%20establish%20common%20bundle">SearchHeadLevel - SHC Captain unable to establish common bundle</a>
-                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20splunk_search_messages%20dispatch">SearchHeadLevel - splunk_search_messages dispatch</a>
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20dispatch%20metadata%20files%20may%20need%20removal">SearchHeadLevel - dispatch metadata files may need removal</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20SHC%20Captain%20unable%20to%20establish%20common%20bundle">SHC Captain unable to establish common bundle</a>
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20splunk_search_messages%20dispatch">splunk_search_messages dispatch</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20dispatch%20metadata%20files%20may%20need%20removal">dispatch metadata files may need removal</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Dashboards%20invalid%20character%20in%20splunkd">Dashboards invalid character in splunkd</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20savedsearches%20invalid%20character%20in%20splunkd">savedsearches invalid character in splunkd</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20datamodel%20errors%20in%20splunkd">datamodel errors in splunkd</a>
+	                <collection label="Generic">
+	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
+	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Search%20Messages%20user%20level">Search Messages user level</a>
+	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Search%20Messages%20admins%20only">Search Messages admins only</a>
+	                </collection>
 		</collection>	
 		<collection label="Non best-practice">
 			<collection label="Realtime searches">
@@ -273,7 +299,8 @@
 			<saved name="SearchHeadLevel - Maximum memory utilisation per search" />
 			<saved name="SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated" />
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20SHC%20Captain%20unable%20to%20establish%20common%20bundle">SearchHeadLevel - SHC Captain unable to establish common bundle</a>
-                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Slow%20peer%20from%20remote%20searches">Slow peer from remote searches</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Slow%20peer%20from%20remote%20searches">Slow peer from remote searches</a>
+                        <saved name="SearchHeadLevel - Search Messages field extractor slow" />
 		</collection>		
 		<collection label="Proactive">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20LDAP%20users%20have%20been%20disabled%20or%20left%20the%20company%20cleanup%20required">LDAP users have been disabled or left the company cleanup required</a>		
@@ -287,7 +314,7 @@
                         <saved name="SearchHeadLevel - Users exceeding the disk quota introspection" />
                         <saved name="SearchHeadLevel - Users with auto-finalized searches" />
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Users%20exceeding%20the%20disk%20quota">Users exceeding the disk quota</a>
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20WLM%20aborted%20searches">SearchHeadLevel - WLM aborted searches</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20WLM%20aborted%20searches">WLM aborted searches</a>
 		</collection>						
 		<collection label="Reports">	
 			<saved name="SearchHeadLevel - Alerts that have not fired an action in X days" />                    
@@ -305,6 +332,7 @@
 			<saved name="SearchHeadLevel - Searches dispatched as owner by other users" />
 			<saved name="SearchHeadLevel - Lookup CSV size" />
 			<saved name="SearchHeadLevel - audit logs showing all time searches" />
+			<saved name="SearchHeadLevel - Search Messages field extractor slow" />
 			<view name="knowledge_objects_by_app" />
 			<view name="lookups_in_use_finder" />
 			<view name="lookup_audit" />
@@ -323,7 +351,8 @@
 		</collection>
 		<collection label="Scheduled Search Failures">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20failing%20in%20cluster%20with%20404%20error">Scheduled searches failing in cluster with 404 error</a>
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20That%20Cannot%20Run">Scheduled Searches That Cannot Run</a>		
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20That%20Cannot%20Run">Scheduled Searches That Cannot Run</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20savedsearches%20invalid%20character%20in%20splunkd">savedsearches invalid character in splunkd</a>
 		</collection>									
 		<collection label="SupportingReports">				
                         <saved name="SearchHeadLevel - Index access list by user" />
@@ -335,6 +364,7 @@
 			<saved name="SearchHeadLevel - Tags report" />
 			<saved name="SearchHeadLevel - EventTypes report" />
 			<saved name="SearchHeadLevel - Users exceeding the disk quota introspection cleanup" />                      
+                        <saved name="SearchHeadLevel - RMD5 to savedsearch_name lookupgen report" />
 		</collection>	
 		<collection label="Recommended (externally hosted)">
 			<a href="https://github.com/dpaper-splunk/public/tree/master/dashboards" target="_blank">Extended Search Reporting (and others)</a>
