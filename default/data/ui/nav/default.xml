@@ -11,10 +11,10 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20ulimit%20on%20Splunk%20enterprise%20servers%20is%20below%208192">ulimit on Splunk enterprise servers is below 8192</a>
 			</collection>   
 			<collection label="Failures">
-				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Low%20disk%20space">KVStore Process Terminated</a>	
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%2520-%2520KVStore%2520Process%2520Terminated">KVStore Process Terminated</a>	
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Unable%20to%20dispatch%20searches%20due%20to%20disk%20space">Unable to dispatch searches due to disk space</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Low%20disk%20space">Low disk space</a>
-				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20KVStore%20Process%20Terminated">Splunkd Crash Logs Have Appeared in Production</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%2520-%2520Splunkd%2520Crash%2520Logs%2520Have%2520Appeared%2520in%2520Production">Splunkd Crash Logs Have Appeared in Production</a>
 				<a href="/app/SplunkAdmins/search?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%2520-%2520Unexpected%2520termination%2520of%2520a%2520Splunk%2520process%2520unix">AllSplunkLevel - Unexpected termination of a Splunk process unix</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%2520-%2520Unexpected%2520termination%2520of%2520a%2520Splunk%2520process%2520windows">AllSplunkLevel - Unexpected termination of a Splunk process windows</a>
 			</collection>   
