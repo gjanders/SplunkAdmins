@@ -285,6 +285,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20without%20a%20configured%20earliest%20and%20latest%20time">Scheduled Searches without a configured earliest and latest time</a>
 			<saved name="SearchHeadLevel - Summary searches using realtime search scheduling" />
 			<saved name="SearchHeadLevel - SavedSearches using special characters" />
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20alert%20actions%20exceeding%20the%20max_action_results%20limit">Splunk alert actions exceeding the max_action_results limit</a>
 	  		</collection>									
 			<collection label="Other">
 	                        <saved name="SearchHeadLevel - audit logs showing all time searches" />

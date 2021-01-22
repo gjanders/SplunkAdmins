@@ -204,6 +204,27 @@ Either way the search head level version seems to be "good enough" to determine 
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.1
+2 navigation menu items fixed (incorrect alert names) by pull request from EsOsO
+
+New alerts:
+`SearchHeadLevel - Splunk alert actions exceeding the max_action_results limit` - detect if any alert action exceeds the limit and receives limited results, currently a silent failure as per https://ideas.splunk.com/ideas/EID-I-781
+
+Updated alerts:
+`AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - exclusion for config reload requiring restart
+
+`IndexerLevel - Search Failures` - comment/description update only (replaced by search messages based alerts)
+
+`SearchHeadLevel - Detect MongoDB errors` - added missing | symbol as per email update from afx
+
+`SearchHeadLevel - Search Messages user level` - excluded messages from kvstore initialization and a few others, added macros
+
+`SearchHeadLevel - Search Messages admins only` - added messages for kvstore unknown status and a few others, added macros
+
+`SearchHeadLevel - SHC Captain unable to establish common bundle` - excluded indexer shutdown times
+
+`SearchHeadLevel - Splunk alert actions exceeding the max_action_results limit` - now ignores emails with no results inline (alert now joins with savedsearch info via map), added macro
+
 ### 2.6.0
 Various README.md updates
 
