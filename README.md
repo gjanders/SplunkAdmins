@@ -204,6 +204,9 @@ Either way the search head level version seems to be "good enough" to determine 
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.2
+Identical to 2.6.1, re-released to get around automated app inspect failure
+
 ### 2.6.1
 2 navigation menu items fixed (incorrect alert names) by pull request from EsOsO
 
