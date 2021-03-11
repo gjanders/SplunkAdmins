@@ -71,6 +71,8 @@ class StreamFilterCommand(StreamingCommand):
         for fieldname in self.fieldnames:
             #multivalue fields come through as a list, iterate through the list and run the regex against each entry
             #in the multivalued field
+            if not fieldname in record:
+                continue            
             if isinstance(record[fieldname], list):
                 for aRecord in record[fieldname]:
                     matches = pattern.findall(six.text_type(aRecord.decode("utf-8")))

@@ -204,6 +204,31 @@ Either way the search head level version seems to be "good enough" to determine 
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.3
+New alert:
+`SearchHeadLevel - authorize.conf settings will prevent some users from appearing in the UI`
+
+Updated alerts:
+`AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - a few more errors
+
+`SearchHeadLevel - Search Messages user level` - updated comment, added sid field
+
+`SearchHeadLevel - Search Messages admins only` - added sid field
+
+`SearchHeadLevel - Detect MongoDB errors` - added partial flag to remove false alarms (thanks afx)
+
+`IndexerLevel - Timestamp parsing issues combined alert` - update to provide a list of hosts per sourcetype
+
+Updated dashboards:
+`detect_excessive_search_use` - removing ldap query section (as this is env specific)
+
+`issues_per_sourcetype` - wording update on title
+
+`knowledge_objects_by_app` - corrected drilldown link to point to the SplunkAdmins app (thanks Vincent!)
+
+
+Updated Splunk python SDK to 1.6.15 
+
 ### 2.6.2
 Identical to 2.6.1, re-released to get around automated app inspect failure
 

@@ -95,7 +95,7 @@
         <option name="totalsRow">false</option>
         <option name="wrap">false</option>
         <drilldown>
-          <link target="_blank">/app/monitoring/knowledge_objects_by_app_drilldown?form.app=$app$&amp;form.type=$row.type$&amp;form.sharing=$row.sharing$&amp;form.owner=$row.owner$</link>
+          <link target="_blank">/app/SplunkAdmins/knowledge_objects_by_app_drilldown?form.app=$app$&amp;form.type=$row.type$&amp;form.sharing=$row.sharing$&amp;form.owner=$row.owner$</link>
         </drilldown>
       </table>
     </panel>

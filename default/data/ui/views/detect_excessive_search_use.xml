@@ -56,26 +56,6 @@
   </row>
   <row>
     <panel>
-      <title>User Information for $username$</title>
-      <table>
-        <search>
-          <query>| ldapsearch search="(&amp;(CN=$username$)(objectClass=organizationalPerson))" attrs="mail,givenName,sn,displayName,description,manager"
-| eval name=if(isnotnull(givenName), givenName . " " . sn, displayName . " _ " . description), username="$username$"
-| rex field=manager "CN=(?P&lt;managerid&gt;[^,]+)"
-| ldapfilter search="(&amp;(CN=$$managerid$$)(objectClass=organizationalPerson))" attrs="givenName,sn"
-| eval managerName = givenName . " " . sn
-| table name, mail, username, managerName</query>
-          <earliest>-15m</earliest>
-          <latest>now</latest>
-        </search>
-        <option name="count">10</option>
-        <option name="drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
-      </table>
-    </panel>
-  </row>
-  <row>
-    <panel>
       <title>Results from access logs for $username$</title>
       <table>
         <title>Note: cluster command in use, introspection data may better list all dashboards in use</title>

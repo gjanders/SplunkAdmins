@@ -308,6 +308,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Saved%20Searches%20with%20privileged%20owners%20and%20excessive%20write%20perms">Saved Searches with privileged owners and excessive write perms</a>						
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20Configured%20with%20incorrect%20sharing">Scheduled Searches Configured with incorrect sharing</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20login%20attempts%20from%20users%20that%20do%20not%20have%20any%20LDAP%20roles">Splunk login attempts from users that do not have any LDAP roles</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20authorize.conf%20settings%20will%20prevent%20some%20users%20from%20appearing%20in%20the%20UI">SearchHeadLevel - authorize.conf settings will prevent some users from appearing in the UI</a>
 		</collection>	
 		<collection label="Quotas">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20Max%20Historic%20Search%20Limits%20Reached">Splunk Max Historic Search Limits Reached</a>

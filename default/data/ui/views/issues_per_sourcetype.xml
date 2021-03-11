@@ -107,7 +107,7 @@ OR "is suspiciously far away from the previous event's time" $sourcetype$
     <panel>
       <title>Multiple time formats one sourcetype</title>
       <table>
-        <title>Normally this alert advises there are different kinds of data sharing a sourcetype, the normal fix it change the universal forwarder / inputs.conf to use different sourcetypes...</title>
+        <title>Normally this alert advises that a sourcetype is been used by multiple unique types of data (i.e. it should be more than one sourcetype), one way to fix this is at the universal forwarder / inputs.conf sourcetype= setting</title>
         <search>
           <query>`comment("This search detects when the time format has changed within the files 1 or more times, the time format per sourcetype should be consistent")`
 index=_internal "DateParserVerbose - Accepted time format has changed" sourcetype=splunkd (`indexerhosts`) OR (`heavyforwarderhosts`) $sourcetype$
