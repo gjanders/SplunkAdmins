@@ -204,6 +204,8 @@ Either way the search head level version seems to be "good enough" to determine 
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.5
+
 ### 2.6.4
 Updated alerts:
 `AllSplunkLevel - Splunk forwarders that are not talking to the deployment server` - contribution via email (Vincent)
