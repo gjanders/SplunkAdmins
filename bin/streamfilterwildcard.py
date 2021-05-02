@@ -75,11 +75,11 @@ class StreamFilterWildcardCommand(StreamingCommand):
                 continue            
             if isinstance(record[fieldname], list):
                 for aRecord in record[fieldname]:
-                    matches = pattern.findall(six.text_type(aRecord.decode("utf-8")))
+                    matches = pattern.findall(six.ensure_str(aRecord))
                     for match in matches:
                         values = values + " " + match
             else:
-                matches = pattern.findall(six.text_type(record[fieldname].decode("utf-8")))
+                matches = pattern.findall(six.ensure_str(record[fieldname]))
                 for match in matches:
                     values = values + " " + match
         return values

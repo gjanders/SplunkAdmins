@@ -204,6 +204,39 @@ Either way the search head level version seems to be "good enough" to determine 
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.4
+Updated alerts:
+`AllSplunkLevel - Splunk forwarders that are not talking to the deployment server` - contribution via email (Vincent)
+
+`AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - a few new additions
+
+`SearchHeadLevel - datamodel errors in splunkd` - excluded kvstore shutdown
+
+`SearchHeadLevel - Search Messages admins only` - new exclusions
+
+Updated dashboard:
+`issues_per_sourcetype` - the `Invalid parsed time` panel needed another regex - contribution via email (Vincent)
+
+Updated reports:
+`SearchHeadLevel - Search Queries summary exact match` - minor updates, added cache stats, improved accuracy
+
+`SearchHeadLevel - Search Queries summary non-exact match` - minor updates, added cache stats, improved accuracy
+
+Renamed/replaced reports:
+`SearchHeadLevel - Search Queries summary exact match 73` - new name is `SearchHeadLevel - Search Queries summary exact match`
+
+`SearchHeadLevel - Search Queries summary non-exact match 73 ` - new name is `SearchHeadLevel - Search Queries summary non-exact match`
+
+`SearchHeadLevel - Search Queries summary exact match 73 by user` - new name is `SearchHeadLevel - Search Queries summary exact match by user`
+
+`SearchHeadLevel - Search Queries summary exact match 73 by index` - new name is `SearchHeadLevel - Search Queries summary exact match by index`
+
+Updates to:
+`streamfilter.py` - correct utf-8 error python 3
+
+`streamfilterwildcard.py` - correct utf-8 error python 3
+
+
 ### 2.6.3
 New alert:
 `SearchHeadLevel - authorize.conf settings will prevent some users from appearing in the UI`

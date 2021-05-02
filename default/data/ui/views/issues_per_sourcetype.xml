@@ -72,6 +72,7 @@ index=_internal sourcetype=splunkd (`indexerhosts`) OR (`heavyforwarderhosts`)
 OR "is too far away from the previous event's time"
 OR "is suspiciously far away from the previous event's time" $sourcetype$
 | rex "source::(?P&lt;source&gt;[^|]+)\|host::(?P&lt;host&gt;[^|]+)\|(?P&lt;sourcetype&gt;[^|]+)"
+| rex "Context: source=(?P&lt;source&gt;[^|]+)\|host=(?P&lt;host&gt;[^|]+)\|(?P&lt;sourcetype&gt;[^|]+)"
 | search `comment("The goal of this part of the search was to obtain the messages that are relating to this particular host/source/sourcetype, however since the message includes a time we cannot uses values(message) without getting a huge number of values, therefore we use cluster to obtain the unique values. Since we want the original start/end times we use labelonly=true")`
 | cluster labelonly=true
 | eval message=coalesce(message,event_message)
