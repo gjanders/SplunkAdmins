@@ -205,6 +205,9 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 
 ## Release Notes
 ### 2.6.5
+`SearchHeadLevel - Search Queries summary exact match` - improved accuracy for append/join/multisearch/set
+
+`SearchHeadLevel - Search Queries summary non-exact match` - improved accuracy for append/join/multisearch/set
 
 ### 2.6.4
 Updated alerts:
