@@ -205,6 +205,12 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 
 ## Release Notes
 ### 2.6.5
+New reports:
+`IndexerLevel - RemoteSearches Indexes Stats Wilcard` - example wildcard match for remote_searches.log
+
+Updated reports:
+`IndexerLevel - RemoteSearches Indexes Stats` - added additional info around bucket cache usage
+
 `SearchHeadLevel - Search Queries summary exact match` - improved accuracy for append/join/multisearch/set
 
 `SearchHeadLevel - Search Queries summary non-exact match` - improved accuracy for append/join/multisearch/set
