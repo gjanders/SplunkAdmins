@@ -1,4 +1,4 @@
-<form>
+<form version="1.1">
   <label>Dashboard - Detect Excessive Search Use</label>
   <description>Detect repeated search use for the same search query by a particular user during a period of time</description>
   <fieldset submitButton="false">

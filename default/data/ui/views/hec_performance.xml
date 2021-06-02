@@ -1,4 +1,4 @@
-<form>
+<form version="1.1">
   <label>Dashboard - HEC Performance</label>
   <description>Based on the original version from  https://github.com/camrunr/hec_perf_report/blob/master/hec_perf_report.xml</description>
   <search id="by_token">

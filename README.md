@@ -204,6 +204,67 @@ Either way the search head level version seems to be "good enough" to determine 
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.5
+New reports:
+`IndexerLevel - RemoteSearches Indexes Stats Wilcard` - example wildcard match for remote_searches.log
+
+`SearchHeadLevel - Index list by cluster report` - for a list of indexes by indexer cluster
+
+Updated reports:
+`IndexerLevel - RemoteSearches Indexes Stats` - added additional info around bucket cache usage, improved accuracy, provided mcollect example
+
+`IndexerLevel - Slow peer from remote searches` - added more search types into the list
+
+`SearchHeadLevel - Search Queries summary exact match` - improved accuracy for append/join/multisearch/set
+
+`SearchHeadLevel - Search Queries summary non-exact match` - improved accuracy for append/join/multisearch/set
+
+Updated alerts:
+`AllSplunkEnterpriseLevel - Splunk Servers with resource starvation` - as per github issue #12, thanks RahimAbdulla
+
+`SearchHeadLevel - Detect MongoDB errors` - fix the alert by re-adding the fillnull into the subsearch
+
+Updated alerts/reports with new search macro for audit logs:
+`SearchHeadLevel - Users with auto-finalized searches`
+
+`SearchHeadLevel - Search Queries By Type Audit Logs`
+
+`SearchHeadLevel - Search Queries By Type Audit Logs macro version`
+
+`SearchHeadLevel - Search Queries By Type Audit Logs macro version other`
+
+`SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated`
+
+`SearchHeadLevel - platform_stats.audit metrics searches`
+
+`SearchHeadLevel - platform_stats.audit metrics users`
+
+`SearchHeadLevel - Searches dispatched as owner by other users`
+
+Updated alerts/reports with (?s) as some logs are now multi-line in 8.2.x (updating just in case):
+`SearchHeadLevel - Scheduled searches not specifying an index`
+
+`SearchHeadLevel - User - Dashboards searching all indexes`
+
+`SearchHeadLevel - Realtime Search Queries in dashboards`
+
+`SearchHeadLevel - Scheduled searches not specifying an index macro version`
+
+`SearchHeadLevel - User - Dashboards searching all indexes macro version`
+
+`SearchHeadLevel - Determine query scan density`
+
+`SearchHeadLevel - Users with auto-finalized`
+
+`SearchHeadLevel - Scheduled searches status`
+
+`SearchHeadLevel - Dashboard refresh intervals`
+
+Updated macros:
+`splunkadmins_audit_logs_macro_sub_v8` - to work in more cases (more output but less chance of missing a macro)
+
+Updated all dashboards to include the version="1.1" tag as required for new Splunk versions
+
 ### 2.6.4
 Updated alerts:
 `AllSplunkLevel - Splunk forwarders that are not talking to the deployment server` - contribution via email (Vincent)

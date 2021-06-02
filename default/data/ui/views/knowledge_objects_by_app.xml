@@ -1,4 +1,4 @@
-<form>
+<form version="1.1">
   <label>Dashboard - Knowledge Objects By App</label>
   <description>List of knowledge objects per app</description>
   <fieldset submitButton="false">

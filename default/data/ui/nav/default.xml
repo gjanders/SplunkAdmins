@@ -214,6 +214,7 @@
                     <saved name="IndexerLevel - platform_stats.counters hosts 24hour" />
                     <saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
                     <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
+		    <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
                 </collection>
 		<collection label="External">
 			<a href="https://github.com/silkyrich/cluster_health_tools/">The cluster_health_tools git repository contains very useful dashboards for various indexer related performance stats</a>
@@ -230,11 +231,12 @@
                         <saved name="SearchHeadLevel - Search Queries By Type Audit Logs macro version other" />                             
                         <saved name="SearchHeadLevel - Search Queries summary exact match" />                                       
                         <saved name="SearchHeadLevel - Search Queries summary non-exact match" /> 
-                        <saved name="SearchHeadLevel - Search Queries summary exact match 73" />
-                        <saved name="SearchHeadLevel - Search Queries summary exact match 73 by user" />
-                        <saved name="SearchHeadLevel - Search Queries summary exact match 73 by index" />
-                        <saved name="SearchHeadLevel - Search Queries summary non-exact match 73" />
+                        <saved name="SearchHeadLevel - Search Queries summary exact match" />
+                        <saved name="SearchHeadLevel - Search Queries summary exact match by user" />
+                        <saved name="SearchHeadLevel - Search Queries summary exact match by index" />
                         <saved name="SearchHeadLevel - IndexesPerUser Report" />
+                        <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
+                        <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
 		</collection>      
 		<collection label="Data Models">				
 			<saved name="SearchHeadLevel - Data Model Acceleration Completion Status" />
@@ -350,6 +352,7 @@
 			<saved name="IndexerLevel - platform_stats.counters hosts 24hour" />
 			<saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
 	                <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
+			<saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
 		</collection>
 		<collection label="Scheduled Search Failures">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20failing%20in%20cluster%20with%20404%20error">Scheduled searches failing in cluster with 404 error</a>
@@ -359,6 +362,7 @@
 		<collection label="SupportingReports">				
                         <saved name="SearchHeadLevel - Index access list by user" />
                         <saved name="SearchHeadLevel - Index list report" />
+			<saved name="SearchHeadLevel - Index list by cluster report" />
                         <saved name="SearchHeadLevel - IndexesPerRole Remote Report" />
                         <saved name="SearchHeadLevel - IndexesPerRole Report" />
 			<saved name="SearchHeadLevel - Macro report" />
@@ -384,6 +388,7 @@
                 <saved name="IndexerLevel - platform_stats.counters hosts 24hour" />
                 <saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
 		<saved name="IndexerLevel - RemoteSearches Indexes Stats" />
+		<saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
         </collection>
         <collection label="Users">
             <saved name="What Access Do I Have Without REST?" />

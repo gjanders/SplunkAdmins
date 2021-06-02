@@ -1,4 +1,4 @@
-<form>
+<form version="1.1">
   <label>Dashboard - Troubleshooting Resource Usage Per User</label>
   <description>This dashboard attempts to assist with finding which queries are using excessive amounts of CPU, memory, disk IOPS at the indexing tier and the queries behind them</description>
   <fieldset submitButton="true" autoRun="false">
