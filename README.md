@@ -204,6 +204,16 @@ Either way the search head level version seems to be "good enough" to determine 
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.6
+Updated to Splunk python SDK 1.1.16
+
+Merged from jordanfelle to fix special character
+
+Updated alerts:
+`SearchHeadLevel - dispatch metadata files may need removal`
+
+`SearchHeadLevel - Dashboards with all time searches set`
+
 ### 2.6.5
 New reports:
 `IndexerLevel - RemoteSearches Indexes Stats Wilcard` - example wildcard match for remote_searches.log
