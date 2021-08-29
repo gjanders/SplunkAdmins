@@ -139,7 +139,8 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20These%20Indexes%20Are%20Approaching%20The%20warmDBCount%20limit">These Indexes Are Approaching The warmDBCount limit</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20strings_metadata%20triggering%20bucket%20rolling">strings_metadata triggering bucket rolling</a>
 			<saved name="IndexerLevel - Corrupt buckets via DBInspect" />
-			<view name="rolled_buckets_by_index" />								
+			<view name="rolled_buckets_by_index" />
+			<saved name="IndexerLevel - IndexWriter pause duration" />
 		</collection>
 		<collection label="Data Ingestion">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Data%20parsing%20error">Data parsing error</a>
@@ -158,11 +159,13 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Weekly%20Broken%20Events%20Report">Weekly Broken Events Report</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Weekly%20Truncated%20Logs%20Report">Weekly Truncated Logs Report</a>			
 			<view name="issues_per_sourcetype" />			
+			<saved name="IndexerLevel - IndexWriter pause duration" />
 		</collection>	
 		<collection label="Failures">		
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20S2SFileReceiver%20Error">S2SFileReceiver Error</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Unclean%20Shutdown%20-%20Fsck">Unclean Shutdown - Fsck</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Losing%20Contact%20With%20Master%20Node">AllSplunkEnterpriseLevel - Losing Contact With Master Node</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20SmartStore%20-%20Bucket%20cache%20errors%20audit%20logs">IndexerLevel - SmartStore - Bucket cache errors audit logs</a>
 	                <collection lable="Generic">
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
 	                </collection>			
@@ -186,12 +189,15 @@
                                 <view name="hec_performance" />
 				<saved name="IndexerLevel - Knowledge bundle upload stats" />
 	                        <saved name="SearchHeadLevel - Search Messages field extractor slow" />
+				<saved name="IndexerLevel - IndexWriter pause duration" />
 			</collection>
 		</collection>		
 		<collection label="Search Related">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Peer%20will%20not%20return%20results%20due%20to%20outdated%20generation">Peer will not return results due to outdated generation</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Search%20Failures">Search Failures</a>	
 			<saved name="IndexerLevel - Maximum memory utilisation per search" />
+                        <saved name="IndexerLevel - RemoteSearches find all time searches" />
+			<saved name="IndexerLevel - RemoteSearches find datamodel acceleration with wildcards" />
 		</collection>	
 		<collection label="Sizing Related">		
 			<collection label="Volumes">
@@ -205,8 +211,11 @@
 		</collection>
 	        <collection label="Summary_Reports">
 		    <saved name="SearchHeadLevel - platform_stats.audit metrics searches" />
-		    <saved name="SearchHeadLevel - platform_stats.audit metrics users" />	
+		    <saved name="SearchHeadLevel - platform_stats.audit metrics users" />
                     <saved name="SearchHeadLevel - platform_stats.audit metrics api" />
+		    <saved name="SearchHeadLevel - platform_stats.audit metrics users 24hour" />
+		    <saved name="SearchHeadLevel - platform_stats.users dashboards" />
+		    <saved name="SearchHeadLevel - platform_stats.users savedsearches" />
                     <saved name="SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search" />
                     <saved name="SearchHeadLevel - platform_stats access summary" />
 		    <saved name="SearchHeadLevel - platform_stats.remote_searches metrics populating search" />
@@ -259,6 +268,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Dashboards%20invalid%20character%20in%20splunkd">Dashboards invalid character in splunkd</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20savedsearches%20invalid%20character%20in%20splunkd">savedsearches invalid character in splunkd</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20datamodel%20errors%20in%20splunkd">datamodel errors in splunkd</a>
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20SmartStore%20-%20Bucket%20cache%20errors%20audit%20logs">IndexerLevel - SmartStore - Bucket cache errors audit logs</a>
 	                <collection label="Generic">
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Search%20Messages%20user%20level">Search Messages user level</a>
@@ -271,7 +281,8 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Realtime%20Search%20Queries%20in%20dashboards">Realtime Search Queries in dashboards</a>
 			</collection>
 			<collection label="Data Models">
-				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Accelerated%20DataModels%20with%20All%20Time%20Searching%20Enabled">Accelerated DataModels with All Time Searching Enabled</a>				
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Accelerated%20DataModels%20with%20All%20Time%20Searching%20Enabled">Accelerated DataModels with All Time Searching Enabled</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Accelerated%20DataModels%20with%20wildcard%20or%20no%20index%20specified">Accelerated DataModels with wildcard or no index specified</a>
 			</collection>			
 			<collection label="Dashboards">
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20User%20-%20Dashboards%20searching%20all%20indexes%20macro%20version">User - Dashboards searching all indexes macro version</a>
@@ -291,6 +302,7 @@
 	  		</collection>									
 			<collection label="Other">
 	                        <saved name="SearchHeadLevel - audit logs showing all time searches" />
+	                        <saved name="IndexerLevel - RemoteSearches find all time searches" />
 			</collection>
 		</collection>
 		<collection label="Performance Issues">
@@ -336,6 +348,8 @@
 			<saved name="SearchHeadLevel - Searches dispatched as owner by other users" />
 			<saved name="SearchHeadLevel - Lookup CSV size" />
 			<saved name="SearchHeadLevel - audit logs showing all time searches" />
+                        <saved name="IndexerLevel - RemoteSearches find all time searches" />
+			<saved name="IndexerLevel - RemoteSearches find datamodel acceleration with wildcards" />
 			<saved name="SearchHeadLevel - Search Messages field extractor slow" />
 			<view name="knowledge_objects_by_app" />
 			<view name="lookups_in_use_finder" />
@@ -344,6 +358,9 @@
 		<collection label="Summary_Reports">
         		<saved name="SearchHeadLevel - platform_stats.audit metrics searches" />
 	                <saved name="SearchHeadLevel - platform_stats.audit metrics users" />
+                        <saved name="SearchHeadLevel - platform_stats.audit metrics users 24hour" />
+                        <saved name="SearchHeadLevel - platform_stats.users dashboards" />
+                        <saved name="SearchHeadLevel - platform_stats.users savedsearches" />
      			<saved name="SearchHeadLevel - platform_stats.audit metrics api" />			
                         <saved name="SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search" />
                         <saved name="SearchHeadLevel - platform_stats access summary" />
@@ -381,6 +398,9 @@
 		<saved name="SearchHeadLevel - platform_stats.audit metrics searches" />
                 <saved name="SearchHeadLevel - platform_stats.audit metrics users" />
                 <saved name="SearchHeadLevel - platform_stats.audit metrics api" />
+		<saved name="SearchHeadLevel - platform_stats.audit metrics users 24hour" />
+                <saved name="SearchHeadLevel - platform_stats.users dashboards" />
+                <saved name="SearchHeadLevel - platform_stats.users savedsearches" />
                 <saved name="SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search" />
                 <saved name="SearchHeadLevel - platform_stats access summary" />
 		<saved name="SearchHeadLevel - platform_stats.remote_searches metrics populating search" />

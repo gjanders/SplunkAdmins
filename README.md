@@ -181,29 +181,84 @@ The metrics then contain detailed information around the number of users using S
 There is plenty of detail in here but dashboards were not included for the information built from them, contributions welcome
 
 ## Detecting which indexes are searched by Splunk users
-As of version 8.0.7 there is still no accurate way to detect which indexes were searched by a user based on their level of access, the audit logs simply do not record which indexes were accessed
-Therefore the following searches:
+As of version 8.0.8 there is still no accurate way to detect which indexes were searched by a user based on their level of access, the audit logs simply do not record which indexes were accessed
+Therefore the following searches are part of this app to help achieve this goal:
+- `SearchHeadLevel - Search Queries summary exact match`
+- `SearchHeadLevel - Search Queries summary non-exact match`
 
-`SearchHeadLevel - Search Queries summary exact match`
+As per the searches description they both require other reports such as `SearchHeadLevel - Macro report`, the description of each search details the various reports they rely on to make them work.
 
-`SearchHeadLevel - Search Queries summary non-exact match`
+However these complicated searches are not 100% accurate, alternative searches exist in this app to work at the indexing tier:
+- `IndexerLevel - RemoteSearches Indexes Stats` 
+- `IndexerLevel - RemoteSearches Indexes Stats Wildcard` 
 
-Were created on version 7.2.x, however there were logging changes that resulted in a more accurate match so the reports were superseded by:
+The `remote_searches.log` at the indexing tier does not (usually) need to perform macro substitution but instead you do not have information around the user that ran the searches so this search is more likely to overcount index access than the search tier version, it is also less likely to miss an index due to macro usage or similar...
 
-`SearchHeadLevel - Search Queries summary exact match 73`
+In more detail, the challenges with the search head level's `audit.log` searches are:
+- You cannot determine which index was used if multiple indexes were specified, for example a search such as `index=A OR index=B`, if this search results in more than 0 results, then you cannot be sure which index returned the results so both are recorded by searches in this app
+- macros, eventtypes, tags and datamodels are recorded in the `audit.log` so you need to substitute the macro/eventtype/tag to correctly determine if an index is in use, to make this more complicated, macros can be nested so a macro may refer to another macro and the 2nd or 3rd macro may contain the `index=` information
+- There are many ways to search an index, such as `index= ""`, `index IN (...)`, the regex'es attempt to deal with the various straightforward scenarios such as `NOT index=A index=B`, but it is not straightforward to correctly extract index names from the `audit.log` in all scenarios
+- The `audit.log` information for ad-hoc searches does not record app-context, therefore even if you know the macro and user information, you cannot be sure which app the search was run from and therefore you cannot correctly substitute the macro/tag/eventtype information
 
-`SearchHeadLevel - Search Queries summary non-exact match 73`
+At the indexing tier the `remote_searches.log` file has different challenges:
+- While macros, eventtypes and tags are expanded (in most cases, there are bugs that allow macros to reach the indexing tier), you instead lose the user context in cases such as ad-hoc searches. This means that a search like `index=*` run by a user with permissions to access 1 index to these searches will appear to be accessing all indexes. The current implementation of the RemoteSearches queries in this app assume access to all indexes if the username is unknown (which may result in excess matching rather than missing searches)
+- app context is again missing for ad-hoc searches, although this is less important at the indexing tier
+- You cannot determine which index was used if multiple indexes were specified, for example a search such as `index=A OR index=B`, if this search results in more than 0 results, then you cannot be sure which index returned the results so both are recorded by searches in this app
 
-As per the description they both require reports such as `SearchHeadLevel - Macro report`, the description details the various reports they rely on to make them work.
+Either way the search head level version seems to be "good enough" to determine who is searching which index in most cases, the RemoteSearches queries cover some of the edge cases but the count will generally be higher than expected, the below ideas require more votes if these issues are important to you.
 
-However they will not be 100% accurate, another version such as `IndexerLevel - RemoteSearches Indexes Stats` doesn't need to do macro substitution but then cannot you be sure of which user ran the search in all cases so you also have an accuracy issue...
-
-Either way the search head level version seems to be "good enough" to determine who is searching which index in most cases
+The following ideas relate to this issue:
+[Better audit logs](https://ideas.splunk.com/ideas/E-I-49)
+[Provide index access statistics to assist in capacity planning of the indexing tier](https://ideas.splunk.com/ideas/E-I-38)
 
 ## Feedback?
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.7
+New alerts:
+`IndexerLevel - SmartStore - Bucket cache errors audit logs`
+
+`SearchHeadLevel - Accelerated DataModels with wildcard or no index specified`
+
+New reports:
+`IndexerLevel - IndexWriter pause duration`
+
+`IndexerLevel - RemoteSearches find all time searches`
+
+`IndexerLevel - RemoteSearches find datamodel acceleration with wildcards`
+
+`SearchHeadLevel - platform_stats.audit metrics users 24hour`
+
+`SearchHeadLevel - platform_stats.users dashboards`
+
+`SearchHeadLevel - platform_stats.users savedsearches`
+
+Updated alerts:
+`AllSplunkEnterpriseLevel - sendmodalert errors` - updated to refer to `SearchHeadLevel - Script failures in the last day` as it replaces most of this alerts functionality...
+
+`AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - more alert criteria
+
+`DeploymentServer - Error Found On Deployment Server`
+
+`SearchHeadLevel - audit logs showing all time searches` - minor correction to display all searches without a `savedsearch_name`
+
+`SearchHeadLevel - Accelerated DataModels with All Time Searching Enabled` - re-wrote the search to not use map
+
+`SearchHeadLevel - Script failures in the last day` - updated to handle various webhook failures
+
+Updated reports:
+`IndexerLevel - RemoteSearches Indexes Stats` - updates to work with search heads with _ in the name, improved handling of "skipped" entries
+
+`IndexerLevel - RemoteSearches Indexes Stats Wilcard` - updates to work with search heads with _ in the name, improved handling of "skipped" entries
+
+`SearchHeadLevel - Search Queries summary non-exact match` - new field "short", updated regex
+
+`SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search` - updates to work with search heads with _ in the name
+
+`SearchHeadLevel - platform_stats.remote_searches metrics populating search` - updates to work with search heads with _ in the name
+
+
 ### 2.6.6
 Updated to Splunk python SDK 1.1.16
 
