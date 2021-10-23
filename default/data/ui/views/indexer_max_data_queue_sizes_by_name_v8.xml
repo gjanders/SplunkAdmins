@@ -1,0 +1,321 @@
+<form version="1.1">
+  <label>Dashboard - Indexer Max Data Queue Sizes By Name (works in Splunk 8.0+)</label>
+  <fieldset submitButton="false">
+    <input type="time" token="time">
+      <label></label>
+      <default>
+        <earliest>-4h@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Parsing Queue Fill Size</title>
+      <chart>
+        <search>
+          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=queue (name=parsingqueue)
+| eval name=case(name=="aggqueue","2 - Aggregation Queue",
+ name=="indexqueue", "4 - Indexing Queue",
+ name=="parsingqueue", "1 - Parsing Queue",
+ name=="typingqueue", "3 - Typing Queue") 
+ | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
+| eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
+| eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
+| eval fill_perc=round((curr/max)*100,2) 
+| eval combined = host . "_pipe_" . ingest_pipe
+| timechart limit=14 useother=false span=1m  Max(fill_perc) by combined</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisY.maximumNumber">100</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.layout.splitSeries">1</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="height">441</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Aggregation Queue Fill Size</title>
+      <chart>
+        <search>
+          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=queue (name=aggqueue)
+| eval name=case(name=="aggqueue","2 - Aggregation Queue",
+ name=="indexqueue", "4 - Indexing Queue",
+ name=="parsingqueue", "1 - Parsing Queue",
+ name=="typingqueue", "3 - Typing Queue") 
+ | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
+| eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
+| eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
+| eval fill_perc=round((curr/max)*100,2) 
+| eval combined = host . "_pipe_" . ingest_pipe
+| timechart limit=14 useother=false span=1m  Max(fill_perc) by combined</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisY.maximumNumber">100</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.layout.splitSeries">1</option>
+        <option name="height">446</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Typing Queue Fill Size</title>
+      <chart>
+        <search>
+          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=queue (name=typingqueue)
+| eval name=case(name=="aggqueue","2 - Aggregation Queue",
+ name=="indexqueue", "4 - Indexing Queue",
+ name=="parsingqueue", "1 - Parsing Queue",
+ name=="typingqueue", "3 - Typing Queue") 
+ | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
+| eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
+| eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
+| eval fill_perc=round((curr/max)*100,2) 
+| eval combined = host . "_pipe_" . ingest_pipe
+| timechart limit=14 useother=false span=1m  Max(fill_perc) by combined</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisY.maximumNumber">100</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.layout.splitSeries">1</option>
+        <option name="height">440</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Indexing Queue Fill Size</title>
+      <chart>
+        <search>
+          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=queue (name=indexqueue)
+| eval name=case(name=="aggqueue","2 - Aggregation Queue",
+ name=="indexqueue", "4 - Indexing Queue",
+ name=="parsingqueue", "1 - Parsing Queue",
+ name=="typingqueue", "3 - Typing Queue") 
+ | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
+| eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
+| eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
+| eval fill_perc=round((curr/max)*100,2) 
+| eval combined = host . "_pipe_" . ingest_pipe
+| timechart limit=14 useother=false span=1m  Max(fill_perc) by combined</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisY.maximumNumber">100</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.layout.splitSeries">1</option>
+        <option name="height">424</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Shows any replication queue issues that may slowdown/prevent the queues from clearing at the indexer level</title>
+      <chart>
+        <search>
+          <query>index=_internal `indexerhosts` "replication queue for " "full" sourcetype=splunkd | rename peer AS guid | join guid [|  rest /services/search/distributed/peers  | table guid peerName] | timechart span=1m count by peerName</query>
+          <earliest>-60m@m</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Blocked Indexing Queues</title>
+      <chart>
+        <search>
+          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=queue | stats count(eval(isnotnull(blocked))) AS blockedCount, count by name, host, _time | eval percBlocked=(100/count)*blockedCount | eval hostQueue = host . "_" . name | timechart useOther=false span=10m avg(percBlocked) by hostQueue</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.maximumNumber">100</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">1</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="height">750</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>TCPIn Queue Sizes (Max)</title>
+      <chart>
+        <search>
+          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=queue (name=splunktcpin OR name=tcpin_cooked_pqueue)
+| eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
+| eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
+| eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
+| eval fill_perc=round((curr/max)*100,2) 
+| eval combined = host . "_pipe_" . ingest_pipe
+| timechart limit=14 useother=false span=1m max(fill_perc) by combined</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">% Max</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.maximumNumber">100</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">1</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="height">562</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Thruput Per Indexer</title>
+      <chart>
+        <search>
+          <query>| tstats sum(PREFIX(kb=)) AS kb where index=_internal `indexerhosts` TERM(group=thruput) TERM(name=index_thruput) source=*metrics.log sourcetype=splunkd `indexerhosts` groupby PREFIX(name=), host, _time span=1s
+                  | timechart aligntime=latest useother=false span=10m limit=14 per_second(kb) AS tcp_KBps by host
+          </query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">1</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="height">404</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Forced closures on restart</title>
+      <chart>
+        <title>A potential indicator of data loss</title>
+        <search>
+          <query>| tstats count where index=_internal sourcetype=splunkd `indexerhosts` `splunkadmins_splunkd_source` TERM("Forcing") groupby _time, host span=1s | timechart sum(count) by host
+</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">1</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="height">404</option>
+      </chart>
+    </panel>
+  </row>
+</form>

@@ -1,0 +1,112 @@
+<form version="1.1">
+  <label>Splunk forwarder output tuning</label>
+  <description>Splunk forwarder to indexer output tuning</description>
+  <fieldset submitButton="false">
+    <input type="time" token="time">
+      <label>time</label>
+      <default>
+        <earliest>-60m@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="host">
+      <label>host</label>
+      <default>`heavyforwarderhosts`</default>
+    </input>
+    <input type="dropdown" token="output_group">
+      <label>Output Group</label>
+      <fieldForLabel>output_name</fieldForLabel>
+      <fieldForValue>output_name</fieldForValue>
+      <search>
+        <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log TERM(group=tcpout_connections)
+| rex field=name "(?P&lt;output_name&gt;[^:]+)"
+| stats count by output_name
+| fields output_name</query>
+        <earliest>-60m@m</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+    <input type="dropdown" token="split_by">
+      <label>Split by host?</label>
+      <choice value="host">Yes</choice>
+      <choice value="&quot;&quot;">No</choice>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Data output per-second</title>
+      <chart>
+        <search>
+          <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log TERM(group=tcpout_connections) name=$output_group$*
+| rex field=name "(?&lt;output_name&gt;[^:]+)"
+| search output_name=$output_group$
+| eval combined = output_name . "_" . ingest_pipe
+| bin _time span=1m
+| stats sum(kb) AS totalkb by combined, host, _time
+| eval totalkb=totalkb/60
+| eval combined = $split_by$ . combined
+| timechart limit=99 avg(totalkb) AS avgkb, perc95(totalkb) AS perc95kb, min(totalkb) AS minkb by combined</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Destination count</title>
+      <table>
+        <search>
+          <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log group=tcpout_connections name=$output_group$*
+| rex field=name "(?&lt;output_name&gt;[^:]+)"
+| search output_name=$output_group$
+| bin _time span=5m
+| stats dc(destIp) AS destination_count by output_name, host, _time
+| stats min(destination_count) AS min_destination_count, avg(destination_count) AS avg_destination_count by output_name</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Dashboard info</title>
+      <html>
+        <body>
+          <p>Purpose of destination count table? metrics.log only records the tcpout data *if* the connection is open at the time the metrics.log writes, so the count is to sanity-check that the numbers of connections matches the number of forwarders on the backend (this will happen with the below outputs.conf settings combined with regular data flow)</p>
+          <br/>
+    <p>Purpose of the data output per-second timechart? The current goal is to get close to switching indexers every second for an output group (per-pipeline)</p>
+          <br/>
+    <p>What config  is used to achieve the above?</p>
+    <p>outputs.conf file based on 1MB/s
+    </p><p><code>maxQueueSize = 10MB</code>
+          </p>
+    <p>
+            <code>#autoLBVolume is set below 1/5 of the maxQueueSize due to changes post 7.3.6 which will hopefully be documented in the very near future, minimum 10MB queue</code>
+          </p>
+    <p>
+            <code>autoLBVolume = 1024000</code>
+          </p>
+    <p>
+            <code>autoLBFrequency = 10</code>
+          </p>
+    <p>
+            <code>connectionTTL = 300</code>
+          </p>
+    <p>
+            <code>heartbeatFrequency = 15</code>
+          </p>
+    <p>
+            <code>#heartbeatFrequency = 15 for useACK, 350 for non-useACK</code>
+          </p>
+        </body>
+      </html>
+    </panel>
+  </row>
+</form>

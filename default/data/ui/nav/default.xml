@@ -42,6 +42,7 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20execprocessor%20errors">execprocessor errors</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%2520-%2520Data%2520Loss%2520on%2520shutdown">Data Loss on shutdown</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20TailReader%20Ignoring%20Path">AllSplunkLevel - TailReader Ignoring Path</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20No%20recent%20metrics.log%20data">AllSplunkLevel - No recent metrics.log data</a>
 			</collection>    	
 			<collection label="Scheduler">
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunk%20Scheduler%20excessive%20delays%20in%20executing%20search">Splunk Scheduler excessive delays in executing search</a>
@@ -52,6 +53,7 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20Unable%20To%20Distribute%20to%20Peer">Unable To Distribute to Peer</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%2520-%2520Data%2520Loss%2520on%2520shutdown">Data Loss on shutdown</a>
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Losing%20Contact%20With%20Master%20Node">Losing Contact With Master Node</a>
+                                <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20No%20recent%20metrics.log%20data">AllSplunkLevel - No recent metrics.log data</a>
 			</collection>    			
 			<collection label="Generic">
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
@@ -117,6 +119,7 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%2520-%2520SSL%2520Errors%2520In%2520Logs%2520%2528Potential%2520Universal%2520Forwarder%2520and%2520License%2520Issue%2529">SSL Errors In Logs (Potential Universal Forwarder and LicenseIssue)</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Unusual%20number%20of%20duplication%20alerts">Unusual number of duplication alerts</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%2520-%2520Splunk%2520HEC%2520issues">Splunk HEC issues</a>
+                                <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20No%20recent%20metrics.log%20data">AllSplunkLevel - No recent metrics.log data</a>
                                 <saved name="ForwarderLevel - Data dropping duration" />
 		                <collection lable="Generic">
 		                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
@@ -125,8 +128,11 @@
 		</collection>
                 <collection label="Performance">
                     <view name="heavyforwarders_max_data_queue_sizes_by_name" />
-                    <view name="indexer_max_data_queue_sizes_by_name" />
+		    <view name="heavyforwarders_max_data_queue_sizes_by_name_v8" />
+		    <view name="indexer_max_data_queue_sizes_by_name" />
+		    <view name="indexer_max_data_queue_sizes_by_name_v8" />		    
 		    <view name="hec_performance" />
+		    <view name="splunk_forwarder_output_tuning" />
 		    <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">ForwarderLevel - Channel churn issues</a>
 		</collection>
 	</collection>
@@ -166,6 +172,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Unclean%20Shutdown%20-%20Fsck">Unclean Shutdown - Fsck</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Losing%20Contact%20With%20Master%20Node">AllSplunkEnterpriseLevel - Losing Contact With Master Node</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20SmartStore%20-%20Bucket%20cache%20errors%20audit%20logs">IndexerLevel - SmartStore - Bucket cache errors audit logs</a>
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20No%20recent%20metrics.log%20data">AllSplunkLevel - No recent metrics.log data</a>			
 	                <collection lable="Generic">
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
 	                </collection>			
@@ -176,7 +183,11 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Indexer%20replication%20queue%20issues%20to%20some%20peers">Indexer replication queue issues to some peers</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Slow%20peer%20from%20remote%20searches">Slow peer from remote searches</a>
 				<view name="heavyforwarders_max_data_queue_sizes_by_name" />
-				<view name="indexer_max_data_queue_sizes_by_name" />			
+		                <view name="heavyforwarders_max_data_queue_sizes_by_name_v8" />
+		                <view name="indexer_max_data_queue_sizes_by_name" />
+			        <view name="indexer_max_data_queue_sizes_by_name_v8" />
+		                <view name="hec_performance" />
+		                <view name="splunk_forwarder_output_tuning" />
   	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">ForwarderLevel - Channel churn issues</a>
 			</collection>
 			<collection label="Other">
@@ -222,6 +233,8 @@
                     <saved name="IndexerLevel - platform_stats.counters hosts" />
                     <saved name="IndexerLevel - platform_stats.counters hosts 24hour" />
                     <saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
+		    <saved name="IndexerLevel - platform_stats.indexers totalgb_thruput measurement" />
+                    <saved name="IndexerLevel - platform_stats.indexers stddev measurement" />		    
                     <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
 		    <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
                 </collection>
@@ -269,6 +282,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20savedsearches%20invalid%20character%20in%20splunkd">savedsearches invalid character in splunkd</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20datamodel%20errors%20in%20splunkd">datamodel errors in splunkd</a>
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20SmartStore%20-%20Bucket%20cache%20errors%20audit%20logs">IndexerLevel - SmartStore - Bucket cache errors audit logs</a>
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20No%20recent%20metrics.log%20data">AllSplunkLevel - No recent metrics.log data</a>
 	                <collection label="Generic">
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Search%20Messages%20user%20level">Search Messages user level</a>
@@ -368,6 +382,8 @@
 			<saved name="IndexerLevel - platform_stats.counters hosts" />
 			<saved name="IndexerLevel - platform_stats.counters hosts 24hour" />
 			<saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
+	                <saved name="IndexerLevel - platform_stats.indexers totalgb_thruput measurement" />
+	                <saved name="IndexerLevel - platform_stats.indexers stddev measurement" />
 	                <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
 			<saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
 		</collection>
@@ -407,6 +423,8 @@
                 <saved name="IndexerLevel - platform_stats.counters hosts" />
                 <saved name="IndexerLevel - platform_stats.counters hosts 24hour" />
                 <saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
+                <saved name="IndexerLevel - platform_stats.indexers totalgb_thruput measurement" />
+                <saved name="IndexerLevel - platform_stats.indexers stddev measurement" />		
 		<saved name="IndexerLevel - RemoteSearches Indexes Stats" />
 		<saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
         </collection>

@@ -199,11 +199,14 @@ In more detail, the challenges with the search head level's `audit.log` searches
 - macros, eventtypes, tags and datamodels are recorded in the `audit.log` so you need to substitute the macro/eventtype/tag to correctly determine if an index is in use, to make this more complicated, macros can be nested so a macro may refer to another macro and the 2nd or 3rd macro may contain the `index=` information
 - There are many ways to search an index, such as `index= ""`, `index IN (...)`, the regex'es attempt to deal with the various straightforward scenarios such as `NOT index=A index=B`, but it is not straightforward to correctly extract index names from the `audit.log` in all scenarios
 - The `audit.log` information for ad-hoc searches does not record app-context, therefore even if you know the macro and user information, you cannot be sure which app the search was run from and therefore you cannot correctly substitute the macro/tag/eventtype information
+- The queries I have built search for a `scan_count` of > 0, this way index=randomstring doesn't appear as an index access, however if a search is trying to use a valid index and the `scan_count` is 0 the search is not counted (this would likely be an edge case)...
 
 At the indexing tier the `remote_searches.log` file has different challenges:
 - While macros, eventtypes and tags are expanded (in most cases, there are bugs that allow macros to reach the indexing tier), you instead lose the user context in cases such as ad-hoc searches. This means that a search like `index=*` run by a user with permissions to access 1 index to these searches will appear to be accessing all indexes. The current implementation of the RemoteSearches queries in this app assume access to all indexes if the username is unknown (which may result in excess matching rather than missing searches)
 - app context is again missing for ad-hoc searches, although this is less important at the indexing tier
 - You cannot determine which index was used if multiple indexes were specified, for example a search such as `index=A OR index=B`, if this search results in more than 0 results, then you cannot be sure which index returned the results so both are recorded by searches in this app
+- If the log line is very long it is truncated with a message similar to ...{skipping 46464 bytes}..., this often results in the last index= in the log getting truncated and also some index= strings from the search will not appear in the logs (for example in a datamodel acceleration search with many indexes listed)
+- Note that searches with a `scan_count` of 0 are counted, there is an additional metric to measure scan count if you wish to find only indexes that are scanning more than 0 data
 
 Either way the search head level version seems to be "good enough" to determine who is searching which index in most cases, the RemoteSearches queries cover some of the edge cases but the count will generally be higher than expected, the below ideas require more votes if these issues are important to you.
 
@@ -215,6 +218,67 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.8
+New alerts:
+`AllSplunkLevel - No recent metrics.log data`
+
+New dashboards:
+`heavyforwarders_max_data_queue_sizes_by_name_v8` - this version uses tstats with PREFIX so only works with Splunk 8.0+
+
+`indexer_max_data_queue_sizes_by_name_v8` - this version uses tstats with PREFIX so only works with Splunk 8.0+
+
+`splunk_forwarder_output_tuning` - using metrics.log to measure the TCP output/stdev per-name, includes example tuning parameters
+
+New reports:
+`IndexerLevel - platform_stats.indexers stddev measurement` - stdev per indexer cluster (useful for tuning the outputs.conf from incoming servers)
+
+`IndexerLevel - platform_stats.indexers totalgb_thruput measurement` - index thruput measurements
+
+Updated alerts:
+`AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - more alert criteria
+
+`IndexerLevel - Cold data location approaching size limits` - improvements to calculation of % used
+
+`IndexerLevel - Data parsing error` - added macro `splunkadmins_dataparsing_error` as requested
+
+`SearchHeadLevel - Realtime Scheduled Searches are in use` - updated timeout to 900 seconds, added context to description about potential use (as per feedback from Vincent)
+
+`SearchHeadLevel - Script failures in the last day` - improved user id matching
+
+`SearchHeadLevel - Search Messages admins only` - more alert criteria
+
+`SearchHeadLevel - Search Messages user level` - more alert criteria
+
+Updated macros:
+`splunkadmins_shutdown_keyword` - updated keyword for shutdown state
+
+`splunkadmins_shutdown_list` - updated keyword for shutdown state
+
+`splunkadmins_shutdown_time` - updated keyword for shutdown state
+
+Updated reports:
+`IndexerLevel - platform_stats.counters hosts` - updated to use `indexer_cluster_name` macro
+
+`IndexerLevel - platform_stats.counters hosts 24hour` - updated to use `indexer_cluster_name` macro
+
+`IndexerLevel - platform_stats.indexers totalgb measurement` - updated to use `indexer_cluster_name` macro, comment update
+
+`IndexerLevel - RemoteSearches find datamodel acceleration with wildcards` - handling the IN clause in `remote_searches.log`
+
+`IndexerLevel - RemoteSearches Indexes Stats` - added short field
+
+`IndexerLevel - RemoteSearches Indexes Stats` - added short field (set to False), to make queries easier
+
+`SearchHeadLevel - platform_stats.users dashboards` - updated mcollect comment
+
+`SearchHeadLevel - Search Messages user level` - added more error messages, limited the message to the first 30 messages
+
+`SearchHeadLevel - Search Messages admins only` - added more error messages
+
+`SearchHeadLevel - Search Queries summary exact match` - excluded Remote storage searches (no real difference)
+
+`SearchHeadLevel - Search Queries summary non-exact match` - excluded Remote storage searches (no real difference)
+
 ### 2.6.7
 New alerts:
 `IndexerLevel - SmartStore - Bucket cache errors audit logs`
