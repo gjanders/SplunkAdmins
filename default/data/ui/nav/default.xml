@@ -120,6 +120,7 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Unusual%20number%20of%20duplication%20alerts">Unusual number of duplication alerts</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%2520-%2520Splunk%2520HEC%2520issues">Splunk HEC issues</a>
                                 <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20No%20recent%20metrics.log%20data">AllSplunkLevel - No recent metrics.log data</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Stopping%20all%20listening%20ports">Stopping all listening ports</a>				
                                 <saved name="ForwarderLevel - Data dropping duration" />
 		                <collection lable="Generic">
 		                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
@@ -133,7 +134,7 @@
 		    <view name="indexer_max_data_queue_sizes_by_name_v8" />		    
 		    <view name="hec_performance" />
 		    <view name="splunk_forwarder_output_tuning" />
-		    <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">ForwarderLevel - Channel churn issues</a>
+		    <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">Channel churn issues</a>
 		</collection>
 	</collection>
 	<collection label="IndexerLevel">
@@ -152,6 +153,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Data%20parsing%20error">Data parsing error</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20IndexConfig%20Warnings%20from%20Splunk%20indexers">IndexConfig Warnings from Splunk indexers</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Index%20not%20defined">Index not defined</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Stopping%20all%20listening%20ports">ForwarderLevel - Stopping all listening ports</a>							
 		</collection>			
 		<collection label="Data Parsing">				
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Failures%20To%20Parse%20Timestamp%20Correctly%20%28excluding%20breaking%20issues%29">Failures To Parse Timestamp Correctly (excluding breaking issues)</a>			
@@ -193,6 +195,7 @@
 			<collection label="Other">
                                 <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Indexer%20not%20accepting%20TCP%20Connections">Indexer not accepting TCP Connections</a>		
                                 <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Uneven%20Indexed%20Data%20Across%20The%20Indexers">Uneven Indexed Data Across The Indexers</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Stopping%20all%20listening%20ports">ForwarderLevel - Stopping all listening ports</a>															
                                 <view name="troubleshooting_indexer_cpu" />
                                 <view name="indexer_data_spread" />
                                 <view name="troubleshooting_resource_usage_per_user" />
@@ -200,8 +203,16 @@
                                 <view name="hec_performance" />
 				<saved name="IndexerLevel - Knowledge bundle upload stats" />
 	                        <saved name="SearchHeadLevel - Search Messages field extractor slow" />
-				<saved name="IndexerLevel - IndexWriter pause duration" />
+				<saved name="IndexerLevel - IndexWriter pause duration" />				
 			</collection>
+			<collection label="SmartStore">
+				<saved name="SearchHeadLevel - SmartStore cache misses - savedsearches" />
+	                        <saved name="SearchHeadLevel - SmartStore cache misses - dashboards" />
+	                        <saved name="SearchHeadLevel - SmartStore cache misses - combined" />				
+				<saved name="IndexerLevel - SmartStore cache misses - remote_searches" />
+				<saved name="IndexerLevel - Buckets in cache" />			
+				<view name="smartstore_stats" />
+			</collection>			
 		</collection>		
 		<collection label="Search Related">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Peer%20will%20not%20return%20results%20due%20to%20outdated%20generation">Peer will not return results due to outdated generation</a>
@@ -209,6 +220,14 @@
 			<saved name="IndexerLevel - Maximum memory utilisation per search" />
                         <saved name="IndexerLevel - RemoteSearches find all time searches" />
 			<saved name="IndexerLevel - RemoteSearches find datamodel acceleration with wildcards" />
+			<collection label="SmartStore">
+				<saved name="SearchHeadLevel - SmartStore cache misses - savedsearches" />
+	                        <saved name="SearchHeadLevel - SmartStore cache misses - dashboards" />	
+	                        <saved name="SearchHeadLevel - SmartStore cache misses - combined" />
+				<saved name="IndexerLevel - SmartStore cache misses - remote_searches" />
+				<saved name="IndexerLevel - Buckets in cache" />								
+				<view name="smartstore_stats" />				
+			</collection>			
 		</collection>	
 		<collection label="Sizing Related">		
 			<collection label="Volumes">
@@ -345,7 +364,15 @@
                         <saved name="SearchHeadLevel - Users with auto-finalized searches" />
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Users%20exceeding%20the%20disk%20quota">Users exceeding the disk quota</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20WLM%20aborted%20searches">WLM aborted searches</a>
-		</collection>						
+		</collection>	
+		<collection label="SmartStore">
+			<saved name="SearchHeadLevel - SmartStore cache misses - savedsearches" />
+                        <saved name="SearchHeadLevel - SmartStore cache misses - dashboards" />	
+			<saved name="SearchHeadLevel - SmartStore cache misses - combined" />	
+			<saved name="IndexerLevel - SmartStore cache misses - remote_searches" />
+			<saved name="IndexerLevel - Buckets in cache" />							
+			<view name="smartstore_stats" />			
+		</collection>					
 		<collection label="Reports">	
 			<saved name="SearchHeadLevel - Alerts that have not fired an action in X days" />                    
 			<saved name="SearchHeadLevel - Audit log search example only" />
@@ -365,6 +392,11 @@
                         <saved name="IndexerLevel - RemoteSearches find all time searches" />
 			<saved name="IndexerLevel - RemoteSearches find datamodel acceleration with wildcards" />
 			<saved name="SearchHeadLevel - Search Messages field extractor slow" />
+			<saved name="SearchHeadLevel - SmartStore cache misses - savedsearches" />
+                        <saved name="SearchHeadLevel - SmartStore cache misses - dashboards" />	
+			<saved name="SearchHeadLevel - SmartStore cache misses - combined" />
+			<saved name="IndexerLevel - SmartStore cache misses - remote_searches" />
+			<saved name="IndexerLevel - Buckets in cache" />							
 			<view name="knowledge_objects_by_app" />
 			<view name="lookups_in_use_finder" />
 			<view name="lookup_audit" />

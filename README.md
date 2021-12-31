@@ -218,6 +218,67 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.9
+Updated alerts:
+`AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - removed 1 log entry for consecutive date entries/unretrievable data
+
+`ForwarderLevel - Splunk HEC issues` - added cluster command
+
+New dashboards:
+`ForwarderLevel - Splunk HEC issues`
+
+New reports:
+`IndexerLevel - SmartStore cache misses - remote_searches`
+
+`IndexerLevel - Buckets in cache`
+
+`SearchHeadLevel - Detect searches hitting corrupt buckets`
+
+`SearchHeadLevel - SmartStore cache misses - savedsearches`
+
+`SearchHeadLevel - SmartStore cache misses - dashboards`
+
+`SearchHeadLevel - SmartStore cache misses - combined`
+
+Updated SDK to 1.6.18
+
+Updated alerts/reports to remove unncessary `TERM()` commands:
+`AllSplunkEnterpriseLevel - Losing Contact With Master Node`
+
+`AllSplunkEnterpriseLevel - Replication Failures`
+
+`AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only`
+
+`ForwarderLevel - Splunk HEC issues` - included lookup file to translate the HTTP code seen by client (based on the documentation version 8.2.3)
+
+`IndexerLevel - Data parsing error`
+
+`IndexerLevel - IndexWriter pause duration`
+
+`IndexerLevel - RemoteSearches Indexes Stats`
+
+`IndexerLevel - RemoteSearches Indexes Stats Wilcard`
+
+`IndexerLevel - RemoteSearches find all time searches`
+
+`IndexerLevel - RemoteSearches find datamodel acceleration with wildcards`
+
+`IndexerLevel - Slow peer from remote searches`
+
+`SearchHeadLevel - Dashboards invalid character in splunkd`
+
+`SearchHeadLevel - platform_stats.remote_searches metrics populating search`
+
+`SearchHeadLevel - savedsearches invalid character in splunkd`
+
+`SearchHeadLevel - Script failures in the last day`
+
+`SearchHeadLevel - Search Messages field extractor slow`
+
+`SearchHeadLevel - Search Messages user level`
+
+`SearchHeadLevel - Search Messages admins only`
+
 ### 2.6.8
 New alerts:
 `AllSplunkLevel - No recent metrics.log data`

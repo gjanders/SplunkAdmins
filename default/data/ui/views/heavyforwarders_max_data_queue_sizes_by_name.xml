@@ -299,4 +299,20 @@
       </chart>
     </panel>
   </row>
+  <row>
+    <panel>
+      <title>Forwarders that have stopped listening on all ports</title>
+      <chart>
+        <search>
+          <query>index=_internal $hosts$ sourcetype=splunkd `splunkadmins_splunkd_source` TERM(WARN) TERM(Stopping) 
+| timechart count by host span=1m limit=99</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>	
 </form>

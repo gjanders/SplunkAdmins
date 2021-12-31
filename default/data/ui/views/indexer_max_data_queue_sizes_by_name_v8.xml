@@ -245,8 +245,8 @@
       <title>Thruput Per Indexer</title>
       <chart>
         <search>
-          <query>| tstats sum(PREFIX(kb=)) AS kb where index=_internal `indexerhosts` TERM(group=thruput) TERM(name=index_thruput) source=*metrics.log sourcetype=splunkd `indexerhosts` groupby PREFIX(name=), host, _time span=1s
-                  | timechart aligntime=latest useother=false span=10m limit=14 per_second(kb) AS tcp_KBps by host
+          <query>| tstats prestats=true sum(PREFIX(kb=)) where index=_internal `indexerhosts` TERM(group=thruput) TERM(name=index_thruput) source=*metrics.log sourcetype=splunkd `indexerhosts` groupby PREFIX(name=), host, _time span=1s
+                  | timechart aligntime=latest useother=false span=10m limit=14 per_second(kb=) AS tcp_KBps by host
           </query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
@@ -285,7 +285,7 @@
       <chart>
         <title>A potential indicator of data loss</title>
         <search>
-          <query>| tstats count where index=_internal sourcetype=splunkd `indexerhosts` `splunkadmins_splunkd_source` TERM("Forcing") groupby _time, host span=1s | timechart sum(count) by host
+          <query>| tstats prestats=true count where index=_internal sourcetype=splunkd `indexerhosts` `splunkadmins_splunkd_source` TERM("Forcing") groupby _time, host span=1s | timechart count by host
 </query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>

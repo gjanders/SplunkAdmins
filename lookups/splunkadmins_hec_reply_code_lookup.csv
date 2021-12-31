@@ -1,0 +1,18 @@
+﻿status_code,http_status_code_id,http_status_code_text,status_message
+0,200,OK,Success
+1,403,Forbidden,Token disabled
+2,401,Unauthorized,Token is required
+3,401,Unauthorized,Invalid authorization
+4,403,Forbidden,Invalid token
+5,400,Bad Request,No data
+6,400,Bad Request,Invalid data format
+7,400,Bad Request,Incorrect index
+8,500,Internal Error,Internal server error
+9,503,Service Unavailable,Server is busy
+10,400,Bad Request,Data channel is missing
+11,400,Bad Request,Invalid data channel
+12,400,Bad Request,Event field is required
+13,400,Bad Request,Event field cannot be blank
+14,400,Bad Request,ACK is disabled
+15,400,Bad Request,Error in handling indexed fields
+16,400,Bad Request,Query string authorization is not enabled

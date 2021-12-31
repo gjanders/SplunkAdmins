@@ -1,0 +1,93 @@
+<form version="1.1">
+  <label>Dashboard - SmartStore Stats</label>
+  <description>Also refer to https://github.com/camrunr/s2_traffic_report/blob/master/s2_traffic_report.xml for an alternative view of SmartStore downloads/uploads</description>
+  <fieldset submitButton="false">
+    <input type="time" token="time">
+      <label></label>
+      <default>
+        <earliest>-60m@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="action">
+      <label>Action</label>
+      <choice value="*">All</choice>
+      <choice value="download">download</choice>
+      <choice value="upload">upload</choice>
+      <default>*</default>
+    </input>
+    <input type="text" token="host">
+      <label>host</label>
+      <default></default>
+    </input>
+    <input type="dropdown" token="host">
+      <label>host</label>
+      <choice value="`indexerhosts`">All Indexers</choice>
+      <default>`indexerhosts`</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Upload/download latency</title>
+      <chart>
+        <search>
+          <query>index=_internal source=*splunkd.log $host$ TERM(status=succeeded) OR TERM(status=failed) sourcetype=splunkd source=*splunkd.log TERM(action=$action$)
+| rangemap field=kb under_300=0-307200 300_700=307201-716800 700_1000=716801-1024000 default=over1000
+| eval combined = action . "_" . range
+| timechart avg(elapsed_ms) AS avg_elapsed_ms, max(elapsed_ms) AS max_elapsed_ms by combined</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Upload/download thruput</title>
+      <chart>
+        <search>
+          <query>index=_internal sourcetype=splunkd source=*splunkd.log $host$ TERM(status=succeeded) OR TERM(status=failed) TERM(action=$action$)
+| timechart sum(eval(kb/1024)) AS MB by action</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>
