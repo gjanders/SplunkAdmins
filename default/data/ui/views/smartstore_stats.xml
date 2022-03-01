@@ -29,7 +29,7 @@
   <row>
     <panel>
       <title>Also refer to</title>
-    <html><a href="https://github.com/camrunr/s2_traffic_report/blob/master/s2_traffic_report.xml">SmartStore S2S Traffic report</a> for an alternative dashboard view or <a href="/app/SplunkAdmins/report?s=%2FservicesNS%2Fnobody%2Fmonitoring%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20SmartStore%20cache%20misses%20-%20combined">SearchHeadLevel - SmartStore cache misses combined</a> to find the searches that are triggering the cache misses</html>
+      <html><a href="https://github.com/camrunr/s2_traffic_report/blob/master/s2_traffic_report.xml">SmartStore S2S Traffic report</a> for an alternative dashboard view or <a href="/app/SplunkAdmins/report?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%2520-%2520SmartStore%2520cache%2520misses%2520-%2520combined">SearchHeadLevel - SmartStore cache misses combined</a> or <a href="/app/SplunkAdmins/report?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%2520-%2520SmartStore%2520cache%2520misses%2520-%2520remote_searches">SmartStore cache misses - remote_searches</a> to find the searches that are triggering the cache misses</html>
     </panel>
   </row>
   <row>
