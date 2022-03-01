@@ -1,6 +1,6 @@
 <form version="1.1">
   <label>Dashboard - SmartStore Stats</label>
-  <description>Also refer to https://github.com/camrunr/s2_traffic_report/blob/master/s2_traffic_report.xml for an alternative view of SmartStore downloads/uploads</description>
+  <description>Also refer to https://github.com/camrunr/s2_traffic_report/blob/master/s2_traffic_report.xml for an alternative view of SmartStore downloads/uploads. To determine which searches are causing cache misses refer to the SearchHeadLevel - SmartStore cache misses reports in this app</description>
   <fieldset submitButton="false">
     <input type="time" token="time">
       <label></label>
@@ -26,6 +26,12 @@
       <default>`indexerhosts`</default>
     </input>
   </fieldset>
+  <row>
+    <panel>
+      <title>Also refer to</title>
+    <html><a href="https://github.com/camrunr/s2_traffic_report/blob/master/s2_traffic_report.xml">SmartStore S2S Traffic report</a> for an alternative dashboard view or <a href="/app/SplunkAdmins/report?s=%2FservicesNS%2Fnobody%2Fmonitoring%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20SmartStore%20cache%20misses%20-%20combined">SearchHeadLevel - SmartStore cache misses combined</a> to find the searches that are triggering the cache misses</html>
+    </panel>
+  </row>
   <row>
     <panel>
       <title>Upload/download latency</title>
@@ -81,6 +87,85 @@
         <search>
           <query>index=_internal sourcetype=splunkd source=*splunkd.log $host$ TERM(status=succeeded) OR TERM(status=failed) TERM(action=$action$)
 | timechart sum(eval(kb/1024)) AS MB by action</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>CacheManager Queued download count</title>
+      <chart>
+        <search>
+          <query>`comment("Relates to [cachemanager] max_concurrent_downloads in server.conf. Thanks to Splunk support for the original version of this search")` index=_internal $host$ source=*metrics.log TERM(group=cachemgr_download) sourcetype=splunkd queued 
+| timechart partial=f limit=50 avg(queued) AS avg_queued by host 
+| eval ceiling=20</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>CacheManager hits/misses</title>
+      <chart>
+        <search>
+          <query>
+          index=_internal $host$ source=*metrics.log sourcetype=splunkd group=cachemgr_bucket TERM(cache_hit=*) OR TERM(cache_miss=*) 
+| timechart sum(cache_hit) as Hits sum(cache_miss) as Misses
+</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Excessive cachemanager downloads</title>
+      <chart>
+        <search>
+          <query>`comment("Thanks to Splunk support for the original version of this search, similar version available in the monitoring console...")` index=_internal $host$ source=*splunkd.log sourcetype=splunkd CacheManager TERM(action=download) TERM(status=succeeded) TERM(download_set=*)
+| rex field=cache_id "&gt;*\|(?&lt;index_name&gt;.*)~.*~.*\|" 
+| eval identifier=(cache_id + host) 
+| stats count by identifier, index_name 
+| stats count(eval(count&gt;1)) as duplicate_downloads, sum(count) as all_downloads
+    count(eval(count&gt;8)) as excessive_duplicate_downloads by index_name 
+| eval duplicate_percent=if(all_downloads=0,0,round((duplicate_downloads/all_downloads)*100,2)) 
+| fields index_name, duplicate_percent all_downloads duplicate_downloads excessive_duplicate_downloads 
+| rename custom_index as Index, duplicate_percent as "Repeat Download %", all_downloads as "All Downloads", duplicate_downloads as "Repeated"</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>CacheManager downloads by age/index</title>
+      <chart>
+        <search>
+          <query>`comment("Thanks to Splunk support for the original version of this search")` index=_audit $host$ TERM(action=remote_bucket_download) TERM(info=completed)
+| eval gbps=kb/1024/1024 
+| eval age=round((now()-earliest_time)/60/60/24) 
+| bucket span=30 age 
+| rex field=cache_id "^[^\|]+\|(?P&lt;index_name&gt;[^~]+)~[^~]+~[^~]+"
+| eval age_index = age. " - ".index_name
+|timechart span=60s sum(gbps) by age_index limit=10 useother=f usenull=f</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
         </search>

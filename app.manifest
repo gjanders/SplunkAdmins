@@ -5,12 +5,12 @@
     "id": {
       "group": null,
       "name": "SplunkAdmins",
-      "version": "2.6.9"
+      "version": "2.6.10"
     },
     "author": [
       {
         "name": "Gareth Anderson",
-        "email": null,
+        "email": "gareth.anderson03@gmail.com",
         "company": null
       }
     ],

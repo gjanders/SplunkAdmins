@@ -1,0 +1,150 @@
+<form version="1.1">
+  <label>Dashboard - Forwarder Data Balance</label>
+  <description>Attempt to measure data balance between HF's, original version by Brett Adam's, similar to splunk_forwarder_output_tuning</description>
+  <fieldset submitButton="false">
+    <input type="time" token="time">
+      <label></label>
+      <default>
+        <earliest>-60m@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="text" token="host">
+      <label>host</label>
+      <default>`heavyforwarderhosts`</default>
+    </input>
+    <input type="dropdown" token="output_group">
+      <label>Output Group</label>
+      <fieldForLabel>output_name</fieldForLabel>
+      <fieldForValue>output_name</fieldForValue>
+      <search>
+        <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log TERM(group=tcpout_connections) 
+| rex field=name "(?P&lt;output_name&gt;[^:]+)" 
+| stats count by output_name
+| fields output_name</query>
+        <earliest>-60m@m</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Scatter Line Chart of sum by destination IP</title>
+      <viz type="Splunk_ML_Toolkit.ScatterLineViz">
+        <search>
+          <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log component=Metrics TERM(group=tcpout_connections) name=$output_group$*
+| timechart span=1m sum(kb) by destIp limit=50
+| fillnull value=0 
+| untable _time server kb
+| eval t=_time-now()
+| table t kb</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="Splunk_ML_Toolkit.ScatterLineViz.identityLine">false</option>
+        <option name="Splunk_ML_Toolkit.ScatterLineViz.legendAlign">bottom</option>
+        <option name="Splunk_ML_Toolkit.ScatterLineViz.legendOrder">numeric</option>
+        <option name="Splunk_ML_Toolkit.ScatterLineViz.showAxisLabels">true</option>
+        <option name="Splunk_ML_Toolkit.ScatterLineViz.showLegend">false</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </viz>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Total KB by destination IP</title>
+      <chart>
+        <search>
+          <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log component=Metrics TERM(group=tcpout_connections) name=$output_group$*
+| timechart span=1m sum(kb) by destIp limit=100
+| fillnull value=0</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.maximumNumber">1000000</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">zero</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="height">365</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Standard Deviation</title>
+      <chart>
+        <search>
+          <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log component=Metrics TERM(group=tcpout_connections) name=$output_group$*
+| timechart span=1m sum(kb) by destIp limit=50
+| fillnull value=0
+| untable _time destIp kb 
+| stats avg(kb) as avg stdev(kb) as stdev by _time
+| eval devperc = stdev/avg*100
+| table _time devperc</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Data Sum</title>
+      <chart>
+        <search>
+          <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log component=Metrics TERM(group=tcpout_connections) kb&gt;0 name=$output_group$*
+| bin span=1m _time
+| stats sum(kb) as kb by destIp _time
+| sort _time 
+| streamstats sum(kb) as sumkb by destIp
+| timechart span=1m max(sumkb) by destIp useother=false limit=50</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>

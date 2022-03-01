@@ -1,6 +1,6 @@
 # Application-level permissions
 []
-access = read : [ admin ], write : [ admin ]
+access = read : [ admin, sc_admin ], write : [ admin, sc_admin ]
 
 [eventtypes]
 export = none

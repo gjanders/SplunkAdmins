@@ -1,5 +1,5 @@
 <form version="1.1">
-  <label>Splunk forwarder output tuning</label>
+  <label>Dashboard - Splunk forwarder output tuning</label>
   <description>Splunk forwarder to indexer output tuning</description>
   <fieldset submitButton="false">
     <input type="time" token="time">
@@ -76,12 +76,35 @@
   </row>
   <row>
     <panel>
+      <title>Data output std deviation</title>
+      <chart>
+        <search>
+          <query>`comment("Credit to Brett Adams")` index=_internal $host$ sourcetype=splunkd source=*metrics.log component=Metrics TERM(group=tcpout_connections) name=$output_group$*
+| rex field=name "(?P&lt;destination&gt;[^:]+)"
+| search destination=$output_group$*
+| timechart span=1m sum(kb) by destIp limit=50
+| fillnull value=0
+| untable _time destIp kb 
+| stats avg(kb) as avg stdev(kb) as stdev by _time
+| eval dev_perc = stdev/avg*100
+| table _time dev_perc</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
       <title>Dashboard info</title>
       <html>
         <body>
           <p>Purpose of destination count table? metrics.log only records the tcpout data *if* the connection is open at the time the metrics.log writes, so the count is to sanity-check that the numbers of connections matches the number of forwarders on the backend (this will happen with the below outputs.conf settings combined with regular data flow)</p>
           <br/>
-    <p>Purpose of the data output per-second timechart? The current goal is to get close to switching indexers every second for an output group (per-pipeline)</p>
+    <p>Purpose of the data output per-second timechart? The current goal is to get close to switching indexers every second for an output group (per-pipeline), note that this will result in more open connections to indexers so only really works if this is deployed to a moderate number of intermediate forwarders (HF's or similar)</p>
           <br/>
     <p>What config  is used to achieve the above?</p>
     <p>outputs.conf file based on 1MB/s

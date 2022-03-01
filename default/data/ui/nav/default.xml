@@ -134,6 +134,7 @@
 		    <view name="indexer_max_data_queue_sizes_by_name_v8" />		    
 		    <view name="hec_performance" />
 		    <view name="splunk_forwarder_output_tuning" />
+		    <view name="splunk_forwarder_data_balance_tuning" />
 		    <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">Channel churn issues</a>
 		</collection>
 	</collection>
@@ -190,6 +191,7 @@
 			        <view name="indexer_max_data_queue_sizes_by_name_v8" />
 		                <view name="hec_performance" />
 		                <view name="splunk_forwarder_output_tuning" />
+				<view name="splunk_forwarder_data_balance_tuning" />
   	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">ForwarderLevel - Channel churn issues</a>
 			</collection>
 			<collection label="Other">
@@ -336,6 +338,7 @@
 			<collection label="Other">
 	                        <saved name="SearchHeadLevel - audit logs showing all time searches" />
 	                        <saved name="IndexerLevel - RemoteSearches find all time searches" />
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Excessive%20REST%20API%20usage">SearchHeadLevel - Excessive REST API usage</a>			
 			</collection>
 		</collection>
 		<collection label="Performance Issues">
@@ -349,6 +352,7 @@
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20SHC%20Captain%20unable%20to%20establish%20common%20bundle">SearchHeadLevel - SHC Captain unable to establish common bundle</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Slow%20peer%20from%20remote%20searches">Slow peer from remote searches</a>
                         <saved name="SearchHeadLevel - Search Messages field extractor slow" />
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Excessive%20REST%20API%20usage">SearchHeadLevel - Excessive REST API usage</a>			
 		</collection>		
 		<collection label="Proactive">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20LDAP%20users%20have%20been%20disabled%20or%20left%20the%20company%20cleanup%20required">LDAP users have been disabled or left the company cleanup required</a>		

@@ -197,4 +197,21 @@
       </table>
     </panel>
   </row>
+  <row>
+    <panel>
+      <title>If useACK is in use num_of_requests_waiting_ack is high then this can be an issue (HEC tokens with useACK will stop allowing data through)</title>
+      <chart>
+        <search>
+          <refresh>$refreshinterval$</refresh>
+          <query>index=_introspection (`indexerhosts`) OR (`heavyforwarderhosts`) data.series=http_event_collector data.num_of_requests_waiting_ack=* sourcetype=http_event_collector_metrics 
+| timechart minspan=2m max(data.num_of_requests_waiting_ack) AS num_of_requests_waiting_ack</query>
+          <earliest>$timepicker.earliest$</earliest>
+          <latest>$timepicker.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
 </form>

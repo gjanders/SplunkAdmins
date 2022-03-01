@@ -46,7 +46,7 @@ The macros are listed below, many expect a `host=A OR host=B` item to assist in 
 
 `searchheadsplunkservers - a splunk_server=...` list of any Splunk search head hosts (for example `splunk_server=searchhead*`)
 
-`splunkindexerhostsvalue - a splunk_server=...` list of any Splunk indexer hosts (for example `splunk_server=indexer*`)
+`splunkindexerhostsvalue - a splunk_server=...` list of any Splunk indexer hosts (for example `splunk_server=indexer*`), or a `splunk_server_group=indexer_group`
 
 `splunkadmins_splunkd_source` - this defaults to `source=*splunkd.log`, for a slight improvement in performance you can make this a specific file such as `/opt/splunk/var/log/splunk/splunkd.log`
 
@@ -63,7 +63,7 @@ The vast majority of the alerts also have a macro(s) which you can customise to 
 I have attempted to provide an appropriate macro in any alert where I deemed it appropriate, feedback is welcome for any alert that you believe should have a macro or requires further improvement
 
 ## Installation
-The application is designed to work on a search head or search head cluster instance, installation on the indexing tier is not required
+The application is designed to work on a search head or search head cluster instance, installation on the indexing tier is not required. You may wish to use your monitoring console server as the search head to run this app on (as it will have `splunk_server_groups` configured for your environment).
 There are a few searches that use REST API calls which are specific to the search head cluster they run on. These alerts will have to be placed on each search head or search head cluster, alternatively any server with the required search peers will also work, the relevant alerts are:
 - SearchHeadLevel - Accelerated DataModels with All Time Searching Enabled
 - SearchHeadLevel - Realtime Scheduled Searches are in use
@@ -218,6 +218,59 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.10
+README.md update
+
+New alert:
+`SearchHeadLevel - Excessive REST API usage`
+
+New dashboard:
+`splunk_forwarder_data_balance_tuning` - new dashboard based on Brett Adam's work
+
+New macro:
+`diskusage`
+
+Updated alert:
+`AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - more criteria
+
+`ForwarderLevel - Channel churn issues` - added another TERM to the search, added stats line to summarise the result, added to where so this fires only if channels added adn removed
+
+`IndexerLevel - RemoteSearches Indexes Stats` - updated comment and rename of fields
+
+`IndexerLevel - RemoteSearches Indexes Stats Wilcard` - updated comment and rename of fields
+
+`SearchHeadLevel - Detect MongoDB errors` - regex update to remove false positives
+
+`SearchHeadLevel - Indexer Peer Connection Failures` - updated comment and sourcetype
+
+`SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search` - added rounding of fields, updated comment
+
+`SearchHeadLevel - platform_stats.users savedsearches` - added time field
+
+`SearchHeadLevel - platform_stats.users dashboards` - added time field
+
+`SearchHeadLevel - Scheduled Searches That Cannot Run` - corrected failure count so it's accurate
+
+`SearchHeadLevel - Search Messages user level` - more criteria and excluded some warnings
+
+`SearchHeadLevel - Search Queries summary exact match` - updates to stats to include 1 more field, updated regex to match macros in multisearch commands, updated comment, removed extra ' character from search field
+
+`SearchHeadLevel - Search Queries summary non-exact match` - updated comment, updated regex to match macros in multisearch commands, removed extra ' character from search field
+
+Updated dashboards:
+`hec_performance` - to include the additional `num_of_requests_waiting_ack` measurement from introspection data, if this is high it can stop data when tokens have useACK set to true
+
+`smartstore_stats` - various new panels around queueing of downloads, and other potential smartstore issues
+
+`splunk_forwarder_output_tuning` - update to include another measure of data balance
+
+Updated comments on alerts:
+`AllSplunkLevel - Unable To Distribute to Peer`
+
+`SearchHeadLevel - splunk_search_messages dispatch` - description update
+
+Updated metadata file to allow `sc_admin` role access
+
 ### 2.6.9
 Updated alerts:
 `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - removed 1 log entry for consecutive date entries/unretrievable data
