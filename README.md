@@ -233,7 +233,7 @@ New macro:
 Updated alert:
 `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - more criteria
 
-`ForwarderLevel - Channel churn issues` - added another TERM to the search, added stats line to summarise the result, added to where so this fires only if channels added adn removed
+`ForwarderLevel - Channel churn issues` - added another TERM to the search, added stats line to summarise the result, added to where so this fires only if channels added and removed
 
 `IndexerLevel - RemoteSearches Indexes Stats` - updated comment and rename of fields
 
