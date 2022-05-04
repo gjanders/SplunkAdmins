@@ -135,6 +135,7 @@
 		    <view name="hec_performance" />
 		    <view name="splunk_forwarder_output_tuning" />
 		    <view name="splunk_forwarder_data_balance_tuning" />
+		    <view name="splunk_introspection_io_stats" />
 		    <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">Channel churn issues</a>
 		</collection>
 	</collection>
@@ -192,6 +193,7 @@
 		                <view name="hec_performance" />
 		                <view name="splunk_forwarder_output_tuning" />
 				<view name="splunk_forwarder_data_balance_tuning" />
+				<view name="splunk_introspection_io_stats" />
   	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">ForwarderLevel - Channel churn issues</a>
 			</collection>
 			<collection label="Other">
@@ -203,6 +205,7 @@
                                 <view name="troubleshooting_resource_usage_per_user" />
                                 <view name="detect_excessive_search_use" />
                                 <view name="hec_performance" />
+				<view name="splunk_introspection_io_stats" />
 				<saved name="IndexerLevel - Knowledge bundle upload stats" />
 	                        <saved name="SearchHeadLevel - Search Messages field extractor slow" />
 				<saved name="IndexerLevel - IndexWriter pause duration" />				
@@ -228,7 +231,8 @@
 	                        <saved name="SearchHeadLevel - SmartStore cache misses - combined" />
 				<saved name="IndexerLevel - SmartStore cache misses - remote_searches" />
 				<saved name="IndexerLevel - Buckets in cache" />								
-				<view name="smartstore_stats" />				
+				<view name="smartstore_stats" />
+				<view name="splunk_introspection_io_stats" />
 			</collection>			
 		</collection>	
 		<collection label="Sizing Related">		
@@ -347,6 +351,7 @@
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Long%20Running%20Searches%20Found">Long Running Searches Found</a>			
                         <view name="search_head_scheduledsearches_distribution" />			
                         <view name="detect_excessive_search_use" />
+			<view name="splunk_introspection_io_stats" />
 			<saved name="SearchHeadLevel - Maximum memory utilisation per search" />
 			<saved name="SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated" />
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20SHC%20Captain%20unable%20to%20establish%20common%20bundle">SearchHeadLevel - SHC Captain unable to establish common bundle</a>

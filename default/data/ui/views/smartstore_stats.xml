@@ -1,6 +1,6 @@
 <form version="1.1">
   <label>Dashboard - SmartStore Stats</label>
-  <description>Also refer to https://github.com/camrunr/s2_traffic_report/blob/master/s2_traffic_report.xml for an alternative view of SmartStore downloads/uploads. To determine which searches are causing cache misses refer to the SearchHeadLevel - SmartStore cache misses reports in this app</description>
+  <description>Also refer to https://github.com/camrunr/s2_traffic_report/blob/master/s2_traffic_report.xml for an alternative view of SmartStore downloads/uploads. To determine which searches are causing cache misses refer to the SearchHeadLevel - SmartStore cache misses reports in this app. Note that the cache misses combined will require the search to complete while the indexing tier version can catch an in-progress search</description>
   <fieldset submitButton="false">
     <input type="time" token="time">
       <label></label>

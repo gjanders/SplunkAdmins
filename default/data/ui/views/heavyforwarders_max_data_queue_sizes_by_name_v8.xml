@@ -226,7 +226,7 @@
       <title>TcpOut KB per second per forwarder</title>
       <chart>
         <search>
-          <query>| tstats prestats=true sum(PREFIX(kb=))where index=_internal $hosts$ TERM(group=thruput) TERM(name=cooked_output) OR TERM(name=uncooked_output) source=*metrics.log sourcetype=splunkd source=*metrics.log groupby host, _time span=1s
+          <query>| tstats prestats=true sum(PREFIX(kb=)) where index=_internal $hosts$ TERM(group=thruput) TERM(name=cooked_output) OR TERM(name=uncooked_output) source=*metrics.log sourcetype=splunkd source=*metrics.log groupby host, _time span=1s
 		  | timechart aligntime=latest useother=false span=$span$ limit=20 per_second(kb=) by host 
           </query>
           <earliest>$time.earliest$</earliest>

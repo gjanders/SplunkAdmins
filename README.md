@@ -1,6 +1,6 @@
 ## SplunkBase
 Also available on SplunkBase as [Alerts for Splunk Admins](https://splunkbase.splunk.com/app/3796/)
-You may also be interested in [VersionControl For Splunk](https://splunkbase.splunk.com/app/4355/)
+You may also be interested in [VersionControl For Splunk](https://splunkbase.splunk.com/app/4355/) or perhaps [Decrypt2](https://splunkbase.splunk.com/app/5565/)
 
 ## Introduction
 This application accompanies the Splunk conf 2017 presentation "How did you get so big? Tips and tricks for growing your Splunk installation from 50GB/day to 1TB/day"
@@ -218,6 +218,37 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.11
+New dashboards:
+`splunk_introspection_io_stats` - just an I/O focussed dashboard based on introspection data
+
+New macro:
+`splunkadmins_shutdown_time_by_shc`
+
+`cluster_masters`
+
+
+Updated alerts:
+`AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - more criteria
+
+`IndexerLevel - IndexConfig Warnings from Splunk indexers` - updated criteria, using stats instead of top
+
+`SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring` - updated keywords for new instances, added more criteria to reduce false alarms
+
+`SearchHeadLevel - Lookup updates within SHC` - changed to addCommit instead of acceptPush
+
+Updated dashboards:
+`heavyforwarders_max_data_queue_sizes_by_name_v8` - corrected missing space in "TcpOut KB per second per forwarder" panel, (feedback from Vincent)
+
+`indexer_max_data_queue_sizes_by_name` - updated comment on replication queue, replication queue issues now show duration
+
+`smartstore_stats` - updated comment
+
+`splunk_forwarder_output_tuning` - added attribution as the link is available via search engines and public, updated comments
+
+Changed:
+`splunkadmins_userlist_indexinfo` into a csv file to prevent unncessary restarts related to updating this app (on standalone instances this triggers a restart due to collections.conf), collections.conf was removed from this app
+
 ### 2.6.10
 README.md update
 

@@ -125,8 +125,9 @@
     <panel>
       <title>Shows any replication queue issues that may slowdown/prevent the queues from clearing at the indexer level</title>
       <chart>
+        <title>The replication queue appears to directly relate to the indexing queue, any blockage of the indexing queue will then block the replication queue and temporarily slow data ingestion. The replication queue appears to be extremely sensitive to the other indexers indexing queue so it can be a useful measure of an issue...</title>
         <search>
-          <query>index=_internal `indexerhosts` "replication queue for " "full" sourcetype=splunkd | rename peer AS guid | join guid [|  rest /services/search/distributed/peers  | table guid peerName] | timechart span=1m count by peerName</query>
+          <query>index=_internal `indexerhosts` "replication queue for " "full" OR "has room now" sourcetype=splunkd | rename peer AS guid | join guid [| rest /services/search/distributed/peers | table guid peerName] | transaction bid peer endswith="has room now" keeporphans=true | timechart span=1m count, max(duration) AS duration by peerName</query>
           <earliest>-60m@m</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
@@ -154,6 +155,12 @@
         <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
         <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
         <option name="charting.legend.placement">right</option>
+        <option name="height">540</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">1</option>
+        <option name="trellis.scales.shared">0</option>
+        <option name="trellis.size">large</option>
+        <option name="trellis.splitBy">_aggregation</option>
       </chart>
     </panel>
   </row>

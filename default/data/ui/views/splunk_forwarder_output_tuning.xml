@@ -104,7 +104,11 @@
         <body>
           <p>Purpose of destination count table? metrics.log only records the tcpout data *if* the connection is open at the time the metrics.log writes, so the count is to sanity-check that the numbers of connections matches the number of forwarders on the backend (this will happen with the below outputs.conf settings combined with regular data flow)</p>
           <br/>
-    <p>Purpose of the data output per-second timechart? The current goal is to get close to switching indexers every second for an output group (per-pipeline), note that this will result in more open connections to indexers so only really works if this is deployed to a moderate number of intermediate forwarders (HF's or similar)</p>
+<p><a href="https://www.linkedin.com/pulse/splunk-asynchronous-forwarding-lightning-fast-data-ingestor-rawat"> Splunk Asynchronous Forwarding (Lightning-fast data ingestor)</a></p>
+    <p>Purpose of the data output per-second timechart? The current goal is to get close to switching indexers every second for an output group (per-pipeline), note that this will result in more open connections to indexers so only really works if this is deployed to a moderate number of intermediate forwarders (HF's or similar). Note that you want to do this with autoLBVolume, if you lower autoLBFrequency to a very short time period you may result in un-even data balance due to switching frequently when forwarding smaller volumes of data</p>
+    <p>Please read the linked article for information on these settings, note that when using async forwarding the open file descriptor usage is higher than without async forwarding as the connections are held open by forwarders. So this works great on an intermediate forwarding tier, this may not work so well with a very large number of forwarders</p>
+    <p>Also note that the maxQueueSize should not be below 10MB (10MB minimium size)</p>
+    <p>Finally while this also works on UF's, there are some reasons why you may want to consider HF's if you are running an intermediate tier, answers post <a href="https://community.splunk.com/t5/Getting-Data-In/Wrongly-merged-Events-permanently-blocked-tcpout-queue-with/m-p/508743">Wrongly merged Events/permanently blocked tcpout queue with Intermediate Universal Forwarder</a></p>
           <br/>
     <p>What config  is used to achieve the above?</p>
     <p>outputs.conf file based on 1MB/s
