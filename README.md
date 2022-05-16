@@ -218,6 +218,9 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.12
+Correct typo in savedsearches.conf (a missing \ character), (feedback from Vincent) 
+
 ### 2.6.11
 New dashboards:
 `splunk_introspection_io_stats` - just an I/O focussed dashboard based on introspection data

@@ -5,7 +5,7 @@
     "id": {
       "group": null,
       "name": "SplunkAdmins",
-      "version": "2.6.11"
+      "version": "2.6.12"
     },
     "author": [
       {
