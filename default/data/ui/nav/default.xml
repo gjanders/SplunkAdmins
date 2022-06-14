@@ -449,6 +449,7 @@
 		<collection label="Recommended (externally hosted)">
 			<a href="https://github.com/dpaper-splunk/public/tree/master/dashboards" target="_blank">Extended Search Reporting (and others)</a>
 			<a href="https://github.com/nicovdw/splunk_concurrency_helper" target="_blank">Search Scheduler Tuning searches</a>
+			<a href="https://splunkbase.splunk.com/app/6449/" target="_blank">Sideview UI (User Activity details)</a>
 		</collection>
 	</collection>
         <collection label="Summary_Reports">

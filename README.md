@@ -218,6 +218,41 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 2.6.13
+Updated python SDK to 1.6.20
+
+Updates to reports/alerts:
+`IndexerLevel - Future Dated Events that appeared in the last week` - comment upate
+
+`IndexerLevel - IndexConfig Warnings from Splunk indexers` - added wildcard to improve matching
+
+Updated regex to handle index:: case:
+`IndexerLevel - RemoteSearches Indexes Stats`
+
+`IndexerLevel - RemoteSearches Indexes Stats Wilcard`
+
+`SearchHeadLevel - Determine query scan density`
+
+`SearchHeadLevel - Search Queries By Type Audit Logs`
+
+`SearchHeadLevel - Search Queries By Type Audit Logs macro version`
+
+`SearchHeadLevel - Search Queries By Type Audit Logs macro version other`
+
+`SearchHeadLevel - SmartStore cache misses - dashboards`
+
+`SearchHeadLevel - SmartStore cache misses - savedsearches`
+
+`SearchHeadLevel - SmartStore cache misses - combined`
+
+Updated regex to handle index:: case: and minor tweak to replace comments with spaces:
+`SearchHeadLevel - Search Queries summary exact match`
+
+`SearchHeadLevel - Search Queries summary non-exact match`
+
+Updated links in nav menu:
+[SideView UI (user activity)](https://splunkbase.splunk.com/app/6449/)
+
 ### 2.6.12
 Correct typo in savedsearches.conf (a missing \ character), (feedback from Vincent) 
 

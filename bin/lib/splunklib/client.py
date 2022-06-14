@@ -75,6 +75,8 @@ from .binding import (AuthenticationError, Context, HTTPError, UrlEncoded,
                       namespace)
 from .data import record
 
+logger = logging.getLogger(__name__)
+
 __all__ = [
     "connect",
     "NotSupportedError",
@@ -224,7 +226,10 @@ def _load_atom_entries(response):
 
 
 # Load the sid from the body of the given response
-def _load_sid(response):
+def _load_sid(response, output_mode):
+    if output_mode == "json":
+        json_obj = json.loads(response.body.read())
+        return json_obj.get('sid')
     return _load_atom(response).response.sid
 
 
@@ -318,6 +323,11 @@ def connect(**kwargs):
     :type username: ``string``
     :param `password`: The password for the Splunk account.
     :type password: ``string``
+    :param retires: Number of retries for each HTTP connection (optional, the default is 0).
+                    NOTE THAT THIS MAY INCREASE THE NUMBER OF ROUND TRIP CONNECTIONS TO THE SPLUNK SERVER.
+    :type retries: ``int``
+    :param retryDelay: How long to wait between connection attempts if `retries` > 0 (optional, defaults to 10s).
+    :type retryDelay: ``int`` (in seconds)
     :param `context`: The SSLContext that can be used when setting verify=True (optional)
     :type context: ``SSLContext``
     :return: An initialized :class:`Service` connection.
@@ -386,6 +396,11 @@ class Service(_BaseService):
     :param `password`: The password, which is used to authenticate the Splunk
                        instance.
     :type password: ``string``
+    :param retires: Number of retries for each HTTP connection (optional, the default is 0).
+                    NOTE THAT THIS MAY INCREASE THE NUMBER OF ROUND TRIP CONNECTIONS TO THE SPLUNK SERVER.
+    :type retries: ``int``
+    :param retryDelay: How long to wait between connection attempts if `retries` > 0 (optional, defaults to 10s).
+    :type retryDelay: ``int`` (in seconds)
     :return: A :class:`Service` instance.
 
     **Example**::
@@ -724,7 +739,7 @@ class Endpoint(object):
     """
     def __init__(self, service, path):
         self.service = service
-        self.path = path if path.endswith('/') else path + '/'
+        self.path = path
 
     def get(self, path_segment="", owner=None, app=None, sharing=None, **query):
         """Performs a GET operation on the path segment relative to this endpoint.
@@ -782,6 +797,8 @@ class Endpoint(object):
         if path_segment.startswith('/'):
             path = path_segment
         else:
+            if not self.path.endswith('/') and path_segment != "":
+                self.path = self.path + '/'
             path = self.service._abspath(self.path + path_segment, owner=owner,
                                          app=app, sharing=sharing)
         # ^-- This was "%s%s" % (self.path, path_segment).
@@ -842,6 +859,8 @@ class Endpoint(object):
         if path_segment.startswith('/'):
             path = path_segment
         else:
+            if not self.path.endswith('/') and path_segment != "":
+                self.path = self.path + '/'
             path = self.service._abspath(self.path + path_segment, owner=owner, app=app, sharing=sharing)
         return self.service.post(path, owner=owner, app=app, sharing=sharing, **query)
 
@@ -853,32 +872,21 @@ class Entity(Endpoint):
 
     ``Entity`` provides the majority of functionality required by entities.
     Subclasses only implement the special cases for individual entities.
-    For example for deployment serverclasses, the subclass makes whitelists and
-    blacklists into Python lists.
+    For example for saved searches, the subclass makes fields like ``action.email``,
+    ``alert_type``, and ``search`` available.
 
     An ``Entity`` is addressed like a dictionary, with a few extensions,
-    so the following all work::
+    so the following all work, for example in saved searches::
 
-        ent['email.action']
-        ent['disabled']
-        ent['whitelist']
-
-    Many endpoints have values that share a prefix, such as
-    ``email.to``, ``email.action``, and ``email.subject``. You can extract
-    the whole fields, or use the key ``email`` to get a dictionary of
-    all the subelements. That is, ``ent['email']`` returns a
-    dictionary with the keys ``to``, ``action``, ``subject``, and so on. If
-    there are multiple levels of dots, each level is made into a
-    subdictionary, so ``email.body.salutation`` can be accessed at
-    ``ent['email']['body']['salutation']`` or
-    ``ent['email.body.salutation']``.
+        ent['action.email']
+        ent['alert_type']
+        ent['search']
 
     You can also access the fields as though they were the fields of a Python
     object, as in::
 
-        ent.email.action
-        ent.disabled
-        ent.whitelist
+        ent.alert_type
+        ent.search
 
     However, because some of the field names are not valid Python identifiers,
     the dictionary-like syntax is preferable.
@@ -978,7 +986,10 @@ class Entity(Endpoint):
     def _load_atom_entry(self, response):
         elem = _load_atom(response, XNAME_ENTRY)
         if isinstance(elem, list):
-            raise AmbiguousReferenceException("Fetch from server returned multiple entries for name %s." % self.name)
+            apps = [ele.entry.content.get('eai:appName') for ele in elem]
+
+            raise AmbiguousReferenceException(
+                "Fetch from server returned multiple entries for name '%s' in apps %s." % (elem[0].entry.title, apps))
         else:
             return elem.entry
 
@@ -1084,8 +1095,6 @@ class Entity(Endpoint):
     def disable(self):
         """Disables the entity at this endpoint."""
         self.post("disable")
-        if self.service.restart_required:
-            self.service.restart(120)
         return self
 
     def enable(self):
@@ -1469,7 +1478,7 @@ class ReadOnlyCollection(Endpoint):
             if pagesize is None or N < pagesize:
                 break
             offset += N
-            logging.debug("pagesize=%d, fetched=%d, offset=%d, N=%d, kwargs=%s", pagesize, fetched, offset, N, kwargs)
+            logger.debug("pagesize=%d, fetched=%d, offset=%d, N=%d, kwargs=%s", pagesize, fetched, offset, N, kwargs)
 
     # kwargs: count, offset, search, sort_dir, sort_key, sort_mode
     def list(self, count=None, **kwargs):
@@ -2111,10 +2120,6 @@ class Index(Entity):
         if source is not None: args['source'] = source
         if sourcetype is not None: args['sourcetype'] = sourcetype
 
-        # The reason we use service.request directly rather than POST
-        # is that we are not sending a POST request encoded using
-        # x-www-form-urlencoded (as we do not have a key=value body),
-        # because we aren't really sending a "form".
         self.service.post(PATH_RECEIVERS_SIMPLE, body=event, **args)
         return self
 
@@ -2542,9 +2547,9 @@ class Inputs(Collection):
             kinds = self.kinds
         if len(kinds) == 1:
             kind = kinds[0]
-            logging.debug("Inputs.list taking short circuit branch for single kind.")
+            logger.debug("Inputs.list taking short circuit branch for single kind.")
             path = self.kindpath(kind)
-            logging.debug("Path for inputs: %s", path)
+            logger.debug("Path for inputs: %s", path)
             try:
                 path = UrlEncoded(path, skip_encode=True)
                 response = self.get(path, **kwargs)
@@ -2762,9 +2767,8 @@ class Job(Entity):
         return self
 
     def results(self, **query_params):
-        """Returns a streaming handle to this job's search results. To get a
-        nice, Pythonic iterator, pass the handle to :class:`splunklib.results.ResultsReader`,
-        as in::
+        """Returns a streaming handle to this job's search results. To get a nice, Pythonic iterator, pass the handle
+        to :class:`splunklib.results.JSONResultsReader` along with the query param "output_mode='json'", as in::
 
             import splunklib.client as client
             import splunklib.results as results
@@ -2773,7 +2777,7 @@ class Job(Entity):
             job = service.jobs.create("search * | head 5")
             while not job.is_done():
                 sleep(.2)
-            rr = results.ResultsReader(job.results())
+            rr = results.JSONResultsReader(job.results(output_mode='json'))
             for result in rr:
                 if isinstance(result, results.Message):
                     # Diagnostic messages may be returned in the results
@@ -2803,19 +2807,17 @@ class Job(Entity):
     def preview(self, **query_params):
         """Returns a streaming handle to this job's preview search results.
 
-        Unlike :class:`splunklib.results.ResultsReader`, which requires a job to
-        be finished to
-        return any results, the ``preview`` method returns any results that have
-        been generated so far, whether the job is running or not. The
-        returned search results are the raw data from the server. Pass
-        the handle returned to :class:`splunklib.results.ResultsReader` to get a
-        nice, Pythonic iterator over objects, as in::
+        Unlike :class:`splunklib.results.JSONResultsReader`along with the query param "output_mode='json'",
+        which requires a job to be finished to return any results, the ``preview`` method returns any results that
+        have been generated so far, whether the job is running or not. The returned search results are the raw data
+        from the server. Pass the handle returned to :class:`splunklib.results.JSONResultsReader` to get a nice,
+        Pythonic iterator over objects, as in::
 
             import splunklib.client as client
             import splunklib.results as results
             service = client.connect(...)
             job = service.jobs.create("search * | head 5")
-            rr = results.ResultsReader(job.preview())
+            rr = results.JSONResultsReader(job.preview(output_mode='json'))
             for result in rr:
                 if isinstance(result, results.Message):
                     # Diagnostic messages may be returned in the results
@@ -2966,19 +2968,19 @@ class Jobs(Collection):
         if kwargs.get("exec_mode", None) == "oneshot":
             raise TypeError("Cannot specify exec_mode=oneshot; use the oneshot method instead.")
         response = self.post(search=query, **kwargs)
-        sid = _load_sid(response)
+        sid = _load_sid(response, kwargs.get("output_mode", None))
         return Job(self.service, sid)
 
     def export(self, query, **params):
-        """Runs a search and immediately starts streaming preview events.
-        This method returns a streaming handle to this job's events as an XML
-        document from the server. To parse this stream into usable Python objects,
-        pass the handle to :class:`splunklib.results.ResultsReader`::
+        """Runs a search and immediately starts streaming preview events. This method returns a streaming handle to
+        this job's events as an XML document from the server. To parse this stream into usable Python objects,
+        pass the handle to :class:`splunklib.results.JSONResultsReader` along with the query param
+        "output_mode='json'"::
 
             import splunklib.client as client
             import splunklib.results as results
             service = client.connect(...)
-            rr = results.ResultsReader(service.jobs.export("search * | head 5"))
+            rr = results.JSONResultsReader(service.jobs.export("search * | head 5",output_mode='json'))
             for result in rr:
                 if isinstance(result, results.Message):
                     # Diagnostic messages may be returned in the results
@@ -3027,14 +3029,14 @@ class Jobs(Collection):
     def oneshot(self, query, **params):
         """Run a oneshot search and returns a streaming handle to the results.
 
-        The ``InputStream`` object streams XML fragments from the server. To
-        parse this stream into usable Python objects,
-        pass the handle to :class:`splunklib.results.ResultsReader`::
+        The ``InputStream`` object streams fragments from the server. To parse this stream into usable Python
+        objects, pass the handle to :class:`splunklib.results.JSONResultsReader` along with the query param
+        "output_mode='json'" ::
 
             import splunklib.client as client
             import splunklib.results as results
             service = client.connect(...)
-            rr = results.ResultsReader(service.jobs.oneshot("search * | head 5"))
+            rr = results.JSONResultsReader(service.jobs.oneshot("search * | head 5",output_mode='json'))
             for result in rr:
                 if isinstance(result, results.Message):
                     # Diagnostic messages may be returned in the results
@@ -3182,7 +3184,7 @@ class SavedSearch(Entity):
         :return: The :class:`Job`.
         """
         response = self.post("dispatch", **kwargs)
-        sid = _load_sid(response)
+        sid = _load_sid(response, kwargs.get("output_mode", None))
         return Job(self.service, sid)
 
     @property
@@ -3616,7 +3618,7 @@ class KVStoreCollection(Entity):
         :return: Result of POST request
         """
         kwargs = {}
-        kwargs['index.' + name] = value if isinstance(value, basestring) else json.dumps(value)
+        kwargs['index.' + name] = value if isinstance(value, six.string_types) else json.dumps(value)
         return self.post(**kwargs)
 
     def update_field(self, name, value):
