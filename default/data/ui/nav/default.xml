@@ -29,6 +29,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Non-existent%20roles%20are%20assigned%20to%20users">Non-existent roles are assigned to users</a>      
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20TCP%20or%20SSL%20Config%20Issue">TCP or SSL Config Issue</a> 
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20WARN%20iniFile%20Configuration%20Issues">WARN iniFile Configuration Issues</a> 
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20error%20in%20stdout">error in stdout.log</a>
 		</collection>	
 		<collection label="Splunk Level Failures">
 			<collection label="Deployment Server Related">
@@ -260,6 +261,7 @@
                     <saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
 		    <saved name="IndexerLevel - platform_stats.indexers totalgb_thruput measurement" />
                     <saved name="IndexerLevel - platform_stats.indexers stddev measurement" />		    
+		    <saved name="IndexerLevel - platform_stats.indexers stddev incoming measurement" />	
                     <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
 		    <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
                 </collection>
@@ -332,12 +334,13 @@
 				<saved name="SearchHeadLevel - Dashboards using special characters" />
 			</collection>			
 			<collection label="Scheduled Searches">
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20not%20specifying%20an%20index%20macro%20version">Scheduled searches not specifying an index macro version</a>
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20not%20specifying%20an%20index">Scheduled searches not specifying an index</a>
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20without%20a%20configured%20earliest%20and%20latest%20time">Scheduled Searches without a configured earliest and latest time</a>
-			<saved name="SearchHeadLevel - Summary searches using realtime search scheduling" />
-			<saved name="SearchHeadLevel - SavedSearches using special characters" />
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20alert%20actions%20exceeding%20the%20max_action_results%20limit">Splunk alert actions exceeding the max_action_results limit</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20not%20specifying%20an%20index%20macro%20version">Scheduled searches not specifying an index macro version</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20not%20specifying%20an%20index">Scheduled searches not specifying an index</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20without%20a%20configured%20earliest%20and%20latest%20time">Scheduled Searches without a configured earliest and latest time</a>
+				<saved name="SearchHeadLevel - Summary searches using realtime search scheduling" />
+				<saved name="SearchHeadLevel - SavedSearches using special characters" />
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20alert%20actions%20exceeding%20the%20max_action_results%20limit">Splunk alert actions exceeding the max_action_results limit</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20Scheduler%20logs%20have%20not%20appeared%20in%20the%20last">Splunk Scheduler logs have not appeared in the last</a>
 	  		</collection>									
 			<collection label="Other">
 	                        <saved name="SearchHeadLevel - audit logs showing all time searches" />
@@ -425,6 +428,7 @@
 			<saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
 	                <saved name="IndexerLevel - platform_stats.indexers totalgb_thruput measurement" />
 	                <saved name="IndexerLevel - platform_stats.indexers stddev measurement" />
+	                <saved name="IndexerLevel - platform_stats.indexers stddev incoming measurement" />			
 	                <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
 			<saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
 		</collection>
@@ -451,7 +455,7 @@
 			<a href="https://github.com/nicovdw/splunk_concurrency_helper" target="_blank">Search Scheduler Tuning searches</a>
 			<a href="https://splunkbase.splunk.com/app/6449/" target="_blank">Sideview UI (User Activity details)</a>
 		</collection>
-	</collection>
+	</collection>	
         <collection label="Summary_Reports">
 		<saved name="SearchHeadLevel - platform_stats.audit metrics searches" />
                 <saved name="SearchHeadLevel - platform_stats.audit metrics users" />
@@ -467,10 +471,15 @@
                 <saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
                 <saved name="IndexerLevel - platform_stats.indexers totalgb_thruput measurement" />
                 <saved name="IndexerLevel - platform_stats.indexers stddev measurement" />		
+                <saved name="IndexerLevel - platform_stats.indexers stddev incoming measurement" />		
 		<saved name="IndexerLevel - RemoteSearches Indexes Stats" />
 		<saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
         </collection>
         <collection label="Users">
             <saved name="What Access Do I Have Without REST?" />
         </collection>
+	<collection label="MonitoringConsole">
+		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FMonitoringConsole%20-%20Core%20dumps%20have%20appeared%20on%20the%20filesystem">Core dumps have appeared on the filesystem</a>
+		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FMonitoringConsole%20-%20Crash%20logs%20have%20appeared%20on%20the%20filesystem">Crash logs have appeared on the filesystem</a>		
+	</collection>
 </nav>

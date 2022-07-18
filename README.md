@@ -1,5 +1,7 @@
 ## SplunkBase
 Also available on SplunkBase as [Alerts for Splunk Admins](https://splunkbase.splunk.com/app/3796/)
+For some searches you will need the companion app, the TA-Alerts for Splunk Admins app [TA-Alerts for SplunkAdmins github](https://github.com/gjanders/TA-SplunkAdmins/) or [TA-Alerts for SplunkAdmins splunkbase](https://splunkbase.splunk.com/app/6518/)
+
 You may also be interested in [VersionControl For Splunk](https://splunkbase.splunk.com/app/4355/) or perhaps [Decrypt2](https://splunkbase.splunk.com/app/5565/)
 
 ## Introduction
@@ -141,39 +143,78 @@ There are many Splunk conf talks available on this subject in various conference
 
 Are all well suited to an automated email using the sendresults command or a similar function as they involve end user configuration which the individual can change/fix
 
-## Custom search commands
-Due to the current SPL not handling a particular task well, and the lookup commands not supporting regular expressions, I found that the only workable solution was to create a custom lookup command.
+## Which alerts and reports have been tested on the newer Splunk versions such as 8.2 or 9.0?
+This application was first created in 2017 and both Splunk and the application have evolved during this time period. This application is a library of potential alerts that could be used in a Splunk environment so it would never be a good idea to turn on all alerts from this application.
 
-Two exist:
-- streamfilter - based on a single (or multivalue) field name, and a single (or multivalue) field with patterns, apply the regular expression in the pattern field against the nominated field(s)
-- streamfilterwildcard - identical to streamfilter except that this takes a field name with wildcards, and assumes an index-style expression, so `*` becomes `(?i)^[^_].*$`, and `example*` becomes `(?i)^example.*$`
-
-Search help is available and these are used within the reports in this application. The Splunk python SDK version 1.6.5 is also included as this is required as part of the app, an example from the reports is:
-`| streamfilterwildcard pattern=indexes fieldname=indexes srchIndexesAllowed`
-
-Where indexes is a field name containing a list of wildcards `(_int*, _aud*)` or similar, indexes is the output field name, srchIndexesAllowed is the field name which the indexes field will be compared to.
-Each entry in the pattern field will be compared to each entry in the srchIndexesAllowed field in this example
-
-To make this command work the Splunk python SDK is bundled into the app, if the bin directory is wiped due to issues with other applications this only disables the two commands which are used in `Search Queries summary non-exact match` so far 
+The below list of alerts and reports are actively used since version 8.0.x and in 8.2.x and eventually 9.0:
+- AllSplunkEnterpriseLevel - Email Sending Failures
+- AllSplunkEnterpriseLevel - Losing Contact With Master Node
+- AllSplunkEnterpriseLevel - Replication Failures
+- AllSplunkEnterpriseLevel - Splunk Scheduler skipped searches and the reason
+- AllSplunkEnterpriseLevel - Splunkd Crash Logs Have Appeared in Production
+- AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only
+- AllSplunkLevel - Data Loss on shutdown
+- AllSplunkLevel - TailReader Ignoring Path
+- AllSplunkLevel - Time skew on Splunk Servers
+- AllSplunkLevel - Unexpected termination of a Splunk process unix
+- ClusterMasterLevel - excess buckets on master
+- DeploymentServer - Error Found On Deployment Server
+- ForwarderLevel - Channel churn issues
+- ForwarderLevel - Data dropping duration
+- ForwarderLevel - File Too Small to checkCRC occurring multiple times
+- ForwarderLevel - Splunk HEC issues
+- IndexerLevel - ClusterMaster Advising SearchOrRep Factor Not Met
+- IndexerLevel - Data parsing error
+- IndexerLevel - IndexConfig Warnings from Splunk indexers
+- IndexerLevel - Indexer Queues May Have Issues
+- IndexerLevel - Indexer replication queue issues to some peers
+- IndexerLevel - Peer will not return results due to outdated generation
+- IndexerLevel - platform_stats.counters hosts
+- IndexerLevel - platform_stats.counters hosts 24hour
+- IndexerLevel - platform_stats.indexers stddev measurement
+- IndexerLevel - platform_stats.indexers totalgb measurement
+- IndexerLevel - platform_stats.indexers totalgb_thruput measurement
+- IndexerLevel - RemoteSearches find datamodel acceleration with wildcards
+- IndexerLevel - RemoteSearches Indexes Stats
+- IndexerLevel - RemoteSearches Indexes Stats Wilcard
+- IndexerLevel - Search Failures
+- IndexerLevel - Slow peer from remote searches
+- IndexerLevel - strings_metadata triggering bucket rolling
+- SearchHeadLevel - authorize.conf settings will prevent some users from appearing in the UI
+- SearchHeadLevel - Captain Switchover Occurring
+- SearchHeadLevel - Dashboards invalid character in splunkd
+- SearchHeadLevel - Dashboards using special characters
+- SearchHeadLevel - Dashboards with all time searches set
+- SearchHeadLevel - datamodel errors in splunkd
+- SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated
+- SearchHeadLevel - Detect MongoDB errors
+- SearchHeadLevel - Detect searches hitting corrupt buckets
+- SearchHeadLevel - Excessive REST API usage
+- SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring
+- SearchHeadLevel - platform_stats access summary
+- SearchHeadLevel - platform_stats.audit metrics api
+- SearchHeadLevel - platform_stats.audit metrics searches
+- SearchHeadLevel - platform_stats.audit metrics users
+- SearchHeadLevel - platform_stats.audit metrics users 24hour
+- SearchHeadLevel - platform_stats.remote_searches metrics populating search
+- SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search
+- SearchHeadLevel - platform_stats.users dashboards
+- SearchHeadLevel - platform_stats.users savedsearches
+- SearchHeadLevel - RMD5 to savedsearch_name lookupgen report
+- SearchHeadLevel - savedsearches invalid character in splunkd
+- SearchHeadLevel - SavedSearches using special characters
+- SearchHeadLevel - Scheduled Searches That Cannot Run
+- SearchHeadLevel - Script failures in the last day
+- SearchHeadLevel - Search Messages admins only
+- SearchHeadLevel - Search Messages user level
+- SearchHeadLevel - Search Queries summary exact match
+- SearchHeadLevel - Search Queries summary non-exact match
+- SearchHeadLevel - SHC Captain unable to establish common bundle
+- SearchHeadLevel - Splunk alert actions exceeding the max_action_results limit
+- SearchHeadLevel - Users exceeding the disk quota
 
 ## KVStore Usage
 Some CSV lookups are now replaced with kvstore entries due to the ability to sync the kvstore across multiple search head or search head cluster(s) via apps like [KV Store Tools Redux](https://splunkbase.splunk.com/app/5328/)
-
-## Lookup Watcher
-The Lookup Watcher is a modular input designed to work in either search head clusters or standalone Splunk instances to determine the modification time and size of all lookup files on the filesystem of the Splunk servers.
-In a search head cluster the input will run on the captain only by running a rest call on each run, on a non-search head cluster it will always run.
-To use this, on a non-search head cluster simply go to Settings -> Inputs and create the Lookup Watcher modular input, the name of the input does not matter, you just need to create 1 input. 
-Note that the debugMode is optional and defaults to false, enabling this generates more logs for troubleshooting.
-
-Under the more settings button choose an index to send the data to and an interval to run the script
-
-On a search head cluster you will need to push an inputs.conf via the deployer server (if you are unsure of the syntax create one on a standalone server first)
-
-Once done the additional logs can be used to determine how often lookups are updated and how big they are
-
-Tested on Windows & Linux on Splunk 7.x.
-
-Lookup Watcher generates a log file is created in `$SPLUNK_HOME/var/log/splunk/` and will also be in the internal index with the name `lookup_watcher.log`
 
 ## platform_stats reports
 There are a number of reports with the keyword "platform_stats" in the title, these were designed to run mcollect commands and to collect data into a metric index
@@ -214,10 +255,47 @@ The following ideas relate to this issue:
 [Better audit logs](https://ideas.splunk.com/ideas/E-I-49)
 [Provide index access statistics to assist in capacity planning of the indexing tier](https://ideas.splunk.com/ideas/E-I-38)
 
+## Which searches require the TA-Alerts for SplunkAdmins add-on?
+- SearchHeadLevel - Search Queries summary non-exact match
+- IndexerLevel - RemoteSearches Indexes Stats Wilcard
+- SearchHeadLevel - Dashboards using depends and running searches in the background
+
 ## Feedback?
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.0
+
+Due to the creation of TA-Alerts for SplunkAdmins, the following are removed in this release:
+- bin directory
+- README directory
+- default/searchbnf.conf
+- default/inputs.conf
+- default/commands.conf
+
+LookupWatcher and the custom commands streamfilter and streamfilterwildcard are now moved into the new TA-Alerts for SplunkAdmins application
+
+New alerts:
+- `AllSplunkEnterpriseLevel - error in stdout.log`
+- `IndexerLevel - platform_stats.indexers stddev incoming measurement` 
+- `MonitoringConsole - Core dumps have appeared on the filesystem` 
+- `MonitoringConsole - Crash logs have appeared on the filesystem`
+- `SearchHeadLevel - Splunk Scheduler logs have not appeared in the last`
+
+Updated:
+- `AllSplunkEnterpriseLevel - Replication Failures` - simplified criteria to match more issues
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - corrected order of statements so this works as expected, added 1 more exclusion
+- `IndexerLevel - platform_stats.indexers stddev measurement` - narrowed down to sourcetype/source
+- `IndexerLevel - Search Failures` - changed criteria
+- `IndexerLevel - Indexer Queues May Have Issues` - added server count
+- `IndexerLevel - RemoteSearches Indexes Stats Wilcard` - description update as this requires TA-Alerts for SplunkAdmins
+- `SearchHeadLevel - Dashboards using depends and running searches in the background` - description update as this requires TA-Alerts for SplunkAdmins
+- `SearchHeadLevel - Detect MongoDB errors` - excluded 1 warning
+- `SearchHeadLevel - Search Queries summary exact match` - comment update
+- `SearchHeadLevel - Search Queries summary non-exact match` - comment and description update as this requires TA-Alerts for SplunkAdmins
+- `SearchHeadLevel - Search Messages user level` - removed "DAG Execution Exception"
+- `SearchHeadLevel - Search Messages admins only` - excluded "Found no results to append to collection"
+
 ### 2.6.13
 Updated python SDK to 1.6.20
 
