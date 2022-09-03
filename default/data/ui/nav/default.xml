@@ -9,6 +9,7 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%2520-%2520Core%2520Dumps%2520Disabled">Core Dumps Disabled</a> 
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Transparent%20Huge%20Pages%20is%20enabled%20and%20should%20not%20be">Transparent Huge Pages is enabled and should not be</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20ulimit%20on%20Splunk%20enterprise%20servers%20is%20below%208192">ulimit on Splunk enterprise servers is below 8192</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FMonitoringConsole%20-%20Check%20OS%20ulimits%20via%20REST">MonitoringConsole - Check OS ulimits via REST</a>
 			</collection>   
 			<collection label="Failures">
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%2520-%2520KVStore%2520Process%2520Terminated">KVStore Process Terminated</a>	
@@ -84,6 +85,7 @@
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
 	                <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FDeploymentServer%20-%20Error%20Found%20On%20Deployment%20Server">Error Found On Deployment Server</a>
                 </collection>
+		<saved name="DeploymentServer - Count by application" />		
 	</collection>
 	<collection label="ForwarderLevel">  
 		<collection label="OS Level Issues">  
@@ -93,6 +95,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Splunk%20Universal%20Forwarders%20that%20are%20time%20shifting">Splunk Universal Forwarders that are time shifting</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Splunk%20universal%20forwarders%20with%20ulimit%20issues">Splunk universal forwarders with ulimit issues</a>			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Splunk%20Universal%20Forwarders%20Exceeding%20the%20File%20Descriptor%20Cache">Splunk Universal Forwarders Exceeding the File Descriptor Cache</a>			
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FMonitoringConsole%20-%20Check%20OS%20ulimits%20via%20REST">MonitoringConsole - Check OS ulimits via REST (useful for HF's only)</a>
 		</collection>		
 		<collection label="File Monitoring issues">
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20crcSalt%20or%20initCrcLength%20change%20may%20be%20required">crcSalt or initCrcLength change may be required</a>
@@ -101,6 +104,7 @@
 		</collection>			
 		<collection label="Deployment Server">
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20Splunk%20forwarders%20that%20are%20not%20talking%20to%20the%20deployment%20server">Splunk forwarders that are not talking to the deployment server</a>
+			<saved name="DeploymentServer - Count by application" />
 		</collection>
 		<collection label="Splunk Level Issues">
 			<collection label="Performance">
@@ -208,6 +212,7 @@
                                 <view name="hec_performance" />
 				<view name="splunk_introspection_io_stats" />
 				<saved name="IndexerLevel - Knowledge bundle upload stats" />
+				<saved name="SearchHeadLevel - Knowledge bundle replication times metrics.log" />							
 	                        <saved name="SearchHeadLevel - Search Messages field extractor slow" />
 				<saved name="IndexerLevel - IndexWriter pause duration" />				
 			</collection>
@@ -283,13 +288,14 @@
                         <saved name="SearchHeadLevel - Search Queries summary exact match" />
                         <saved name="SearchHeadLevel - Search Queries summary exact match by user" />
                         <saved name="SearchHeadLevel - Search Queries summary exact match by index" />
-                        <saved name="SearchHeadLevel - IndexesPerUser Report" />
+                        <saved name="SearchHeadLevel - IndexesPerUser Report" />			
                         <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
-                        <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
+                        <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />			
 		</collection>      
 		<collection label="Data Models">				
 			<saved name="SearchHeadLevel - Data Model Acceleration Completion Status" />
 			<saved name="SearchHeadLevel - DataModel Fields" />
+			<saved name="IndexerLevel - DataModel Acceleration - Indexes in use" />
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20datamodel%20errors%20in%20splunkd">datamodel errors in splunkd</a>			
 			<view name="data_model_rebuild_monitor" />
 			<view name="data_model_status" />			
@@ -310,6 +316,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20datamodel%20errors%20in%20splunkd">datamodel errors in splunkd</a>
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20SmartStore%20-%20Bucket%20cache%20errors%20audit%20logs">IndexerLevel - SmartStore - Bucket cache errors audit logs</a>
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20No%20recent%20metrics.log%20data">AllSplunkLevel - No recent metrics.log data</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Detect%20bundle%20pushes%20no%20longer%20occurring">SearchHeadLevel - Detect bundle pushes no longer occurring</a>
 	                <collection label="Generic">
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Search%20Messages%20user%20level">Search Messages user level</a>
@@ -343,6 +350,7 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20Scheduler%20logs%20have%20not%20appeared%20in%20the%20last">Splunk Scheduler logs have not appeared in the last</a>
 	  		</collection>									
 			<collection label="Other">
+				<saved name="SearchHeadLevel - Knowledge bundle replication times metrics.log" />							
 	                        <saved name="SearchHeadLevel - audit logs showing all time searches" />
 	                        <saved name="IndexerLevel - RemoteSearches find all time searches" />
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Excessive%20REST%20API%20usage">SearchHeadLevel - Excessive REST API usage</a>			
@@ -361,6 +369,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Slow%20peer%20from%20remote%20searches">Slow peer from remote searches</a>
                         <saved name="SearchHeadLevel - Search Messages field extractor slow" />
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Excessive%20REST%20API%20usage">SearchHeadLevel - Excessive REST API usage</a>			
+			<saved name="SearchHeadLevel - Knowledge bundle replication times metrics.log" />			
 		</collection>		
 		<collection label="Proactive">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20LDAP%20users%20have%20been%20disabled%20or%20left%20the%20company%20cleanup%20required">LDAP users have been disabled or left the company cleanup required</a>		
@@ -412,6 +421,8 @@
 			<view name="knowledge_objects_by_app" />
 			<view name="lookups_in_use_finder" />
 			<view name="lookup_audit" />
+			<saved name="SearchHeadLevel - Knowledge bundle status on indexers" />
+			<saved name="SearchHeadLevel - Knowledge bundle replication times metrics.log" />			
 		</collection>	
 		<collection label="Summary_Reports">
         		<saved name="SearchHeadLevel - platform_stats.audit metrics searches" />
@@ -454,6 +465,8 @@
 			<a href="https://github.com/dpaper-splunk/public/tree/master/dashboards" target="_blank">Extended Search Reporting (and others)</a>
 			<a href="https://github.com/nicovdw/splunk_concurrency_helper" target="_blank">Search Scheduler Tuning searches</a>
 			<a href="https://splunkbase.splunk.com/app/6449/" target="_blank">Sideview UI (User Activity details)</a>
+			<a href="https://splunkbase.splunk.com/app/6368/" target="_blank">Admins Little Helper for Splunk (btool, bundle utils and similar)</a>
+			<a href="https://splunkbase.splunk.com/app/4621/" target="_blank">TrackMe (Data Ingestion)</a>
 		</collection>
 	</collection>	
         <collection label="Summary_Reports">

@@ -21,13 +21,13 @@
     <panel>
       <title>data.avg_total_ms (average wait time)</title>
       <chart>
-        <title>perc95 average wait time per host (sum of all disks)</title>
+        <title>perc95 total io service time per host (sum of all disks avg_total_ms)</title>
         <search>
           <query>index=_introspection sourcetype=splunk_resource_usage component=IOStats $hosts$ data.device=nvme* 
-| eval avg_wait_ms = 'data.avg_total_ms' 
+| eval avg_total_ms = 'data.avg_total_ms', comment="You may wish to change sum(avg_total_ms) for perc95 or similar depending on your setup..." 
 | bin _time span=$span$
-| stats sum(avg_wait_ms) AS avg_wait_ms by host, _time
-| timechart span=$span$ partial=f limit=99 perc95(avg_wait_ms) AS avg_wait_ms by host</query>
+| stats sum(avg_total_ms) AS avg_total_ms by host, _time
+| timechart span=$span$ partial=f limit=99 perc95(avg_total_ms) AS avg_total_ms by host</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
           <sampleRatio>1</sampleRatio>

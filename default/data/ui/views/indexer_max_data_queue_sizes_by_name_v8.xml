@@ -127,7 +127,13 @@
       <chart>
         <title>The replication queue appears to directly relate to the indexing queue, any blockage of the indexing queue will then block the replication queue and temporarily slow data ingestion. The replication queue appears to be extremely sensitive to the other indexers indexing queue so it can be a useful measure of an issue...</title>
         <search>
-          <query>index=_internal `indexerhosts` "replication queue for " "full" OR "has room now" sourcetype=splunkd | rename peer AS guid | join guid [| rest /services/search/distributed/peers | table guid peerName] | transaction bid peer endswith="has room now" keeporphans=true | timechart span=1m count, max(duration) AS duration by peerName</query>
+          <query>index=_internal `indexerhosts` "replication queue for " "full" OR "has room now" sourcetype=splunkd
+| rename peer AS guid
+| join guid
+    [| rest /services/search/distributed/peers
+    | table guid peerName]
+| transaction bid guid endswith="has room now" keeporphans=true
+| timechart span=1m count, max(duration) AS duration by peerName</query>
           <earliest>-60m@m</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>

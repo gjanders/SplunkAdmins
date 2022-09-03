@@ -67,31 +67,62 @@ I have attempted to provide an appropriate macro in any alert where I deemed it 
 ## Installation
 The application is designed to work on a search head or search head cluster instance, installation on the indexing tier is not required. You may wish to use your monitoring console server as the search head to run this app on (as it will have `splunk_server_groups` configured for your environment).
 There are a few searches that use REST API calls which are specific to the search head cluster they run on. These alerts will have to be placed on each search head or search head cluster, alternatively any server with the required search peers will also work, the relevant alerts are:
-- SearchHeadLevel - Accelerated DataModels with All Time Searching Enabled
-- SearchHeadLevel - Realtime Scheduled Searches are in use
-- SearchHeadLevel - Realtime Search Queries in dashboards
-- SearchHeadLevel - Scheduled Searches without a configured earliest and latest time
-- SearchHeadLevel - Scheduled searches not specifying an index
-- SearchHeadLevel - Scheduled searches not specifying an index macro version
-- SearchHeadLevel - Scheduled Searches Configured with incorrect sharing
-- SearchHeadLevel - Saved Searches with privileged owners and excessive write perms
-- SearchHeadLevel - User - Dashboards searching all indexes
-- SearchHeadLevel - User - Dashboards searching all indexes macro version
-- SearchHeadLevel - Users exceeding the disk quota (recent jobs list uses a REST call so you may need to adjust the search), the SearchHeadLevel - Users exceeding the disk quota introspection is a non-search head specific alternative
+- `SearchHeadLevel - Accelerated DataModels with All Time Searching Enabled`
+- `SearchHeadLevel - Realtime Scheduled Searches are in use`
+- `SearchHeadLevel - Realtime Search Queries in dashboards`
+- `SearchHeadLevel - Scheduled Searches without a configured earliest and latest time`
+- `SearchHeadLevel - Scheduled searches not specifying an index`
+- `SearchHeadLevel - Scheduled searches not specifying an index macro version`
+- `SearchHeadLevel - Scheduled Searches Configured with incorrect sharing`
+- `SearchHeadLevel - Saved Searches with privileged owners and excessive write perms`
+- `SearchHeadLevel - User - Dashboards searching all indexes`
+- `SearchHeadLevel - User - Dashboards searching all indexes macro version`
+- `SearchHeadLevel - Users exceeding the disk quota (recent jobs list uses a REST call so you may need to adjust the search), the SearchHeadLevel - Users exceeding the disk quota introspection is a non-search head specific alternative`
 
 The following reports also are specific to a search head or search head cluster:
-- SearchHeadLevel - Alerts that have not fired an action in X days
-- SearchHeadLevel - Data Model Acceleration Completion Status
-- SearchHeadLevel - Macro report
-- What Access Do I Have?
+- `SearchHeadLevel - Alerts that have not fired an action in X days`
+- `SearchHeadLevel - Data Model Acceleration Completion Status`
+- `SearchHeadLevel - Macro report`
+- `What Access Do I Have?`
 
 The following dashboards are search head or search head cluster specific:
-- Data Model Rebuild Monitor
-- Data Model Status
+- `Data Model Rebuild Monitor`
+- `Data Model Status`
 
 The following reports / alert must either run on the cluster master or a server where the cluster master is a peer:
-- ClusterMasterLevel - Per index status
-- ClusterMasterLevel - Primary bucket count per peer
+- `ClusterMasterLevel - Per index status`
+- `ClusterMasterLevel - Primary bucket count per peer`
+
+## Dependencies
+This application is designed to work independently of other Splunk applications, however there are a few reports and dashboards that rely on external apps to work as expected, these include:
+
+Dashboards:
+- `splunk_forwarder_data_balance_tuning` - the ScatterPlot visualization relies on the Splunk MLTK (Machine Learning Toolkit), note the dashboard works without this as well
+
+Alerts/Reports:
+- `IndexerLevel - RemoteSearches Indexes Stats Wilcard`
+- `IndexerLevel - RemoteSearches Indexes Stats`
+- `SearchHeadLevel - audit logs showing all time searches`
+- `SearchHeadLevel - platform_stats access summary`
+- `SearchHeadLevel - Script failures in the last day`
+- `SearchHeadLevel - Search Queries summary exact match`
+- `SearchHeadLevel - Search Queries summary non-exact match`
+- `SearchHeadLevel - Searches dispatched as owner by other users`
+- `SearchHeadLevel - Search Messages field extractor slow`
+- `SearchHeadLevel - Search Messages user level`
+- `SearchHeadLevel - Search Messages admins only`
+- `SearchHeadLevel - SmartStore cache misses - dashboards`
+- `SearchHeadLevel - SmartStore cache misses - savedsearches`
+= `SearchHeadLevel - SmartStore cache misses - combined`
+
+Will have more accurate search results with the base64 decoding working, [decrypt2 github](https://github.com/gjanders/decrypt2) or [decrypt2 SplunkBase](https://splunkbase.splunk.com/app/5565/) can work for this situation, you will need to update the macro `base64decode` in this app once decrypt2 is installed 
+
+The following alerts/reports:
+- `IndexerLevel - RemoteSearches Indexes Stats Wilcard`
+- `SearchHeadLevel - Search Queries summary non-exact match`
+- `SearchHeadLevel - Dashboards using depends and running searches in the background   `
+
+Require the [TA-Alerts for SplunkAdmins github](https://github.com/gjanders/TA-SplunkAdmins/) or [TA-Alerts for SplunkAdmins splunkbase](https://splunkbase.splunk.com/app/6518/) to work as sexpected
 
 ## Using the application
 Once the application is installed, **all** alerts are disabled by default and you can enable those you require or want to test in your local environment
@@ -122,24 +153,24 @@ Inspired by articles such as "Things I wish I knew then" and knowledge collected
 There are many Splunk conf talks available on this subject in various conference replays, however my goal was to provide practical steps to implement the ideas. That is why this application exists
 
 ## Which alerts are best suited to automation?
-- SearchHeadLevel - Scheduled searches not specifying an index
-- SearchHeadLevel - Scheduled Searches Configured with incorrect sharing
-- SearchHeadLevel - Splunk login attempts from users that do not have any LDAP roles
-- SearchHeadLevel - Scheduled Searches That Cannot Run
-- SearchHeadLevel - Scheduled Searches without a configured earliest and latest time
-- SearchHeadLevel - Users exceeding the disk quota
-- SearchHeadLevel - Users with auto-finalized searches
-- SearchHeadLevel - User - Dashboards searching all indexes
-- SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated
-- SearchHeadLevel - WLM aborted searches
-- SearchHeadLevel - Dashboards with all time searches set
-- SearchHeadLevel - SavedSearches using special characters
-- SearchHeadLevel - Dashboards using special characters
-- SearchHeadLevel - Dashboards using depends and running searches in the background
-= SearchHeadLevel - Summary searches using realtime search scheduling
-- SearchHeadLevel - Searches dispatched as owner by other users
-- SearchHeadLevel - Search Messages user level
-- SearchHeadLevel - audit logs showing all time searches
+- `SearchHeadLevel - Scheduled searches not specifying an index`
+- `SearchHeadLevel - Scheduled Searches Configured with incorrect sharing`
+- `SearchHeadLevel - Splunk login attempts from users that do not have any LDAP roles`
+- `SearchHeadLevel - Scheduled Searches That Cannot Run`
+- `SearchHeadLevel - Scheduled Searches without a configured earliest and latest time`
+- `SearchHeadLevel - Users exceeding the disk quota`
+- `SearchHeadLevel - Users with auto-finalized searches`
+- `SearchHeadLevel - User - Dashboards searching all indexes`
+- `SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated`
+- `SearchHeadLevel - WLM aborted searches`
+- `SearchHeadLevel - Dashboards with all time searches set`
+- `SearchHeadLevel - SavedSearches using special characters`
+- `SearchHeadLevel - Dashboards using special characters`
+- `SearchHeadLevel - Dashboards using depends and running searches in the background`
+- `SearchHeadLevel - Summary searches using realtime search scheduling`
+- `SearchHeadLevel - Searches dispatched as owner by other users`
+- `SearchHeadLevel - Search Messages user level`
+- `SearchHeadLevel - audit logs showing all time searches`
 
 Are all well suited to an automated email using the sendresults command or a similar function as they involve end user configuration which the individual can change/fix
 
@@ -147,71 +178,79 @@ Are all well suited to an automated email using the sendresults command or a sim
 This application was first created in 2017 and both Splunk and the application have evolved during this time period. This application is a library of potential alerts that could be used in a Splunk environment so it would never be a good idea to turn on all alerts from this application.
 
 The below list of alerts and reports are actively used since version 8.0.x and in 8.2.x and eventually 9.0:
-- AllSplunkEnterpriseLevel - Email Sending Failures
-- AllSplunkEnterpriseLevel - Losing Contact With Master Node
-- AllSplunkEnterpriseLevel - Replication Failures
-- AllSplunkEnterpriseLevel - Splunk Scheduler skipped searches and the reason
-- AllSplunkEnterpriseLevel - Splunkd Crash Logs Have Appeared in Production
-- AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only
-- AllSplunkLevel - Data Loss on shutdown
-- AllSplunkLevel - TailReader Ignoring Path
-- AllSplunkLevel - Time skew on Splunk Servers
-- AllSplunkLevel - Unexpected termination of a Splunk process unix
-- ClusterMasterLevel - excess buckets on master
-- DeploymentServer - Error Found On Deployment Server
-- ForwarderLevel - Channel churn issues
-- ForwarderLevel - Data dropping duration
-- ForwarderLevel - File Too Small to checkCRC occurring multiple times
-- ForwarderLevel - Splunk HEC issues
-- IndexerLevel - ClusterMaster Advising SearchOrRep Factor Not Met
-- IndexerLevel - Data parsing error
-- IndexerLevel - IndexConfig Warnings from Splunk indexers
-- IndexerLevel - Indexer Queues May Have Issues
-- IndexerLevel - Indexer replication queue issues to some peers
-- IndexerLevel - Peer will not return results due to outdated generation
-- IndexerLevel - platform_stats.counters hosts
-- IndexerLevel - platform_stats.counters hosts 24hour
-- IndexerLevel - platform_stats.indexers stddev measurement
-- IndexerLevel - platform_stats.indexers totalgb measurement
-- IndexerLevel - platform_stats.indexers totalgb_thruput measurement
-- IndexerLevel - RemoteSearches find datamodel acceleration with wildcards
-- IndexerLevel - RemoteSearches Indexes Stats
-- IndexerLevel - RemoteSearches Indexes Stats Wilcard
-- IndexerLevel - Search Failures
-- IndexerLevel - Slow peer from remote searches
-- IndexerLevel - strings_metadata triggering bucket rolling
-- SearchHeadLevel - authorize.conf settings will prevent some users from appearing in the UI
-- SearchHeadLevel - Captain Switchover Occurring
-- SearchHeadLevel - Dashboards invalid character in splunkd
-- SearchHeadLevel - Dashboards using special characters
-- SearchHeadLevel - Dashboards with all time searches set
-- SearchHeadLevel - datamodel errors in splunkd
-- SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated
-- SearchHeadLevel - Detect MongoDB errors
-- SearchHeadLevel - Detect searches hitting corrupt buckets
-- SearchHeadLevel - Excessive REST API usage
-- SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring
-- SearchHeadLevel - platform_stats access summary
-- SearchHeadLevel - platform_stats.audit metrics api
-- SearchHeadLevel - platform_stats.audit metrics searches
-- SearchHeadLevel - platform_stats.audit metrics users
-- SearchHeadLevel - platform_stats.audit metrics users 24hour
-- SearchHeadLevel - platform_stats.remote_searches metrics populating search
-- SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search
-- SearchHeadLevel - platform_stats.users dashboards
-- SearchHeadLevel - platform_stats.users savedsearches
-- SearchHeadLevel - RMD5 to savedsearch_name lookupgen report
-- SearchHeadLevel - savedsearches invalid character in splunkd
-- SearchHeadLevel - SavedSearches using special characters
-- SearchHeadLevel - Scheduled Searches That Cannot Run
-- SearchHeadLevel - Script failures in the last day
-- SearchHeadLevel - Search Messages admins only
-- SearchHeadLevel - Search Messages user level
-- SearchHeadLevel - Search Queries summary exact match
-- SearchHeadLevel - Search Queries summary non-exact match
-- SearchHeadLevel - SHC Captain unable to establish common bundle
-- SearchHeadLevel - Splunk alert actions exceeding the max_action_results limit
-- SearchHeadLevel - Users exceeding the disk quota
+- `AllSplunkEnterpriseLevel - error in stdout.log`
+- `AllSplunkEnterpriseLevel - Email Sending Failures`
+- `AllSplunkEnterpriseLevel - Losing Contact With Master Node`
+- `AllSplunkEnterpriseLevel - Replication Failures`
+- `AllSplunkEnterpriseLevel - Splunk Scheduler skipped searches and the reason`
+- `AllSplunkEnterpriseLevel - Splunkd Crash Logs Have Appeared in Production`
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only`
+- `AllSplunkLevel - Data Loss on shutdown`
+- `AllSplunkLevel - TailReader Ignoring Path`
+- `AllSplunkLevel - Time skew on Splunk Servers`
+- `AllSplunkLevel - Unexpected termination of a Splunk process unix`
+- `ClusterMasterLevel - excess buckets on master`
+- `DeploymentServer - Error Found On Deployment Server`
+- `ForwarderLevel - Channel churn issues`
+- `ForwarderLevel - Data dropping duration`
+- `ForwarderLevel - File Too Small to checkCRC occurring multiple times`
+- `ForwarderLevel - Splunk HEC issues`
+- `IndexerLevel - ClusterMaster Advising SearchOrRep Factor Not Met`
+- `IndexerLevel - Data parsing error`
+- `IndexerLevel - IndexConfig Warnings from Splunk indexers`
+- `IndexerLevel - Indexer Queues May Have Issues`
+- `IndexerLevel - Indexer replication queue issues to some peers`
+- `IndexerLevel - Peer will not return results due to outdated generation`
+- `IndexerLevel - platform_stats.counters hosts`
+- `IndexerLevel - platform_stats.counters hosts 24hour`
+- `IndexerLevel - platform_stats.indexers stddev measurement`
+- `IndexerLevel - platform_stats.indexers stddev incoming measurement`
+- `IndexerLevel - platform_stats.indexers totalgb measurement`
+- `IndexerLevel - platform_stats.indexers totalgb_thruput measurement`
+- `IndexerLevel - RemoteSearches find datamodel acceleration with wildcards`
+- `IndexerLevel - RemoteSearches Indexes Stats`
+- `IndexerLevel - RemoteSearches Indexes Stats Wilcard`
+- `IndexerLevel - Search Failures`
+- `IndexerLevel - Slow peer from remote searches`
+- `IndexerLevel - strings_metadata triggering bucket rolling`
+- `MonitoringConsole - Check OS ulimits via REST`
+- `MonitoringConsole - Core dumps have appeared on the filesystem`
+- `MonitoringConsole - Crash logs have appeared on the filesystem`
+- `SearchHeadLevel - authorize.conf settings will prevent some users from appearing in the UI`
+- `SearchHeadLevel - Captain Switchover Occurring`
+- `SearchHeadLevel - Dashboards invalid character in splunkd`
+- `SearchHeadLevel - Dashboards using special characters`
+- `SearchHeadLevel - Dashboards with all time searches set`
+- `SearchHeadLevel - datamodel errors in splunkd`
+- `SearchHeadLevel - Detect bundle pushes no longer occurring`
+- `SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated`
+- `SearchHeadLevel - Detect MongoDB errors`
+- `SearchHeadLevel - Detect searches hitting corrupt buckets`
+- `SearchHeadLevel - dispatch metadata files may need removal`
+- `SearchHeadLevel - Excessive REST API usage`
+- `SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring`
+- `SearchHeadLevel - platform_stats access summary`
+- `SearchHeadLevel - platform_stats.audit metrics api`
+- `SearchHeadLevel - platform_stats.audit metrics searches`
+- `SearchHeadLevel - platform_stats.audit metrics users`
+- `SearchHeadLevel - platform_stats.audit metrics users 24hour`
+- `SearchHeadLevel - platform_stats.remote_searches metrics populating search`
+- `SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search`
+- `SearchHeadLevel - platform_stats.users dashboards`
+- `SearchHeadLevel - platform_stats.users savedsearches`
+- `SearchHeadLevel - RMD5 to savedsearch_name lookupgen report`
+- `SearchHeadLevel - savedsearches invalid character in splunkd`
+- `SearchHeadLevel - SavedSearches using special characters`
+- `SearchHeadLevel - Scheduled Searches That Cannot Run`
+- `SearchHeadLevel - Script failures in the last day`
+- `SearchHeadLevel - Search Messages admins only`
+- `SearchHeadLevel - Search Messages user level`
+- `SearchHeadLevel - Search Queries summary exact match`
+- `SearchHeadLevel - Search Queries summary non-exact match`
+- `SearchHeadLevel - SHC Captain unable to establish common bundle`
+- `SearchHeadLevel - Splunk alert actions exceeding the max_action_results limit`
+- `SearchHeadLevel - Splunk Scheduler logs have not appeared in the last`
+- `SearchHeadLevel - Users exceeding the disk quota`
 
 ## KVStore Usage
 Some CSV lookups are now replaced with kvstore entries due to the ability to sync the kvstore across multiple search head or search head cluster(s) via apps like [KV Store Tools Redux](https://splunkbase.splunk.com/app/5328/)
@@ -256,14 +295,43 @@ The following ideas relate to this issue:
 [Provide index access statistics to assist in capacity planning of the indexing tier](https://ideas.splunk.com/ideas/E-I-38)
 
 ## Which searches require the TA-Alerts for SplunkAdmins add-on?
-- SearchHeadLevel - Search Queries summary non-exact match
-- IndexerLevel - RemoteSearches Indexes Stats Wilcard
-- SearchHeadLevel - Dashboards using depends and running searches in the background
+- `IndexerLevel - RemoteSearches Indexes Stats Wilcard`
+- `SearchHeadLevel - Search Queries summary non-exact match`
+- `SearchHeadLevel - Dashboards using depends and running searches in the background`
 
 ## Feedback?
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.1
+New macros:
+- `splunkadmins_shutdown_time_by_period`
+
+New alerts:
+- `MonitoringConsole - Check OS ulimits via REST`
+- `SearchHeadLevel - Detect bundle pushes no longer occurring`
+
+New reports:
+- `DeploymentServer - Count by application` - contributed by @trex (radler)
+- `IndexerLevel - DataModel Acceleration - Indexes in use`
+- `SearchHeadLevel - Knowledge bundle status on indexers`
+- `SearchHeadLevel - Knowledge bundle replication times metrics.log`
+
+Updated alerts:
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only`
+
+Updated dashboards:
+- `splunk_introspection_io_stats` - updated names/description of fields used
+- `indexer_max_data_queue_sizes_by_name` - minor tweak to replication queue queries 
+- `indexer_max_data_queue_sizes_by_name_v8` - minor tweak to replication queue queries
+- `splunk_forwarder_output_tuning` - comment update only
+
+Updated macros:
+- `splunkadmins_shutdown_time_by_period(4)` to work as expected
+
+Added link to Admins Little Helper for Splunk and TrackMe
+README.md improvements 
+
 ### 3.0.0
 
 Due to the creation of TA-Alerts for SplunkAdmins, the following are removed in this release:
