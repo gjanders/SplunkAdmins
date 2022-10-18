@@ -61,6 +61,8 @@ The macros are listed below, many expect a `host=A OR host=B` item to assist in 
 The macros are used in various alerts which you can optionally enable, the alerts will raise a triggered alert only as emails are not allowed for Splunk app certification purposes
 The macros are also used in the dashboards for this application
 
+There are also other macros you might want to consider editing before enabling the alerts, for example `splunkadmins_replicationfactor`.
+
 The vast majority of the alerts also have a macro(s) which you can customise to tweak the search results, for example the macro `splunkadmins_weekly_truncated` allows the alert, `IndexerLevel - Weekly Truncated Logs Report`, to be customised without changing the alert itself. This will make upgrading to a new version of this app more straightforward
 I have attempted to provide an appropriate macro in any alert where I deemed it appropriate, feedback is welcome for any alert that you believe should have a macro or requires further improvement
 
