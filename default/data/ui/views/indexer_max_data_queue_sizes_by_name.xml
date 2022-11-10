@@ -14,7 +14,7 @@
       <title>Parsing Queue Fill Size</title>
       <chart>
         <search>
-          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=queue (name=parsingqueue)
+          <query>index=_internal `indexerhosts` `splunkadmins_metrics_source` sourcetype=splunkd group=queue (name=parsingqueue)
 | eval name=case(name=="aggqueue","2 - Aggregation Queue",
  name=="indexqueue", "4 - Indexing Queue",
  name=="parsingqueue", "1 - Parsing Queue",
@@ -45,7 +45,7 @@
       <title>Aggregation Queue Fill Size</title>
       <chart>
         <search>
-          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=queue (name=aggqueue)
+          <query>index=_internal `indexerhosts` `splunkadmins_metrics_source` sourcetype=splunkd group=queue (name=aggqueue)
 | eval name=case(name=="aggqueue","2 - Aggregation Queue",
  name=="indexqueue", "4 - Indexing Queue",
  name=="parsingqueue", "1 - Parsing Queue",
@@ -72,7 +72,7 @@
       <title>Typing Queue Fill Size</title>
       <chart>
         <search>
-          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=queue (name=typingqueue)
+          <query>index=_internal `indexerhosts` `splunkadmins_metrics_source` sourcetype=splunkd group=queue (name=typingqueue)
 | eval name=case(name=="aggqueue","2 - Aggregation Queue",
  name=="indexqueue", "4 - Indexing Queue",
  name=="parsingqueue", "1 - Parsing Queue",
@@ -99,7 +99,7 @@
       <title>Indexing Queue Fill Size</title>
       <chart>
         <search>
-          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=queue (name=indexqueue)
+          <query>index=_internal `indexerhosts` `splunkadmins_metrics_source` sourcetype=splunkd group=queue (name=indexqueue)
 | eval name=case(name=="aggqueue","2 - Aggregation Queue",
  name=="indexqueue", "4 - Indexing Queue",
  name=="parsingqueue", "1 - Parsing Queue",
@@ -175,7 +175,7 @@
       <title>Blocked Indexing Queues</title>
       <chart>
         <search>
-          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=queue | stats count(eval(isnotnull(blocked))) AS blockedCount, count by name, host, _time | eval percBlocked=(100/count)*blockedCount | eval hostQueue = host . "_" . name | timechart useOther=false span=10m avg(percBlocked) by hostQueue</query>
+          <query>index=_internal `indexerhosts` `splunkadmins_metrics_source` sourcetype=splunkd group=queue | stats count(eval(isnotnull(blocked))) AS blockedCount, count by name, host, _time | eval percBlocked=(100/count)*blockedCount | eval hostQueue = host . "_" . name | timechart useOther=false span=10m avg(percBlocked) by hostQueue</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -213,7 +213,7 @@
       <title>TCPIn Queue Sizes (Max)</title>
       <chart>
         <search>
-          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=queue (name=splunktcpin OR name=tcpin_cooked_pqueue)
+          <query>index=_internal `indexerhosts` `splunkadmins_metrics_source` sourcetype=splunkd group=queue (name=splunktcpin OR name=tcpin_cooked_pqueue)
 | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
 | eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
 | eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
@@ -258,7 +258,7 @@
       <title>Thruput Per Indexer</title>
       <chart>
         <search>
-          <query>index=_internal `indexerhosts` source=*metrics.log sourcetype=splunkd group=thruput name=index_thruput
+          <query>index=_internal `indexerhosts` `splunkadmins_metrics_source` sourcetype=splunkd group=thruput name=index_thruput
 		  | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=*
                   | eval combined = host . "_pipe_" . ingest_pipe
                   | timechart useother=false span=1m limit=14 per_second(kb) by host

@@ -2,7 +2,7 @@
   <label>Dashboard - HEC Performance</label>
   <description>Based on the original version from  https://github.com/camrunr/hec_perf_report/blob/master/hec_perf_report.xml</description>
   <search id="by_token">
-    <query>index=_introspection (`indexerhosts`) OR (`heavyforwarderhosts`) source=*http_event_collector_metrics.log http_event_collector_token
+    <query>index=_introspection (`indexerhosts`) OR (`heavyforwarderhosts`) `splunkadmins_hec_metrics_source` http_event_collector_token
 | bucket _time span=$dd_span$
 | stats sum(data.num_of_events) as Events sum(data.total_bytes_received) as Bytes by _time data.token_name</query>
     <earliest>$timepicker.earliest$</earliest>
@@ -11,7 +11,7 @@
     <refresh>$refreshinterval$</refresh>
   </search>
   <search id="by_host">
-    <query>index=_introspection (`indexerhosts`) OR (`heavyforwarderhosts`) source=*http_event_collector_metrics.log http_event_collector_token
+    <query>index=_introspection (`indexerhosts`) OR (`heavyforwarderhosts`) `splunkadmins_hec_metrics_source` http_event_collector_token
 | bucket _time span=$dd_span$
 | stats sum(data.num_of_events) as Events sum(data.total_bytes_received) as Bytes by _time host
 | eval host=replace(host,"\..*","")</query>
@@ -164,7 +164,7 @@
       <table>
         <search>
           <refresh>$refreshinterval$</refresh>
-          <query>index=_introspection (`indexerhosts`) OR (`heavyforwarderhosts`) source=*http_event_collector_metrics.log http_event_collector_token
+          <query>index=_introspection (`indexerhosts`) OR (`heavyforwarderhosts`) `splunkadmins_hec_metrics_source` http_event_collector_token
 | eval EpR='data.num_of_events'/'data.num_of_requests'
 | bucket _time span=5m
 | stats sum(data.num_of_events) as events avg(EpR) as events_per_POST sum(data.num_of_requests) as reqs sum(data.total_bytes_received) as Bytes by _time data.token_name

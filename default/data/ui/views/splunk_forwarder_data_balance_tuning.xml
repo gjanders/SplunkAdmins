@@ -18,7 +18,7 @@
       <fieldForLabel>output_name</fieldForLabel>
       <fieldForValue>output_name</fieldForValue>
       <search>
-        <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log TERM(group=tcpout_connections) 
+        <query>index=_internal $host$ sourcetype=splunkd `splunkadmins_metrics_source` TERM(group=tcpout_connections) 
 | rex field=name "(?P&lt;output_name&gt;[^:]+)" 
 | stats count by output_name
 | fields output_name</query>
@@ -32,7 +32,7 @@
       <title>Scatter Line Chart of sum by destination IP</title>
       <viz type="Splunk_ML_Toolkit.ScatterLineViz">
         <search>
-          <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log component=Metrics TERM(group=tcpout_connections) name=$output_group$*
+          <query>index=_internal $host$ sourcetype=splunkd `splunkadmins_metrics_source` component=Metrics TERM(group=tcpout_connections) name=$output_group$*
 | timechart span=1m sum(kb) by destIp limit=50
 | fillnull value=0 
 | untable _time server kb
@@ -60,7 +60,7 @@
       <title>Total KB by destination IP</title>
       <chart>
         <search>
-          <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log component=Metrics TERM(group=tcpout_connections) name=$output_group$*
+          <query>index=_internal $host$ sourcetype=splunkd `splunkadmins_metrics_source` component=Metrics TERM(group=tcpout_connections) name=$output_group$*
 | timechart span=1m sum(kb) by destIp limit=100
 | fillnull value=0</query>
           <earliest>$time.earliest$</earliest>
@@ -109,7 +109,7 @@
       <title>Standard Deviation</title>
       <chart>
         <search>
-          <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log component=Metrics TERM(group=tcpout_connections) name=$output_group$*
+          <query>index=_internal $host$ sourcetype=splunkd `splunkadmins_metrics_source` component=Metrics TERM(group=tcpout_connections) name=$output_group$*
 | timechart span=1m sum(kb) by destIp limit=50
 | fillnull value=0
 | untable _time destIp kb 
@@ -131,7 +131,7 @@
       <title>Data Sum</title>
       <chart>
         <search>
-          <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log component=Metrics TERM(group=tcpout_connections) kb&gt;0 name=$output_group$*
+          <query>index=_internal $host$ sourcetype=splunkd `splunkadmins_metrics_source` component=Metrics TERM(group=tcpout_connections) kb&gt;0 name=$output_group$*
 | bin span=1m _time
 | stats sum(kb) as kb by destIp _time
 | sort _time 

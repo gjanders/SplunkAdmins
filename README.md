@@ -61,6 +61,8 @@ The macros are listed below, many expect a `host=A OR host=B` item to assist in 
 The macros are used in various alerts which you can optionally enable, the alerts will raise a triggered alert only as emails are not allowed for Splunk app certification purposes
 The macros are also used in the dashboards for this application
 
+There are also other macros you might want to consider editing before enabling the alerts, for example `splunkadmins_replicationfactor`.
+
 The vast majority of the alerts also have a macro(s) which you can customise to tweak the search results, for example the macro `splunkadmins_weekly_truncated` allows the alert, `IndexerLevel - Weekly Truncated Logs Report`, to be customised without changing the alert itself. This will make upgrading to a new version of this app more straightforward
 I have attempted to provide an appropriate macro in any alert where I deemed it appropriate, feedback is welcome for any alert that you believe should have a macro or requires further improvement
 
@@ -207,6 +209,7 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `IndexerLevel - platform_stats.indexers stddev incoming measurement`
 - `IndexerLevel - platform_stats.indexers totalgb measurement`
 - `IndexerLevel - platform_stats.indexers totalgb_thruput measurement`
+- `IndexerLevel - replicationdatareceiverthread close to 100% utilisation`
 - `IndexerLevel - RemoteSearches find datamodel acceleration with wildcards`
 - `IndexerLevel - RemoteSearches Indexes Stats`
 - `IndexerLevel - RemoteSearches Indexes Stats Wilcard`
@@ -303,6 +306,86 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.2
+Merged pull request from jeffland-consist via github including various changes
+
+New alerts:
+- `IndexerLevel - replicationdatareceiverthread close to 100% utilisation`
+
+New macros:
+- `splunkadmins_metrics_source`
+- `splunkadmins_hec_metrics_source`
+
+New reports:
+- `SearchHeadLevel - Accelerated DataModels Access Info`
+- `SearchHeadLevel - Dashboards resulting in concurrency issues`
+- `SearchHeadLevel - Dashboards that may benefit from base or post-process searches`
+- `SearchHeadLevel - Searches by search type`
+
+Updated macros:
+- `splunkadmins_splunkd_source`
+- `splunkadmins_splunkuf_source`
+- `splunkadmins_mongo_source`
+- `splunkadmins_license_usage_source`
+
+To include a trailing wildcard (so splunkd.log.1 matches or similar)
+
+Updated alerts:
+- `AllSplunkEnterpriseLevel - Core Dumps Disabled` - updated matching criteria
+- `AllSplunkEnterpriseLevel - Non-existent roles are assigned to users` - updated matching criteria
+- `AllSplunkEnterpriseLevel - Splunk Servers throwing runScript errors` - updated matching criteria
+- `AllSplunkEnterpriseLevel - sendmodalert errors` - updated matching criteria
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - updated matching criteria
+- `AllSplunkEnterpriseLevel - Splunk Servers with resource starvation` - updated to use `splunkadmins_splunkd_source` macro
+- `AllSplunkLevel - No recent metrics.log data` - corrected comment to be after tstats, updated to use `splunkadmins_metrics_source` macro
+- `AllSplunkLevel - DeploymentServer Application Installation Error` - updated matching criteria
+- `DeploymentServer - Application Not Found On Deployment Server` - updated matching criteria
+- `ForwarderLevel - Channel churn issues` - updated to use `splunkadmins_metrics_source` macro
+- `ForwarderLevel - Forwarders connecting to a single endpoint for extended periods` - updated to use `splunkadmins_metrics_source` macro
+- `ForwarderLevel - Forwarders connecting to a single endpoint for extended periods UF level` - updated to use `splunkadmins_metrics_source` macro
+- `ForwarderLevel - Splunk HTTP Listener Overwhelmed` - updated matching criteria
+- `ForwarderLevel - Splunk Universal Forwarders Exceeding the File Descriptor Cache` - updated matching criteria
+- `ForwarderLevel - Splunk Universal Forwarders that are time shifting` - updated matching criteria
+- `ForwarderLevel - Stopping all listening ports` - updated to use `splunkadmins_splunkd_source` macro
+- `IndexerLevel - Buckets changes per day` - updated matching criteria, updated to use `splunkadmins_splunkd_source` macro
+- `IndexerLevel - Indexer Queues May Have Issues` - updated to use `splunkadmins_metrics_source` macro
+- `IndexerLevel - Knowledge bundle upload stats` - updated to use `splunkadmins_metrics_source` macro
+- `IndexerLevel - platform_stats.indexers totalgb_thruput measurement` - updated to use `splunkadmins_metrics_source` macro
+- `IndexerLevel - platform_stats.indexers stddev measurement` - updated to use `splunkadmins_metrics_source` macro
+- `IndexerLevel - platform_stats.indexers stddev incoming measurement` - updated to use `splunkadmins_metrics_source` macro
+- `IndexerLevel - Weekly Broken Events Report` - updated matching criteria
+- `IndexerLevel - Time format has changed multiple log types in one sourcetype` - updated matching criteria
+- `IndexerLevel - Buckets have being frozen due to index sizing` - updated matching criteria
+- `IndexerLevel - Unclean Shutdown - Fsck` - updated matching criteria
+- `IndexerLevel - Index not defined` - updated matching criteria
+- `IndexerLevel - Timestamp parsing issues combined alert` - updated to use `splunkadmins_splunkd_source` macro
+- `IndexerLevel - S2SFileReceiver Error` - updated matching criteria
+- `MonitoringConsole - Core dumps have appeared on the filesystem` - corrected to use `indexer_cluster_name` macro
+- `MonitoringConsole - Crash logs have appeared on the filesystem` - corrected description
+- `SearchHeadLevel - LDAP users have been disabled or left the company cleanup required` - updated matching criteria
+- `SearchHeadLevel - Long filenames may be causing issues` - updated matching criteria
+- `SearchHeadLevel - SHCluster Artifact Replication Issues` - updated matching criteria
+- `SearchHeadLevel - Captain Switchover Occurring` - updated matching criteria
+- `SearchHeadLevel - Knowledge bundle replication times metrics.log` - updated to use `splunkadmins_metrics_source` macro
+- `SearchHeadLevel - Detect bundle pushes no longer occurring` - updated to use `splunkadmins_metrics_source` macro
+- `SearchHeadLevel - WLM aborted searches` - updated matching criteria
+- `SearchHeadLevel - SHC Captain unable to establish common bundle` - updated to use `splunkadmins_splunkd_source` macro
+
+Updated dashboards:
+- `ClusterMasterJobs.xml`
+- `heavyforwarders_max_data_queue_sizes_by_name.xml`
+- `heavyforwarders_max_data_queue_sizes_by_name_v8.xml`
+- `hec_performance.xml`
+- `indexer_data_spread.xml`
+- `indexer_max_data_queue_sizes_by_name.xml`
+- `indexer_max_data_queue_sizes_by_name_v8.xml`
+- `rolled_buckets_by_index.xml`
+- `smartstore_stats.xml`
+- `splunk_forwarder_data_balance_tuning.xml`
+- `splunk_forwarder_output_tuning.xml`
+
+To use `splunkadmins_splunkd_source` and/or `splunkadmins_metrics_source` macros
+
 ### 3.0.1
 New macros:
 - `splunkadmins_shutdown_time_by_period`

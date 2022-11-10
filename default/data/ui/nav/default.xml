@@ -161,6 +161,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20IndexConfig%20Warnings%20from%20Splunk%20indexers">IndexConfig Warnings from Splunk indexers</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Index%20not%20defined">Index not defined</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Stopping%20all%20listening%20ports">ForwarderLevel - Stopping all listening ports</a>							
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20replicationdatareceiverthread%20close%20to%20100%25%20utilisation">IndexerLevel - replicationdatareceiverthread close to 100% utilisation</a>							
 		</collection>			
 		<collection label="Data Parsing">				
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Failures%20To%20Parse%20Timestamp%20Correctly%20%28excluding%20breaking%20issues%29">Failures To Parse Timestamp Correctly (excluding breaking issues)</a>			
@@ -200,6 +201,7 @@
 				<view name="splunk_forwarder_data_balance_tuning" />
 				<view name="splunk_introspection_io_stats" />
   	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">ForwarderLevel - Channel churn issues</a>
+                                <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20replicationdatareceiverthread%20close%20to%20100%25%20utilisation">IndexerLevel - replicationdatareceiverthread close to 100% utilisation</a>				
 			</collection>
 			<collection label="Other">
                                 <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Indexer%20not%20accepting%20TCP%20Connections">Indexer not accepting TCP Connections</a>		
@@ -288,13 +290,15 @@
                         <saved name="SearchHeadLevel - Search Queries summary exact match" />
                         <saved name="SearchHeadLevel - Search Queries summary exact match by user" />
                         <saved name="SearchHeadLevel - Search Queries summary exact match by index" />
+			<saved name="SearchHeadLevel - Searches by search type" />			
                         <saved name="SearchHeadLevel - IndexesPerUser Report" />			
                         <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
-                        <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />			
+                        <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
 		</collection>      
 		<collection label="Data Models">				
 			<saved name="SearchHeadLevel - Data Model Acceleration Completion Status" />
 			<saved name="SearchHeadLevel - DataModel Fields" />
+			<saved name="SearchHeadLevel - Accelerated DataModels Access Info" />
 			<saved name="IndexerLevel - DataModel Acceleration - Indexes in use" />
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20datamodel%20errors%20in%20splunkd">datamodel errors in splunkd</a>			
 			<view name="data_model_rebuild_monitor" />
@@ -339,6 +343,8 @@
 				<saved name="SearchHeadLevel - Dashboard refresh intervals" />
                                 <saved name="SearchHeadLevel - Dashboards using depends and running searches in the background" />
 				<saved name="SearchHeadLevel - Dashboards using special characters" />
+				<saved name="SearchHeadLevel - Dashboards resulting in concurrency issues" />
+				<saved name="SearchHeadLevel - Dashboards that may benefit from base or post-process searches" />				
 			</collection>			
 			<collection label="Scheduled Searches">
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20not%20specifying%20an%20index%20macro%20version">Scheduled searches not specifying an index macro version</a>

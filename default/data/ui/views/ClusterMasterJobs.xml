@@ -18,7 +18,7 @@
       <title>Job Count</title>
       <chart>
         <search>
-          <query>index=_internal `splunkadmins_clustermaster_oshost` sourcetype=splunkd source=*splunkd.log *CMRepJob running job | timechart span=$span$ count by job</query>
+          <query>index=_internal `splunkadmins_clustermaster_oshost` sourcetype=splunkd `splunkadmins_splunkd_source` *CMRepJob running job | timechart span=$span$ count by job</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -63,7 +63,7 @@
       <title>Fixup Jobs</title>
       <chart>
         <search>
-          <query>index=_internal source=*metrics.log sourcetype=splunkd name=cmmaster_service `splunkadmins_clustermaster_oshost` group=subtask_counts
+          <query>index=_internal `splunkadmins_metrics_source` sourcetype=splunkd name=cmmaster_service `splunkadmins_clustermaster_oshost` group=subtask_counts
 | timechart max(to_fix_gen), max(to_fix_rep_factor), max(to_fix_search_factor) span=$span$</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>

@@ -27,7 +27,7 @@
       <chart>
         <title>Buckets rolled per day per index, top 15 indexes</title>
         <search>
-          <query>index=_internal "HotBucketRoller" sourcetype=splunkd source=*splunkd.log `indexerhosts` "finished moving"
+          <query>index=_internal "HotBucketRoller" sourcetype=splunkd `splunkadmins_splunkd_source` `indexerhosts` "finished moving"
 | bin _time span=24h
 | chart limit=15 useother=false count by _time, idx</query>
           <earliest>$time.earliest$</earliest>

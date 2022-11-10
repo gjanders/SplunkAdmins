@@ -37,7 +37,7 @@
       <title>Upload/download latency</title>
       <chart>
         <search>
-          <query>index=_internal source=*splunkd.log $host$ TERM(status=succeeded) OR TERM(status=failed) sourcetype=splunkd source=*splunkd.log TERM(action=$action$)
+          <query>index=_internal $host$ TERM(status=succeeded) OR TERM(status=failed) sourcetype=splunkd `splunkadmins_splunkd_source` TERM(action=$action$)
 | rangemap field=kb under_300=0-307200 300_700=307201-716800 700_1000=716801-1024000 default=over1000
 | eval combined = action . "_" . range
 | timechart avg(elapsed_ms) AS avg_elapsed_ms, max(elapsed_ms) AS max_elapsed_ms by combined</query>
@@ -85,7 +85,7 @@
       <title>Upload/download thruput</title>
       <chart>
         <search>
-          <query>index=_internal sourcetype=splunkd source=*splunkd.log $host$ TERM(status=succeeded) OR TERM(status=failed) TERM(action=$action$)
+          <query>index=_internal sourcetype=splunkd `splunkadmins_splunkd_source` $host$ TERM(status=succeeded) OR TERM(status=failed) TERM(action=$action$)
 | timechart sum(eval(kb/1024)) AS MB by action</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
@@ -101,7 +101,7 @@
       <title>CacheManager Queued download count</title>
       <chart>
         <search>
-          <query>`comment("Relates to [cachemanager] max_concurrent_downloads in server.conf. Thanks to Splunk support for the original version of this search")` index=_internal $host$ source=*metrics.log TERM(group=cachemgr_download) sourcetype=splunkd queued 
+          <query>`comment("Relates to [cachemanager] max_concurrent_downloads in server.conf. Thanks to Splunk support for the original version of this search")` index=_internal $host$ `splunkadmins_metrics_source` TERM(group=cachemgr_download) sourcetype=splunkd queued 
 | timechart partial=f limit=50 avg(queued) AS avg_queued by host 
 | eval ceiling=20</query>
           <earliest>$time.earliest$</earliest>
@@ -119,7 +119,7 @@
       <chart>
         <search>
           <query>
-          index=_internal $host$ source=*metrics.log sourcetype=splunkd group=cachemgr_bucket TERM(cache_hit=*) OR TERM(cache_miss=*) 
+          index=_internal $host$ `splunkadmins_metrics_source` sourcetype=splunkd group=cachemgr_bucket TERM(cache_hit=*) OR TERM(cache_miss=*) 
 | timechart sum(cache_hit) as Hits sum(cache_miss) as Misses
 </query>
           <earliest>$time.earliest$</earliest>
@@ -136,7 +136,7 @@
       <title>Excessive cachemanager downloads</title>
       <chart>
         <search>
-          <query>`comment("Thanks to Splunk support for the original version of this search, similar version available in the monitoring console...")` index=_internal $host$ source=*splunkd.log sourcetype=splunkd CacheManager TERM(action=download) TERM(status=succeeded) TERM(download_set=*)
+          <query>`comment("Thanks to Splunk support for the original version of this search, similar version available in the monitoring console...")` index=_internal $host$ `splunkadmins_splunkd_source` sourcetype=splunkd CacheManager TERM(action=download) TERM(status=succeeded) TERM(download_set=*)
 | rex field=cache_id "&gt;*\|(?&lt;index_name&gt;.*)~.*~.*\|" 
 | eval identifier=(cache_id + host) 
 | stats count by identifier, index_name 

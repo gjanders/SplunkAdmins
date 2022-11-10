@@ -22,7 +22,7 @@
       <title>Parsing Queue Fill Size</title>
       <chart>
         <search>
-          <query>index=_internal $hosts$ source=*metrics.log sourcetype=splunkd group=queue (name=parsingqueue)
+          <query>index=_internal $hosts$ `splunkadmins_metrics_source` sourcetype=splunkd group=queue (name=parsingqueue)
 | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
 | eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
 | eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
@@ -49,7 +49,7 @@
       <title>Aggregation Queue Fill Size</title>
       <chart>
         <search>
-          <query>index=_internal $hosts$ source=*metrics.log sourcetype=splunkd group=queue (name=aggqueue)
+          <query>index=_internal $hosts$ `splunkadmins_metrics_source` sourcetype=splunkd group=queue (name=aggqueue)
 | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
 | eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
 | eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
@@ -72,7 +72,7 @@
       <title>Typing Queue Fill Size</title>
       <chart>
         <search>
-          <query>index=_internal $hosts$ source=*metrics.log sourcetype=splunkd group=queue (name=typingqueue)
+          <query>index=_internal $hosts$ `splunkadmins_metrics_source` sourcetype=splunkd group=queue (name=typingqueue)
 | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
 | eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
 | eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
@@ -95,7 +95,7 @@
       <title>Index Queue Size</title>
       <chart>
         <search>
-          <query>index=_internal $hosts$ source=*metrics.log sourcetype=splunkd group=queue (name=indexqueue)
+          <query>index=_internal $hosts$ `splunkadmins_metrics_source` sourcetype=splunkd group=queue (name=indexqueue)
 | eval name=case(name=="aggqueue","2 - Aggregation Queue",
  name=="indexqueue", "4 - Indexing Queue",
  name=="parsingqueue", "1 - Parsing Queue",
@@ -143,7 +143,7 @@
       <title>TCPOut Queue Sizes</title>
       <chart>
         <search>
-          <query>index=_internal $hosts$ source=*metrics.log sourcetype=splunkd group=queue (name=tcpout_*)
+          <query>index=_internal $hosts$ `splunkadmins_metrics_source` sourcetype=splunkd group=queue (name=tcpout_*)
 | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") | search ingest_pipe=* 
 | eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) 
 | eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) 
@@ -188,7 +188,7 @@
       <title>Blocked Forwarder Queues</title>
       <chart>
         <search>
-          <query>index=_internal $hosts$ source=*metrics.log sourcetype=splunkd group=queue max_size_kb&gt;0 | stats count(eval(isnotnull(blocked))) AS blockedCount, count by name, host, _time | eval percBlocked=(100/count)*blockedCount | eval hostQueue = host . "_" . name | where percBlocked&gt;0 | timechart limit=50 useOther=false span=$span$ avg(percBlocked) by hostQueue</query>
+          <query>index=_internal $hosts$ `splunkadmins_metrics_source` sourcetype=splunkd group=queue max_size_kb&gt;0 | stats count(eval(isnotnull(blocked))) AS blockedCount, count by name, host, _time | eval percBlocked=(100/count)*blockedCount | eval hostQueue = host . "_" . name | where percBlocked&gt;0 | timechart limit=50 useOther=false span=$span$ avg(percBlocked) by hostQueue</query>
           <earliest>$time.earliest$</earliest>
           <latest>$time.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -226,7 +226,7 @@
       <title>TcpOut KB per second per forwarder</title>
       <chart>
         <search>
-          <query>| tstats prestats=true sum(PREFIX(kb=)) where index=_internal $hosts$ TERM(group=thruput) TERM(name=cooked_output) OR TERM(name=uncooked_output) source=*metrics.log sourcetype=splunkd source=*metrics.log groupby host, _time span=1s
+          <query>| tstats prestats=true sum(PREFIX(kb=)) where index=_internal $hosts$ TERM(group=thruput) TERM(name=cooked_output) OR TERM(name=uncooked_output) sourcetype=splunkd `splunkadmins_metrics_source` groupby host, _time span=1s
 		  | timechart aligntime=latest useother=false span=$span$ limit=20 per_second(kb=) by host 
           </query>
           <earliest>$time.earliest$</earliest>

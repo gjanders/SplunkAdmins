@@ -18,7 +18,7 @@
       <fieldForLabel>output_name</fieldForLabel>
       <fieldForValue>output_name</fieldForValue>
       <search>
-        <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log TERM(group=tcpout_connections)
+        <query>index=_internal $host$ sourcetype=splunkd `splunkadmins_metrics_source` TERM(group=tcpout_connections)
 | rex field=name "(?P&lt;output_name&gt;[^:]+)"
 | stats count by output_name
 | fields output_name</query>
@@ -37,7 +37,7 @@
       <title>Data output per-second</title>
       <chart>
         <search>
-          <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log TERM(group=tcpout_connections) name=$output_group$*
+          <query>index=_internal $host$ sourcetype=splunkd `splunkadmins_metrics_source` TERM(group=tcpout_connections) name=$output_group$*
 | rex field=name "(?&lt;output_name&gt;[^:]+)"
 | search output_name=$output_group$
 | eval combined = output_name . "_" . ingest_pipe
@@ -60,7 +60,7 @@
       <title>Destination count</title>
       <table>
         <search>
-          <query>index=_internal $host$ sourcetype=splunkd source=*metrics.log group=tcpout_connections name=$output_group$*
+          <query>index=_internal $host$ sourcetype=splunkd `splunkadmins_metrics_source` group=tcpout_connections name=$output_group$*
 | rex field=name "(?&lt;output_name&gt;[^:]+)"
 | search output_name=$output_group$
 | bin _time span=5m
@@ -79,7 +79,7 @@
       <title>Data output std deviation</title>
       <chart>
         <search>
-          <query>`comment("Credit to Brett Adams")` index=_internal $host$ sourcetype=splunkd source=*metrics.log component=Metrics TERM(group=tcpout_connections) name=$output_group$*
+          <query>`comment("Credit to Brett Adams")` index=_internal $host$ sourcetype=splunkd `splunkadmins_metrics_source` component=Metrics TERM(group=tcpout_connections) name=$output_group$*
 | rex field=name "(?P&lt;destination&gt;[^:]+)"
 | search destination=$output_group$*
 | timechart span=1m sum(kb) by destIp limit=50
