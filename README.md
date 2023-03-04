@@ -308,6 +308,10 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 
 ## Release Notes
 
+### 3.0.4
+
+Removed app.manifest file 
+
 ### 3.0.3
 New alerts:
 - `IndexerLevel - Buckets have being frozen due to index sizing SmartStore`
