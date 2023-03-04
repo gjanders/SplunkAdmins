@@ -147,6 +147,7 @@
 	<collection label="IndexerLevel">
 		<collection label="Bucket Related">
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Buckets%20have%20being%20frozen%20due%20to%20index%20sizing">Buckets have being frozen due to index sizing</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Buckets%20have%20being%20frozen%20due%20to%20index%20sizing%20SmartStore">Buckets have being frozen due to index sizing SmartStore</a>
 			<saved name="IndexerLevel - Buckets changes per day" />          
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Buckets%20rolling%20more%20frequently%20than%20expected">Buckets rolling more frequently than expected</a>				
 			<saved name="IndexerLevel - Report on bucket corruption" />

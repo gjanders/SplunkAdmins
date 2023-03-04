@@ -197,6 +197,7 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `ForwarderLevel - Data dropping duration`
 - `ForwarderLevel - File Too Small to checkCRC occurring multiple times`
 - `ForwarderLevel - Splunk HEC issues`
+- `IndexerLevel - Buckets have being frozen due to index sizing SmartStore`
 - `IndexerLevel - ClusterMaster Advising SearchOrRep Factor Not Met`
 - `IndexerLevel - Data parsing error`
 - `IndexerLevel - IndexConfig Warnings from Splunk indexers`
@@ -306,6 +307,21 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+
+### 3.0.3
+New alerts:
+- `IndexerLevel - Buckets have being frozen due to index sizing SmartStore`
+
+Updated alerts:
+- `AllSplunkEnterpriseLevel - Replication Failures` - comment update
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - additional criteria and removed SHC restart times
+- `IndexerLevel - Buckets have being frozen due to index sizing` - comment update only
+- `IndexerLevel - IndexConfig Warnings from Splunk indexers` - additional criteria
+- `SearchHeadLevel - Script failures in the last day`
+- `SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring`
+- `SearchHeadLevel - SavedSearches using special characters`
+- `SearchHeadLevel - Search Messages user level` - removed some messages from the alert
+
 ### 3.0.2
 Merged pull request from jeffland-consist via github including various changes
 
