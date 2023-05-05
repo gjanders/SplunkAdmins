@@ -198,6 +198,7 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `ForwarderLevel - File Too Small to checkCRC occurring multiple times`
 - `ForwarderLevel - Splunk HEC issues`
 - `IndexerLevel - Buckets have being frozen due to index sizing SmartStore`
+- `IndexerLevel - Connection errors to SmartStore`
 - `IndexerLevel - ClusterMaster Advising SearchOrRep Factor Not Met`
 - `IndexerLevel - Data parsing error`
 - `IndexerLevel - IndexConfig Warnings from Splunk indexers`
@@ -307,12 +308,25 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.5
+New alerts:
+- `IndexerLevel - Connection errors to SmartStore`
+
+New reports:
+- `SearchHeadLevel - Sourcetypes usage from search telemetry data`
+
+Updated alerts:
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - more matching criteria
+- `ForwarderLevel - Data dropping duration` - comment update
+- `SearchHeadLevel - Search Queries summary exact match` - regex updates and 1 regex removal
+- `SearchHeadLevel - Search Queries summary non-exact match` - regex updates and 1 regex removal
+
+Updated macro:
+- `splunkadmins_metrics_source` - corrected to include source=
+
+Removed app.manifest file
 
 ### 3.0.4
-
-Removed app.manifest file 
-
-### 3.0.3
 New alerts:
 - `IndexerLevel - Buckets have being frozen due to index sizing SmartStore`
 
@@ -325,6 +339,9 @@ Updated alerts:
 - `SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring`
 - `SearchHeadLevel - SavedSearches using special characters`
 - `SearchHeadLevel - Search Messages user level` - removed some messages from the alert
+
+### 3.0.3
+SplunkBase validation failure (wrong manifest version)
 
 ### 3.0.2
 Merged pull request from jeffland-consist via github including various changes

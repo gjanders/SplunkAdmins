@@ -183,7 +183,8 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Unclean%20Shutdown%20-%20Fsck">Unclean Shutdown - Fsck</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Losing%20Contact%20With%20Master%20Node">AllSplunkEnterpriseLevel - Losing Contact With Master Node</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20SmartStore%20-%20Bucket%20cache%20errors%20audit%20logs">IndexerLevel - SmartStore - Bucket cache errors audit logs</a>
-                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20No%20recent%20metrics.log%20data">AllSplunkLevel - No recent metrics.log data</a>			
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20No%20recent%20metrics.log%20data">AllSplunkLevel - No recent metrics.log data</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Connection%20errors%20to%20SmartStore">Connection errors to SmartStore</a>		
 	                <collection lable="Generic">
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
 	                </collection>			
@@ -291,6 +292,7 @@
                         <saved name="SearchHeadLevel - Search Queries summary exact match" />
                         <saved name="SearchHeadLevel - Search Queries summary exact match by user" />
                         <saved name="SearchHeadLevel - Search Queries summary exact match by index" />
+			<saved name="SearchHeadLevel - Sourcetypes usage from search telemetry data" />
 			<saved name="SearchHeadLevel - Searches by search type" />			
                         <saved name="SearchHeadLevel - IndexesPerUser Report" />			
                         <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
@@ -429,7 +431,7 @@
 			<view name="lookups_in_use_finder" />
 			<view name="lookup_audit" />
 			<saved name="SearchHeadLevel - Knowledge bundle status on indexers" />
-			<saved name="SearchHeadLevel - Knowledge bundle replication times metrics.log" />			
+			<saved name="SearchHeadLevel - Knowledge bundle replication times metrics.log" />		
 		</collection>	
 		<collection label="Summary_Reports">
         		<saved name="SearchHeadLevel - platform_stats.audit metrics searches" />
