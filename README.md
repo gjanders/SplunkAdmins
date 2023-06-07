@@ -308,6 +308,43 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.6
+Updated dashboards:
+- `Splunk forwarder output tuning` - added fillnull ingest_pipe
+
+Updated reports/alerts:
+- `SearchHeadLevel - Dashboards using special characters` - updated to use spath command instead of rex
+- `SearchHeadLevel - Search Messages user level` - excluded require command
+- `IndexerLevel - RemoteSearches find all time searches` - removed keyword
+
+On reports/alerts:
+- `IndexerLevel - RemoteSearches Indexes Stats`
+- `IndexerLevel - RemoteSearches Indexes Stats Wilcard`
+- `IndexerLevel - Slow peer from remote searches`
+- `IndexerLevel - SmartStore cache misses - remote_searches`
+- `SearchHeadLevel - platform_stats.remote_searches metrics populating search`
+
+Updated keywords to terminated: or closed: (previously terminated)
+
+On reports/alerts:
+- `SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated`
+- `SearchHeadLevel - platform_stats.audit metrics searches`
+- `SearchHeadLevel - platform_stats.audit metrics users`
+- `SearchHeadLevel - platform_stats.audit metrics users 24hour`
+- `SearchHeadLevel - Search Queries By Type Audit Logs`
+- `SearchHeadLevel - Search Queries By Type Audit Logs macro version`
+- `SearchHeadLevel - Search Queries By Type Audit Logs macro version other`
+- `SearchHeadLevel - Searches dispatched as owner by other users`
+- `SearchHeadLevel - SmartStore cache misses - dashboards`
+- `SearchHeadLevel - SmartStore cache misses - savedsearches`
+- `SearchHeadLevel - SmartStore cache misses - combined`
+- `SearchHeadLevel - Users with auto-finalized searches`
+
+Removed regex:
+`| rex "(?s)^(?:[^'\n]*'){4},\s+\w+='(?P<search>[\s\S]+)'\]($|\[[^\]]+\]$)"`
+
+As it is causing issues with max_matches, newer Splunk versions appear to accurately match the search field without this regex
+
 ### 3.0.5
 New alerts:
 - `IndexerLevel - Connection errors to SmartStore`

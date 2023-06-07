@@ -40,6 +40,7 @@
           <query>index=_internal $host$ sourcetype=splunkd `splunkadmins_metrics_source` TERM(group=tcpout_connections) name=$output_group$*
 | rex field=name "(?&lt;output_name&gt;[^:]+)"
 | search output_name=$output_group$
+| fillnull ingest_pipe
 | eval combined = output_name . "_" . ingest_pipe
 | bin _time span=1m
 | stats sum(kb) AS totalkb by combined, host, _time
