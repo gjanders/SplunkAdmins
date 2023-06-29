@@ -143,6 +143,9 @@
 		    <view name="splunk_introspection_io_stats" />
 		    <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">Channel churn issues</a>
 		</collection>
+                <collection label="syslog-ng">
+			<saved name="syslog-ng - cache statistics summary" />
+		</collection>
 	</collection>
 	<collection label="IndexerLevel">
 		<collection label="Bucket Related">
@@ -329,6 +332,7 @@
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Search%20Messages%20user%20level">Search Messages user level</a>
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Search%20Messages%20admins%20only">Search Messages admins only</a>
 	                </collection>
+			<saved name="SearchHeadLevel - Knowledge Bundle contents" />
 		</collection>	
 		<collection label="Non best-practice">
 			<collection label="Realtime searches">
@@ -363,6 +367,7 @@
 	                        <saved name="SearchHeadLevel - audit logs showing all time searches" />
 	                        <saved name="IndexerLevel - RemoteSearches find all time searches" />
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Excessive%20REST%20API%20usage">SearchHeadLevel - Excessive REST API usage</a>			
+				<saved name="SearchHeadLevel - Knowledge Bundle contents" />
 			</collection>
 		</collection>
 		<collection label="Performance Issues">
@@ -378,7 +383,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Slow%20peer%20from%20remote%20searches">Slow peer from remote searches</a>
                         <saved name="SearchHeadLevel - Search Messages field extractor slow" />
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Excessive%20REST%20API%20usage">SearchHeadLevel - Excessive REST API usage</a>			
-			<saved name="SearchHeadLevel - Knowledge bundle replication times metrics.log" />			
+			<saved name="SearchHeadLevel - Knowledge bundle replication times metrics.log" />
 		</collection>		
 		<collection label="Proactive">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20LDAP%20users%20have%20been%20disabled%20or%20left%20the%20company%20cleanup%20required">LDAP users have been disabled or left the company cleanup required</a>		
@@ -386,6 +391,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20Searches%20Configured%20with%20incorrect%20sharing">Scheduled Searches Configured with incorrect sharing</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20login%20attempts%20from%20users%20that%20do%20not%20have%20any%20LDAP%20roles">Splunk login attempts from users that do not have any LDAP roles</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20authorize.conf%20settings%20will%20prevent%20some%20users%20from%20appearing%20in%20the%20UI">SearchHeadLevel - authorize.conf settings will prevent some users from appearing in the UI</a>
+			<saved name="SearchHeadLevel - Knowledge Bundle contents" />
 		</collection>	
 		<collection label="Quotas">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20Max%20Historic%20Search%20Limits%20Reached">Splunk Max Historic Search Limits Reached</a>
@@ -432,6 +438,8 @@
 			<view name="lookup_audit" />
 			<saved name="SearchHeadLevel - Knowledge bundle status on indexers" />
 			<saved name="SearchHeadLevel - Knowledge bundle replication times metrics.log" />		
+			<saved name="SearchHeadLevel - Knowledge Bundle contents" />
+			<saved name="syslog-ng - cache statistics summary" />
 		</collection>	
 		<collection label="Summary_Reports">
         		<saved name="SearchHeadLevel - platform_stats.audit metrics searches" />

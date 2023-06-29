@@ -256,6 +256,7 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `SearchHeadLevel - Splunk alert actions exceeding the max_action_results limit`
 - `SearchHeadLevel - Splunk Scheduler logs have not appeared in the last`
 - `SearchHeadLevel - Users exceeding the disk quota`
+- `syslog-ng - cache statistics summary`
 
 ## KVStore Usage
 Some CSV lookups are now replaced with kvstore entries due to the ability to sync the kvstore across multiple search head or search head cluster(s) via apps like [KV Store Tools Redux](https://splunkbase.splunk.com/app/5328/)
@@ -308,9 +309,31 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.7
+New macros:
+- `sysloghosts`
+
+New reports:
+- `SearchHeadLevel - Knowledge Bundle contents`
+- `syslog-ng - cache statistics summary` - as contributed by Marc Andersen, company: NIL815 ApS
+
+Updated dashboards:
+- `splunk_forwarder_output_tuning` - added fillnull for `ingest_pipe`
+
+Updated alerts:
+- `AllSplunkLevel - No recent metrics.log data` - updated to use prestats
+- `AllSplunkLevel - TCP Output Processor has paused the data flow` - updated criteria
+- `AllSplunkEnterpriseLevel - ulimit on Splunk enterprise servers is below 8192` - now 64,000 (could be renamed in future)
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - updated criteria
+- `ForwarderLevel - Splunk universal forwarders with ulimit issues` - updated keywords
+- `SearchHeadLevel - Scheduled Searches That Cannot Run` - excluded the require command
+- `SearchHeadLevel - Detect MongoDB errors` - updated to use prestats, added `_time` field
+- `SearchHeadLevel - SHC Captain unable to establish common bundle` - added new criteria
+- `SearchHeadLevel - Search Messages user level` - updated criteria
+
 ### 3.0.6
 Updated dashboards:
-- `Splunk forwarder output tuning` - added fillnull ingest_pipe
+- `Splunk forwarder output tuning` - added fillnull `ingest_pipe`
 
 Updated reports/alerts:
 - `SearchHeadLevel - Dashboards using special characters` - updated to use spath command instead of rex
