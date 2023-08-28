@@ -173,6 +173,7 @@ There are many Splunk conf talks available on this subject in various conference
 - `SearchHeadLevel - Searches dispatched as owner by other users`
 - `SearchHeadLevel - Search Messages user level`
 - `SearchHeadLevel - audit logs showing all time searches`
+- `SearchHeadLevel - summary indexing searches not using durable search`
 
 Are all well suited to an automated email using the sendresults command or a similar function as they involve end user configuration which the individual can change/fix
 
@@ -215,12 +216,14 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `IndexerLevel - RemoteSearches find datamodel acceleration with wildcards`
 - `IndexerLevel - RemoteSearches Indexes Stats`
 - `IndexerLevel - RemoteSearches Indexes Stats Wilcard`
+- `IndexerLevel - RemoteSearches - lookup usage`
 - `IndexerLevel - Search Failures`
 - `IndexerLevel - Slow peer from remote searches`
 - `IndexerLevel - strings_metadata triggering bucket rolling`
 - `MonitoringConsole - Check OS ulimits via REST`
 - `MonitoringConsole - Core dumps have appeared on the filesystem`
 - `MonitoringConsole - Crash logs have appeared on the filesystem`
+- `SearchHeadLevel - audit.log - lookup usage`
 - `SearchHeadLevel - authorize.conf settings will prevent some users from appearing in the UI`
 - `SearchHeadLevel - Captain Switchover Occurring`
 - `SearchHeadLevel - Dashboards invalid character in splunkd`
@@ -233,7 +236,9 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `SearchHeadLevel - Detect searches hitting corrupt buckets`
 - `SearchHeadLevel - dispatch metadata files may need removal`
 - `SearchHeadLevel - Excessive REST API usage`
+- `SearchHeadLevel - Knowledge Bundle contents`
 - `SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring`
+- `SearchHeadLevel - license usage per sourcetype per index`
 - `SearchHeadLevel - platform_stats access summary`
 - `SearchHeadLevel - platform_stats.audit metrics api`
 - `SearchHeadLevel - platform_stats.audit metrics searches`
@@ -255,6 +260,7 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `SearchHeadLevel - SHC Captain unable to establish common bundle`
 - `SearchHeadLevel - Splunk alert actions exceeding the max_action_results limit`
 - `SearchHeadLevel - Splunk Scheduler logs have not appeared in the last`
+- `SearchHeadLevel - summary indexing searches not using durable search`
 - `SearchHeadLevel - Users exceeding the disk quota`
 - `syslog-ng - cache statistics summary`
 
@@ -309,6 +315,33 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.8
+New alerts:
+- `SearchHeadLevel - summary indexing searches not using durable search`
+
+New macros:
+- `indexer_cluster_name` without any parameters created as per issue #19 (barrettnet)
+
+New reports:
+- `SearchHeadLevel - audit.log - lookup usage`
+- `SearchHeadLevel - license usage per sourcetype per index`
+- `SearchHeadLevel - Lookup file owners`
+- `IndexerLevel - RemoteSearches - lookup usage`
+
+Updated alerts:
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - more matching criteria
+- `SearchHeadLevel - Scheduled Searches That Cannot Run` - as per issue #18 (AHCL1)
+- `SearchHeadLevel - SHC Captain unable to establish common bundle` - additional exclusion for Splunk 9.0.x
+
+
+Updated reports:
+- `IndexerLevel - platform_stats.indexers totalgb measurement` - added * to the end of `license_usage.log`, updated `indexer_cluster_name` with parameter as per issue #19 (barrettnet)
+- `IndexerLevel - platform_stats.indexers totalgb_thruput measurement` - updated `indexer_cluster_name` with parameter as per issue #19 (barrettnet)
+- `SearchHeadLevel - Search Queries summary exact match` - removed newlines to improve accuracy
+- `SearchHeadLevel - Search Queries summary non-exact match` - removed newlines to improve accuracy
+
+Updated recommended links in nav menu
+
 ### 3.0.7
 New macros:
 - `sysloghosts`

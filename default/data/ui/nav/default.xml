@@ -166,6 +166,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Index%20not%20defined">Index not defined</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Stopping%20all%20listening%20ports">ForwarderLevel - Stopping all listening ports</a>							
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20replicationdatareceiverthread%20close%20to%20100%25%20utilisation">IndexerLevel - replicationdatareceiverthread close to 100% utilisation</a>							
+			<saved name="SearchHeadLevel - license usage per sourcetype per index" />
 		</collection>			
 		<collection label="Data Parsing">				
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Failures%20To%20Parse%20Timestamp%20Correctly%20%28excluding%20breaking%20issues%29">Failures To Parse Timestamp Correctly (excluding breaking issues)</a>			
@@ -238,6 +239,7 @@
 			<saved name="IndexerLevel - Maximum memory utilisation per search" />
                         <saved name="IndexerLevel - RemoteSearches find all time searches" />
 			<saved name="IndexerLevel - RemoteSearches find datamodel acceleration with wildcards" />
+			<saved name="IndexerLevel - RemoteSearches - lookup usage" />			
 			<collection label="SmartStore">
 				<saved name="SearchHeadLevel - SmartStore cache misses - savedsearches" />
 	                        <saved name="SearchHeadLevel - SmartStore cache misses - dashboards" />	
@@ -268,6 +270,7 @@
                     <saved name="SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search" />
                     <saved name="SearchHeadLevel - platform_stats access summary" />
 		    <saved name="SearchHeadLevel - platform_stats.remote_searches metrics populating search" />
+		    <saved name="SearchHeadLevel - audit.log - lookup usage" />
                     <saved name="IndexerLevel - platform_stats.counters hosts" />
                     <saved name="IndexerLevel - platform_stats.counters hosts 24hour" />
                     <saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
@@ -276,6 +279,7 @@
 		    <saved name="IndexerLevel - platform_stats.indexers stddev incoming measurement" />	
                     <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
 		    <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
+		    <saved name="IndexerLevel - RemoteSearches - lookup usage" />
                 </collection>
 		<collection label="External">
 			<a href="https://github.com/silkyrich/cluster_health_tools/">The cluster_health_tools git repository contains very useful dashboards for various indexer related performance stats</a>
@@ -286,7 +290,8 @@
 	</collection>
 	<collection label="SearchHeadLevel">
 		<collection label="Analytics">				
-             	        <saved name="SearchHeadLevel - Search Queries Per Day Audit Logs" />
+			<saved name="SearchHeadLevel - audit.log - lookup usage" />
+			<saved name="SearchHeadLevel - Search Queries Per Day Audit Logs" />
                         <saved name="SearchHeadLevel - Search Queries By Type Audit Logs" />         
                         <saved name="SearchHeadLevel - Search Queries By Type Audit Logs macro version" />                   
                         <saved name="SearchHeadLevel - Search Queries By Type Audit Logs macro version other" />                             
@@ -297,9 +302,12 @@
                         <saved name="SearchHeadLevel - Search Queries summary exact match by index" />
 			<saved name="SearchHeadLevel - Sourcetypes usage from search telemetry data" />
 			<saved name="SearchHeadLevel - Searches by search type" />			
-                        <saved name="SearchHeadLevel - IndexesPerUser Report" />			
+                        <saved name="SearchHeadLevel - IndexesPerUser Report" />
+			<saved name="SearchHeadLevel - license usage per sourcetype per index" />
+			<saved name="SearchHeadLevel - Lookup file owners" />
                         <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
-                        <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
+                        <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />			
+			<saved name="IndexerLevel - RemoteSearches - lookup usage" />
 		</collection>      
 		<collection label="Data Models">				
 			<saved name="SearchHeadLevel - Data Model Acceleration Completion Status" />
@@ -361,6 +369,7 @@
 				<saved name="SearchHeadLevel - SavedSearches using special characters" />
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20alert%20actions%20exceeding%20the%20max_action_results%20limit">Splunk alert actions exceeding the max_action_results limit</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20Scheduler%20logs%20have%20not%20appeared%20in%20the%20last">Splunk Scheduler logs have not appeared in the last</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20summary%20indexing%20searches%20not%20using%20durable%20search">SearchHeadLevel - summary indexing searches not using durable search</a>
 	  		</collection>									
 			<collection label="Other">
 				<saved name="SearchHeadLevel - Knowledge bundle replication times metrics.log" />							
@@ -392,6 +401,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20login%20attempts%20from%20users%20that%20do%20not%20have%20any%20LDAP%20roles">Splunk login attempts from users that do not have any LDAP roles</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20authorize.conf%20settings%20will%20prevent%20some%20users%20from%20appearing%20in%20the%20UI">SearchHeadLevel - authorize.conf settings will prevent some users from appearing in the UI</a>
 			<saved name="SearchHeadLevel - Knowledge Bundle contents" />
+		        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20summary%20indexing%20searches%20not%20using%20durable%20search">SearchHeadLevel - summary indexing searches not using durable search</a>			
 		</collection>	
 		<collection label="Quotas">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20Max%20Historic%20Search%20Limits%20Reached">Splunk Max Historic Search Limits Reached</a>
@@ -425,8 +435,10 @@
 			<saved name="SearchHeadLevel - Searches dispatched as owner by other users" />
 			<saved name="SearchHeadLevel - Lookup CSV size" />
 			<saved name="SearchHeadLevel - audit logs showing all time searches" />
+			<saved name="SearchHeadLevel - audit.log - lookup usage" />
                         <saved name="IndexerLevel - RemoteSearches find all time searches" />
 			<saved name="IndexerLevel - RemoteSearches find datamodel acceleration with wildcards" />
+			<saved name="IndexerLevel - RemoteSearches - lookup usage" />			
 			<saved name="SearchHeadLevel - Search Messages field extractor slow" />
 			<saved name="SearchHeadLevel - SmartStore cache misses - savedsearches" />
                         <saved name="SearchHeadLevel - SmartStore cache misses - dashboards" />	
@@ -436,12 +448,16 @@
 			<view name="knowledge_objects_by_app" />
 			<view name="lookups_in_use_finder" />
 			<view name="lookup_audit" />
+			<saved name="SearchHeadLevel - Lookup file owners" />
 			<saved name="SearchHeadLevel - Knowledge bundle status on indexers" />
 			<saved name="SearchHeadLevel - Knowledge bundle replication times metrics.log" />		
 			<saved name="SearchHeadLevel - Knowledge Bundle contents" />
+			<saved name="SearchHeadLevel - license usage per sourcetype per index" />
 			<saved name="syslog-ng - cache statistics summary" />
 		</collection>	
 		<collection label="Summary_Reports">
+			<saved name="SearchHeadLevel - audit.log - lookup usage" />
+			<saved name="SearchHeadLevel - license usage per sourcetype per index" />
         		<saved name="SearchHeadLevel - platform_stats.audit metrics searches" />
 	                <saved name="SearchHeadLevel - platform_stats.audit metrics users" />
                         <saved name="SearchHeadLevel - platform_stats.audit metrics users 24hour" />
@@ -450,7 +466,7 @@
      			<saved name="SearchHeadLevel - platform_stats.audit metrics api" />			
                         <saved name="SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search" />
                         <saved name="SearchHeadLevel - platform_stats access summary" />
-			<saved name="SearchHeadLevel - platform_stats.remote_searches metrics populating search" />
+			<saved name="SearchHeadLevel - platform_stats.remote_searches metrics populating search" />			
 			<saved name="IndexerLevel - platform_stats.counters hosts" />
 			<saved name="IndexerLevel - platform_stats.counters hosts 24hour" />
 			<saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
@@ -458,7 +474,8 @@
 	                <saved name="IndexerLevel - platform_stats.indexers stddev measurement" />
 	                <saved name="IndexerLevel - platform_stats.indexers stddev incoming measurement" />			
 	                <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
-			<saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
+			<saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />			
+			<saved name="IndexerLevel - RemoteSearches - lookup usage" />			
 		</collection>
 		<collection label="Scheduled Search Failures">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Scheduled%20searches%20failing%20in%20cluster%20with%20404%20error">Scheduled searches failing in cluster with 404 error</a>
@@ -477,6 +494,7 @@
 			<saved name="SearchHeadLevel - EventTypes report" />
 			<saved name="SearchHeadLevel - Users exceeding the disk quota introspection cleanup" />                      
                         <saved name="SearchHeadLevel - RMD5 to savedsearch_name lookupgen report" />
+			<saved name="SearchHeadLevel - Lookup file owners" />
 		</collection>	
 		<collection label="Recommended (externally hosted)">
 			<a href="https://github.com/dpaper-splunk/public/tree/master/dashboards" target="_blank">Extended Search Reporting (and others)</a>
@@ -484,9 +502,11 @@
 			<a href="https://splunkbase.splunk.com/app/6449/" target="_blank">Sideview UI (User Activity details)</a>
 			<a href="https://splunkbase.splunk.com/app/6368/" target="_blank">Admins Little Helper for Splunk (btool, bundle utils and similar)</a>
 			<a href="https://splunkbase.splunk.com/app/4621/" target="_blank">TrackMe (Data Ingestion)</a>
+                        <a href="https://github.com/redvelociraptor/gettingsmarter/tree/main">Getting Smarter about Splunk SmartStore (including HEC dashboards)</a>
 		</collection>
 	</collection>	
         <collection label="Summary_Reports">
+		<saved name="SearchHeadLevel - audit.log - lookup usage" />		
 		<saved name="SearchHeadLevel - platform_stats.audit metrics searches" />
                 <saved name="SearchHeadLevel - platform_stats.audit metrics users" />
                 <saved name="SearchHeadLevel - platform_stats.audit metrics api" />
@@ -503,7 +523,8 @@
                 <saved name="IndexerLevel - platform_stats.indexers stddev measurement" />		
                 <saved name="IndexerLevel - platform_stats.indexers stddev incoming measurement" />		
 		<saved name="IndexerLevel - RemoteSearches Indexes Stats" />
-		<saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
+		<saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />		
+		<saved name="IndexerLevel - RemoteSearches - lookup usage" />
         </collection>
         <collection label="Users">
             <saved name="What Access Do I Have Without REST?" />

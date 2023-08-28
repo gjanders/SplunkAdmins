@@ -1,18 +1,24 @@
-﻿status_code,http_status_code_id,http_status_code_text,status_message
-0,200,OK,Success
-1,403,Forbidden,Token disabled
-2,401,Unauthorized,Token is required
-3,401,Unauthorized,Invalid authorization
-4,403,Forbidden,Invalid token
-5,400,Bad Request,No data
-6,400,Bad Request,Invalid data format
-7,400,Bad Request,Incorrect index
-8,500,Internal Error,Internal server error
-9,503,Service Unavailable,Server is busy
-10,400,Bad Request,Data channel is missing
-11,400,Bad Request,Invalid data channel
-12,400,Bad Request,Event field is required
-13,400,Bad Request,Event field cannot be blank
-14,400,Bad Request,ACK is disabled
-15,400,Bad Request,Error in handling indexed fields
-16,400,Bad Request,Query string authorization is not enabled
+﻿status_code,http_status_code_id,http_status_code_text,status_message,reason,action
+0,200,OK,Success,,
+1,403,Forbidden,Token disabled,Client is sending using a disabled token,Splunk Admin needs to enable the token or have client use new token.
+2,401,Unauthorized,Token is required,Client is sending without a token,Splunk Admin needs to find what client is trying to send without a token.
+3,401,Unauthorized,Invalid authorization,Client is sending with an incorrect Authorization Header,"Splunk Admin needs to work with client/user to ensure Authorization Header is correct, most common cause is the word Splunk is missing before the token."
+4,403,Forbidden,Invalid token,Client is sending with a token the receiver(s) don't know of,Splunk Admin needs to work with client/user to ensure they are using a valid token.
+5,400,Bad Request,No data,Client is sending without any data,Splunk Admin needs to work with client/user to ensure sending side is configured to send data properly. If there is a token and a channel ID with no payload this is more than likely AWS Firehose second connection to ensure it can send data to Splunk. It's testing the event endpoint and it's expecting to get a 400 reply code.
+6,400,Bad Request,Invalid data format,Client is sending with data in an invalid format,"Splunk Admin needs to work with client/user to ensure sending side is using a proper format, the raw source should be looked at and the log entry for parsing_err will point to what to look for. In Splunk versions newer then 8.1.2103, as a last resort debug can be used."
+7,400,Bad Request,Incorrect index,Client is trying to send to an index not in the tokens allow list,Splunk Admin needs to work with client/user to ensure the sending side is trying to send to indexes listed in the tokens allow list. Correction can be on the client sending side or adding the index to the token in Splunk.
+8,500,Internal Error,Internal server error,Receiver had an issue client should retry to send,Client should automatically try to resend the data. If the issue happens too often then a support case should be filed so that the issue can be investigated deeper.
+9,503,Service Unavailable,Server is busy,Receiver had an issue receiving client should retry to send,"Client should automatically try to resend data, occasional Server Is Busy messages are expected. If the message happens too often a support case should be filed and investigated further."
+10,400,Bad Request,Data channel is missing,Client is trying to send to a token that has useACK enabled channel id is needed,Splunk Admin needs to work with client/user to ensure they are using the correct token and the sending side is configured properly.
+11,400,Bad Request,Invalid data channel,Client is trying to send with an improperly formatted data channel id,Splunk Admin needs to work with the client/user to ensure they send using a properly formatted data channel id.
+12,400,Bad Request,Event field is required,Client is trying to send without an event field,Splunk Admin needs to work with the client/user to ensure they are sending in a proper format. An event field is not being sent.
+13,400,Bad Request,Event field cannot be blank,Client is trying to send with an empty event field,Splunk Admin needs to work with the client/user to ensure they are sending in a proper format. The event field is empty.
+14,400,Bad Request,ACK is disabled,Client is trying to use useACK on a token that it is not enabled on,Splunk Admin needs to work with the client/user to ensure they are using the correct token for their data in the proper format.
+15,400,Bad Request,Error in handling indexed fields,Client is trying to send where index fields are incorrect,Splunk Admin needs to work with the client/user to ensure they are using index fields correctly for HEC.
+16,400,Bad Request,Query string authorization is not enabled,Client is trying to send with query string authorization where it is not enabled,Splunk Admin needs to open a Support case to enable query string authorization to the token. Understand the security risk of Query string authorization. The HEC token can be logged in plain text as part of the url.
+17,200,OK,HEC is healthy,,
+18,503,Service Unavailable,"HEC is unhealthy, queues are full",Receiver Queues are full,
+19,503,Service Unavailable,"HEC is unhealthy, ack service unavailable",,
+20,503,Service Unavailable,"HEC is unhealthy, queues are full, ack service unavailable",,
+21,400,Bad Request,Invalid token,,
+22,400,Bad Request,Token disabled,,
