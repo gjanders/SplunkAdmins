@@ -322,6 +322,9 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.10
+
+
 ### 3.0.9
 In version 3.0.8 the lookup file `splunkadmins_hec_reply_code_lookup.csv` was updated based on [gettingsmarter (github repo)](https://github.com/redvelociraptor/gettingsmarter/), the updated lookup was created by @jgedeon and additionally includes some health endpoint return codes (as well as those returned by the standard HEC endpoint)
 
