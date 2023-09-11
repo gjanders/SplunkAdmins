@@ -271,6 +271,7 @@
                     <saved name="SearchHeadLevel - platform_stats access summary" />
 		    <saved name="SearchHeadLevel - platform_stats.remote_searches metrics populating search" />
 		    <saved name="SearchHeadLevel - audit.log - lookup usage" />
+		    <saved name="SearchHeadLevel - Lookup Editor lookup updates" />
                     <saved name="IndexerLevel - platform_stats.counters hosts" />
                     <saved name="IndexerLevel - platform_stats.counters hosts 24hour" />
                     <saved name="IndexerLevel - platform_stats.indexers totalgb measurement" />
@@ -291,6 +292,8 @@
 	<collection label="SearchHeadLevel">
 		<collection label="Analytics">				
 			<saved name="SearchHeadLevel - audit.log - lookup usage" />
+			<saved name="SearchHeadLevel - Detect lookups that have not being accessed for a period of time" />
+			<saved name="SearchHeadLevel - Lookup Editor lookup updates" />
 			<saved name="SearchHeadLevel - Search Queries Per Day Audit Logs" />
                         <saved name="SearchHeadLevel - Search Queries By Type Audit Logs" />         
                         <saved name="SearchHeadLevel - Search Queries By Type Audit Logs macro version" />                   
@@ -305,6 +308,9 @@
                         <saved name="SearchHeadLevel - IndexesPerUser Report" />
 			<saved name="SearchHeadLevel - license usage per sourcetype per index" />
 			<saved name="SearchHeadLevel - Lookup file owners" />
+			<saved name="SearchHeadLevel - REST API usage via audit.log" />
+			<saved name="SearchHeadLevel - Lookups within a dashboard" />
+			<saved name="SearchHeadLevel - Lookups within savedsearches" />
                         <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
                         <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />			
 			<saved name="IndexerLevel - RemoteSearches - lookup usage" />
@@ -436,6 +442,9 @@
 			<saved name="SearchHeadLevel - Lookup CSV size" />
 			<saved name="SearchHeadLevel - audit logs showing all time searches" />
 			<saved name="SearchHeadLevel - audit.log - lookup usage" />
+			<saved name="SearchHeadLevel - Detect lookups that have not being accessed for a period of time" />
+			<saved name="SearchHeadLevel - Lookup Editor lookup updates" />
+			<saved name="SearchHeadLevel - REST API usage via audit.log" />
                         <saved name="IndexerLevel - RemoteSearches find all time searches" />
 			<saved name="IndexerLevel - RemoteSearches find datamodel acceleration with wildcards" />
 			<saved name="IndexerLevel - RemoteSearches - lookup usage" />			
@@ -449,6 +458,8 @@
 			<view name="lookups_in_use_finder" />
 			<view name="lookup_audit" />
 			<saved name="SearchHeadLevel - Lookup file owners" />
+			<saved name="SearchHeadLevel - Lookups within a dashboard" />
+			<saved name="SearchHeadLevel - Lookups within savedsearches" />
 			<saved name="SearchHeadLevel - Knowledge bundle status on indexers" />
 			<saved name="SearchHeadLevel - Knowledge bundle replication times metrics.log" />		
 			<saved name="SearchHeadLevel - Knowledge Bundle contents" />
@@ -457,6 +468,7 @@
 		</collection>	
 		<collection label="Summary_Reports">
 			<saved name="SearchHeadLevel - audit.log - lookup usage" />
+			<saved name="SearchHeadLevel - Lookup Editor lookup updates" />
 			<saved name="SearchHeadLevel - license usage per sourcetype per index" />
         		<saved name="SearchHeadLevel - platform_stats.audit metrics searches" />
 	                <saved name="SearchHeadLevel - platform_stats.audit metrics users" />
@@ -506,7 +518,8 @@
 		</collection>
 	</collection>	
         <collection label="Summary_Reports">
-		<saved name="SearchHeadLevel - audit.log - lookup usage" />		
+		<saved name="SearchHeadLevel - audit.log - lookup usage" />
+		<saved name="SearchHeadLevel - Lookup Editor lookup updates" />
 		<saved name="SearchHeadLevel - platform_stats.audit metrics searches" />
                 <saved name="SearchHeadLevel - platform_stats.audit metrics users" />
                 <saved name="SearchHeadLevel - platform_stats.audit metrics api" />

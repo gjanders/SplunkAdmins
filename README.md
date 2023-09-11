@@ -164,6 +164,7 @@ There are many Splunk conf talks available on this subject in various conference
 - `SearchHeadLevel - Users with auto-finalized searches`
 - `SearchHeadLevel - User - Dashboards searching all indexes`
 - `SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated`
+- `SearchHeadLevel - Detect lookups that have not being accessed for a period of time`
 - `SearchHeadLevel - WLM aborted searches`
 - `SearchHeadLevel - Dashboards with all time searches set`
 - `SearchHeadLevel - SavedSearches using special characters`
@@ -232,6 +233,7 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `SearchHeadLevel - datamodel errors in splunkd`
 - `SearchHeadLevel - Detect bundle pushes no longer occurring`
 - `SearchHeadLevel - Detect Excessive Search Use - Dashboard - Automated`
+- `SearchHeadLevel - Detect lookups that have not being accessed for a period of time`
 - `SearchHeadLevel - Detect MongoDB errors`
 - `SearchHeadLevel - Detect searches hitting corrupt buckets`
 - `SearchHeadLevel - dispatch metadata files may need removal`
@@ -239,6 +241,10 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `SearchHeadLevel - Knowledge Bundle contents`
 - `SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring`
 - `SearchHeadLevel - license usage per sourcetype per index`
+- `SearchHeadLevel - Lookup Editor lookup updates`
+- `SearchHeadLevel - Lookup file owners`
+- `SearchHeadLevel - Lookups within dashboards`
+- `SearchHeadLevel - Lookups within savedsearches`
 - `SearchHeadLevel - platform_stats access summary`
 - `SearchHeadLevel - platform_stats.audit metrics api`
 - `SearchHeadLevel - platform_stats.audit metrics searches`
@@ -249,6 +255,7 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `SearchHeadLevel - platform_stats.users dashboards`
 - `SearchHeadLevel - platform_stats.users savedsearches`
 - `SearchHeadLevel - RMD5 to savedsearch_name lookupgen report`
+- `SearchHeadLevel - REST API usage via audit.log`
 - `SearchHeadLevel - savedsearches invalid character in splunkd`
 - `SearchHeadLevel - SavedSearches using special characters`
 - `SearchHeadLevel - Scheduled Searches That Cannot Run`
@@ -315,6 +322,26 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.9
+In version 3.0.8 the lookup file `splunkadmins_hec_reply_code_lookup.csv` was updated based on [gettingsmarter (github repo)](https://github.com/redvelociraptor/gettingsmarter/), the updated lookup was created by @jgedeon and additionally includes some health endpoint return codes (as well as those returned by the standard HEC endpoint)
+
+Updated alerts:
+- `SplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - more criteria
+- `SearchHeadLevel - Scheduled Searches That Cannot Run` - correcting issue #20 (thanks @barrettnet)
+
+Updated reports:
+- `SearchHeadLevel - Search Queries summary exact match` - added provenance
+- `SearchHeadLevel - Search Queries summary non-exact match` - added provenance
+- `SearchHeadLevel - audit.log - lookup usage` - updated to handle mlspl files as well (apply command)
+- `SearchHeadLevel - Lookup file owners` - now includes an additional join that can be used if TA-webtools is installed (to improve accuracy/exclude default lookup definitions/files) 
+
+New reports:
+- `SearchHeadLevel - Detect lookups that have not being accessed for a period of time`
+- `SearchHeadLevel - Lookup Editor lookup updates`
+- `SearchHeadLevel - Lookups within dashboards`
+- `SearchHeadLevel - Lookups within savedsearches`
+- `SearchHeadLevel - REST API usage via audit.log`
+
 ### 3.0.8
 New alerts:
 - `SearchHeadLevel - summary indexing searches not using durable search`
