@@ -322,6 +322,15 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.11
+Updated alerts:
+- `AllSplunkEnterpriseLevel - ulimit on Splunk enterprise servers is below 8192` - missing parenthesis, thanks Gregg Woodcock
+- `IndexerLevel - replicationdatareceiverthread close to 100% utilisation` - incorrect macro
+- `MonitoringConsole - Crash logs have appeared on the filesystem` - incorrect macro, github issue #22, thanks SANSd20
+
+Added lookup file:
+- `splunkadmins_indexlist_by_cluster.csv`
+
 ### 3.0.10
 - `SearchHeadLevel - audit.log - lookup usage` - correcting issue #21 (thanks @barrettnet)
 
