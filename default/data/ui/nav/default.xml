@@ -311,6 +311,8 @@
 			<saved name="SearchHeadLevel - REST API usage via audit.log" />
 			<saved name="SearchHeadLevel - Lookups within a dashboard" />
 			<saved name="SearchHeadLevel - Lookups within savedsearches" />
+			<saved name="SearchHeadLevel - Job performance data per indexer" />
+			<saved name="SearchHeadLevel - Jobs endpoint example" />
                         <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
                         <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />			
 			<saved name="IndexerLevel - RemoteSearches - lookup usage" />
@@ -319,6 +321,7 @@
 			<saved name="SearchHeadLevel - Data Model Acceleration Completion Status" />
 			<saved name="SearchHeadLevel - DataModel Fields" />
 			<saved name="SearchHeadLevel - Accelerated DataModels Access Info" />
+			<saved name="SearchHeadLevel - Datamodel REST endpoint indexes in use" />
 			<saved name="IndexerLevel - DataModel Acceleration - Indexes in use" />
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20datamodel%20errors%20in%20splunkd">datamodel errors in splunkd</a>			
 			<view name="data_model_rebuild_monitor" />
