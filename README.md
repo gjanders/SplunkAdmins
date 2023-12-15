@@ -322,6 +322,15 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.12
+New macros:
+- splunkadmins_macro_sub
+
+New reports:
+- SearchHeadLevel - Datamodel REST endpoint indexes in use
+- SearchHeadLevel - Job performance data per indexer
+- SearchHeadLevel - Jobs endpoint example
+
 ### 3.0.11
 Updated alerts:
 - `AllSplunkEnterpriseLevel - ulimit on Splunk enterprise servers is below 8192` - missing parenthesis, thanks Gregg Woodcock
