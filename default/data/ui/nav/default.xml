@@ -313,6 +313,7 @@
 			<saved name="SearchHeadLevel - Lookups within savedsearches" />
 			<saved name="SearchHeadLevel - Job performance data per indexer" />
 			<saved name="SearchHeadLevel - Jobs endpoint example" />
+			<saved name="SearchHeadLevel - configtracker index example" />
                         <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
                         <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />			
 			<saved name="IndexerLevel - RemoteSearches - lookup usage" />
@@ -321,7 +322,7 @@
 			<saved name="SearchHeadLevel - Data Model Acceleration Completion Status" />
 			<saved name="SearchHeadLevel - DataModel Fields" />
 			<saved name="SearchHeadLevel - Accelerated DataModels Access Info" />
-			<saved name="SearchHeadLevel - Datamodel REST endpoint indexes in use" />
+			<saved name="SearchHeadLevel - Datamodel REST endpoint indexes in use" />			
 			<saved name="IndexerLevel - DataModel Acceleration - Indexes in use" />
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20datamodel%20errors%20in%20splunkd">datamodel errors in splunkd</a>			
 			<view name="data_model_rebuild_monitor" />
@@ -343,7 +344,8 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20datamodel%20errors%20in%20splunkd">datamodel errors in splunkd</a>
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20SmartStore%20-%20Bucket%20cache%20errors%20audit%20logs">IndexerLevel - SmartStore - Bucket cache errors audit logs</a>
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20No%20recent%20metrics.log%20data">AllSplunkLevel - No recent metrics.log data</a>
-			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Detect%20bundle%20pushes%20no%20longer%20occurring">SearchHeadLevel - Detect bundle pushes no longer occurring</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Detect%20bundle%20pushes%20no%20longer%20occurring">Detect bundle pushes no longer occurring</a>
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Peer%20timeouts%20or%20authentication%20issues">Peer timeouts or authentication issues</a>
 	                <collection label="Generic">
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Search%20Messages%20user%20level">Search Messages user level</a>
@@ -548,5 +550,7 @@
 	<collection label="MonitoringConsole">
 		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FMonitoringConsole%20-%20Core%20dumps%20have%20appeared%20on%20the%20filesystem">Core dumps have appeared on the filesystem</a>
 		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FMonitoringConsole%20-%20Crash%20logs%20have%20appeared%20on%20the%20filesystem">Crash logs have appeared on the filesystem</a>		
+		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FMonitoringConsole%20-%20one%20or%20more%20servers%20require%20configuration">one or more servers require configuration</a>
+		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FMonitoringConsole%20-%20one%20or%20more%20servers%20require%20configuration%20automated">one or more servers require configuration automated</a>
 	</collection>
 </nav>

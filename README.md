@@ -181,7 +181,7 @@ Are all well suited to an automated email using the sendresults command or a sim
 ## Which alerts and reports have been tested on the newer Splunk versions such as 8.2 or 9.0?
 This application was first created in 2017 and both Splunk and the application have evolved during this time period. This application is a library of potential alerts that could be used in a Splunk environment so it would never be a good idea to turn on all alerts from this application.
 
-The below list of alerts and reports are actively used since version 8.0.x and in 8.2.x and eventually 9.0:
+The below list of alerts and reports are actively used since version 8.0.x and in 8.2.x and eventually 9.0.x:
 - `AllSplunkEnterpriseLevel - error in stdout.log`
 - `AllSplunkEnterpriseLevel - Email Sending Failures`
 - `AllSplunkEnterpriseLevel - Losing Contact With Master Node`
@@ -224,6 +224,8 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `MonitoringConsole - Check OS ulimits via REST`
 - `MonitoringConsole - Core dumps have appeared on the filesystem`
 - `MonitoringConsole - Crash logs have appeared on the filesystem`
+- `MonitoringConsole - one or more servers require configuration`
+- `MonitoringConsole - one or more servers require configuration automated`
 - `SearchHeadLevel - audit.log - lookup usage`
 - `SearchHeadLevel - authorize.conf settings will prevent some users from appearing in the UI`
 - `SearchHeadLevel - Captain Switchover Occurring`
@@ -245,6 +247,7 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `SearchHeadLevel - Lookup file owners`
 - `SearchHeadLevel - Lookups within dashboards`
 - `SearchHeadLevel - Lookups within savedsearches`
+- `SearchHeadLevel - Peer timeouts or authentication issues`
 - `SearchHeadLevel - platform_stats access summary`
 - `SearchHeadLevel - platform_stats.audit metrics api`
 - `SearchHeadLevel - platform_stats.audit metrics searches`
@@ -323,13 +326,49 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 
 ## Release Notes
 ### 3.0.12
+New alerts:
+- `MonitoringConsole - one or more servers require configuration`
+- `MonitoringConsole - one or more servers require configuration automated`
+- `SearchHeadLevel - Peer timeouts or authentication issues`
+
 New macros:
-- splunkadmins_macro_sub
+- `splunkadmins_macro_sub`
 
 New reports:
-- SearchHeadLevel - Datamodel REST endpoint indexes in use
-- SearchHeadLevel - Job performance data per indexer
-- SearchHeadLevel - Jobs endpoint example
+- `SearchHeadLevel - Datamodel REST endpoint indexes in use`
+- `SearchHeadLevel - Job performance data per indexer`
+- `SearchHeadLevel - Jobs endpoint example`
+- `SearchHeadLevel - configtracker index example`
+
+Updated alerts:
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - more criteria
+- `SearchHeadLevel - Search Messages user level` - more criteria
+- `SearchHeadLevel - Search Messages admins only` - more criteria
+
+Updated dashboards:
+- `splunk_forwarder_output_tuning` - to reference NLB/load balanced version of asynchronous forwarding
+
+Updated macros:
+- `whataccessdoihave` - comments and added srchIndexesDisallowed
+
+Updated reports:
+- `SearchHeadLevel - IndexesPerRole Remote Report` - comment updates only
+- `SearchHeadLevel - Lookup file owners` - comment updates only
+
+Alerts added to future removal list:
+- `ClusterMasterLevel - Per index status`
+
+Updated to use `splunkadmins_macro_sub` macro:
+- `SearchHeadLevel - Dashboards with all time searches set`
+- `SearchHeadLevel - Scheduled searches not specifying an index macro version`
+- `SearchHeadLevel - Search Queries By Type Audit Logs macro version`
+- `SearchHeadLevel - Search Queries By Type Audit Logs macro version other`
+- `SearchHeadLevel - Search Queries summary exact match`
+- `SearchHeadLevel - Search Queries summary non-exact match`
+- `SearchHeadLevel - User - Dashboards searching all indexes macro version`
+
+Misc:
+- Added supported themes settings in app.conf to allow the usage of dark theme (for 9.1 enterprise users and above)
 
 ### 3.0.11
 Updated alerts:
