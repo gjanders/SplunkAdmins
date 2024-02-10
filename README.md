@@ -328,6 +328,8 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.14
+
 ### 3.0.13
 New reports:
 - `IndexerLevel - events per second benchmark`
@@ -354,7 +356,6 @@ Updated alerts:
 - `SearchHeadLevel - Search Messages field extractor slow` - updated comments
 - `SearchHeadLevel - Search Messages user level` - updated comments
 - `SearchHeadLevel - Search Messages admins only` - updated criteria and comments
-
 
 Updated reports:
 - `IndexerLevel - RemoteSearches - lookup usage` - typo fixed in description
