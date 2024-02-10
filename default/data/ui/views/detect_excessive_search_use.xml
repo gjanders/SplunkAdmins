@@ -60,7 +60,7 @@
       <table>
         <title>Note: cluster command in use, introspection data may better list all dashboards in use</title>
         <search>
-          <query>index=_internal (sourcetype=splunkd_access (method="GET" AND "/services/search/jobs/export") OR method="POST") OR (sourcetype=splunkd_ui_access method=POST "/report?" OR "/search?" OR "/search/jobs" OR "/saved/searches" NOT "/search/parser HTTP" NOT "/user-prefs/data/user-prefs/") OR (sourcetype=splunkd_ui_access method=GET "/app/" NOT "/search HTTP" NOT "/dashboards HTTP" NOT "/alerts HTTP" NOT "/reports HTTP") user IN ($username$)
+		<query>index=_internal (sourcetype=splunkd_access (method="GET" AND "/services/search/jobs/export") OR method="POST") OR (sourcetype=splunkd_ui_access method=POST "/report?" OR "/search?" OR "/search/jobs" OR "/servicesNS/*/*/search/jobs" OR "/saved/searches" NOT "/search/parser HTTP" NOT "/user-prefs/data/user-prefs/") OR (sourcetype=splunkd_ui_access method=GET "/app/" NOT "/search HTTP" NOT "/dashboards HTTP" NOT "/alerts HTTP" NOT "/reports HTTP") user IN ($username$)
 | cluster t=0.95 showcount=true
 | rex field=uri "/servicesNS/[^/]+/(?P&lt;app&gt;[^/]+)"
 | rex field=uri "/[^/]+/app/(?P&lt;app&gt;[^/]+)/(?P&lt;dashboard_name&gt;[^/\?]+)"

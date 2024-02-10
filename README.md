@@ -203,6 +203,7 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `IndexerLevel - Connection errors to SmartStore`
 - `IndexerLevel - ClusterMaster Advising SearchOrRep Factor Not Met`
 - `IndexerLevel - Data parsing error`
+- `IndexerLevel - events per second benchmark`
 - `IndexerLevel - IndexConfig Warnings from Splunk indexers`
 - `IndexerLevel - Indexer Queues May Have Issues`
 - `IndexerLevel - Indexer replication queue issues to some peers`
@@ -247,6 +248,7 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `SearchHeadLevel - Lookup file owners`
 - `SearchHeadLevel - Lookups within dashboards`
 - `SearchHeadLevel - Lookups within savedsearches`
+- `SearchHeadLevel - macros in use`
 - `SearchHeadLevel - Peer timeouts or authentication issues`
 - `SearchHeadLevel - platform_stats access summary`
 - `SearchHeadLevel - platform_stats.audit metrics api`
@@ -254,6 +256,7 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 - `SearchHeadLevel - platform_stats.audit metrics users`
 - `SearchHeadLevel - platform_stats.audit metrics users 24hour`
 - `SearchHeadLevel - platform_stats.remote_searches metrics populating search`
+- `SearchHeadLevel - platform_stats.remote_searches metrics populating search 24 hour`
 - `SearchHeadLevel - platform_stats.user_stats.introspection metrics populating search`
 - `SearchHeadLevel - platform_stats.users dashboards`
 - `SearchHeadLevel - platform_stats.users savedsearches`
@@ -278,7 +281,7 @@ The below list of alerts and reports are actively used since version 8.0.x and i
 Some CSV lookups are now replaced with kvstore entries due to the ability to sync the kvstore across multiple search head or search head cluster(s) via apps like [KV Store Tools Redux](https://splunkbase.splunk.com/app/5328/)
 
 ## platform_stats reports
-There are a number of reports with the keyword "platform_stats" in the title, these were designed to run mcollect commands and to collect data into a metric index
+There are a number of reports with the keyword "platform_stats" in the title, these were designed to run mcollect commands (or to use summary indexing and durable search) to collect data into a metrics index
 The metrics then contain detailed information around the number of users using Splunk per-search head cluster, data indexed at the indexing tier, resource usage per user et cetera.
 There is plenty of detail in here but dashboards were not included for the information built from them, contributions welcome
 
@@ -325,6 +328,83 @@ The following ideas relate to this issue:
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.13
+New reports:
+- `IndexerLevel - events per second benchmark`
+- `IndexerLevel - savedsearches by indexer execution time`
+- `SearchHeadLevel - indexes per savedsearch`
+- `SearchHeadLevel - macros in use`
+- `SearchHeadLevel - Indexes for savedsearch without subsearches`
+- `SearchHeadLevel - platform_stats.remote_searches metrics populating search 24 hour`
+
+Updated alerts:
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - updated criteria
+- `IndexerLevel - RemoteSearches find datamodel acceleration with wildcards` - updated regex
+- `MonitoringConsole - one or more servers require configuration` - changed criteria
+- `MonitoringConsole - one or more servers require configuration automated` - rewrote the alert
+- `SearchHeadLevel - Indexer Peer Connection Failures` - updated comments
+- `SearchHeadLevel - Detect searches hitting corrupt buckets` - updated comments
+- `SearchHeadLevel - Users with auto-finalized searches` - updated comments
+- `SearchHeadLevel - splunk_search_messages dispatch` - updated comments
+- `SearchHeadLevel - Lookups within savedsearches` - corrected URL
+- `SearchHeadLevel - Sourcetypes usage from search telemetry data` - description update
+- `SearchHeadLevel - Jobs endpoint example` - updated description
+- `SearchHeadLevel - SmartStore cache misses - dashboards` - minor update to regex
+- `SearchHeadLevel - SmartStore cache misses - combined` - minor update to regex
+- `SearchHeadLevel - Search Messages field extractor slow` - updated comments
+- `SearchHeadLevel - Search Messages user level` - updated comments
+- `SearchHeadLevel - Search Messages admins only` - updated criteria and comments
+
+
+Updated reports:
+- `IndexerLevel - RemoteSearches - lookup usage` - typo fixed in description
+- `IndexerLevel - Report on bucket corruption` - updated comments
+- `SearchHeadLevel - summary indexing searches not using durable search` - corrected REST context
+- `SearchHeadLevel - Lookups within savedsearches` - corrected REST context
+- `SearchHeadLevel - platform_stats.audit metrics users` - added v2/v1 endpoints for search/jobs/export
+- `SearchHeadLevel - platform_stats.audit metrics api` - added v2/v1 endpoints for search/jobs/export
+- `SearchHeadLevel - platform_stats.audit metrics users 24hour` - added v2/v1 endpoints for search/jobs/export
+
+Updated to use macro `splunkadmins_clustermaster_host` instead of splunk_server=local:
+- `ClusterMasterLevel - Primary bucket count per peer`
+- `ClusterMasterLevel - excess buckets on master`
+- `IndexerLevel - ClusterMaster Advising SearchOrRep Factor Not Met`
+
+Updated to use macro `splunkadmins_restmacro` instead of splunk_server=local:
+- `IndexerLevel - Indexer replication queue issues to some peers`
+- `SearchHeadLevel - Alerts that have not fired an action in X days`
+- `SearchHeadLevel - Accelerated DataModels Access Info`
+- `SearchHeadLevel - Accelerated DataModels with wildcard or no index specified`
+- `SearchHeadLevel - authorize.conf settings will prevent some users from appearing in the UI`
+- `SearchHeadLevel - Data Model Acceleration Completion Status`
+- `SearchHeadLevel - DataModel Fields`
+- `SearchHeadLevel - Dashboard refresh intervals`
+- `SearchHeadLevel - Dashboards using depends and running searches in the background`
+- `SearchHeadLevel - Dashboards using special characters`
+- `SearchHeadLevel - Dashboards with all time searches set`
+- `SearchHeadLevel - Dashboards that may benefit from base or post-process searches`
+- `SearchHeadLevel - DataModels report`
+- `SearchHeadLevel - Disabled modular inputs are running`
+- `SearchHeadLevel - Detect changes to knowledge objects non-directory`
+- `SearchHeadLevel - EventTypes report`
+- `SearchHeadLevel - Index access list by user`
+- `SearchHeadLevel - IndexesPerUser Report`
+- `SearchHeadLevel - Knowledge bundle status on indexers`
+- `SearchHeadLevel - Lookup file owners`
+- `SearchHeadLevel - Lookup CSV size`
+- `SearchHeadLevel - Macro report`
+- `SearchHeadLevel - platform_stats.users savedsearches`
+- `SearchHeadLevel - platform_stats.users dashboards`
+- `SearchHeadLevel - Saved Searches with privileged owners and excessive write perms`
+- `SearchHeadLevel - Summary searches using realtime search scheduling`
+- `SearchHeadLevel - SavedSearches using special characters`
+- `SearchHeadLevel - Splunk alert actions exceeding the max_action_results limit`
+- `SearchHeadLevel - summary indexing searches not using durable search`
+- `SearchHeadLevel - Tags report`
+
+Other macro updates:
+- `DeploymentServer - Count by application`
+
 ### 3.0.12
 New alerts:
 - `MonitoringConsole - one or more servers require configuration`
@@ -540,10 +620,12 @@ New reports:
 - `SearchHeadLevel - Searches by search type`
 
 Updated macros:
+- `search_type_from_sid`
 - `splunkadmins_splunkd_source`
 - `splunkadmins_splunkuf_source`
 - `splunkadmins_mongo_source`
 - `splunkadmins_license_usage_source`
+- `splunkadmins_deploymentserver_splunkserver`
 
 To include a trailing wildcard (so splunkd.log.1 matches or similar)
 
