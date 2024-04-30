@@ -359,6 +359,9 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.15
+
+
 ### 3.0.14
 New reports:
 - `SearchHeadLevel - Lookup definitions with no lookup file or kvstore collection`
