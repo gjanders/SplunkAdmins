@@ -1,0 +1,17 @@
+# This is a basic workflow to generate build
+name: "Generate build, run app inspect and update splunklib"
+
+on: push
+
+jobs:
+  pre-release:
+    name: "Run on push - Add Utilities & App Inspect"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - uses: VatsalJagani/splunk-app-action@v4
+        with:
+          my_github_token: ${{ secrets.MY_GITHUB_TOKEN }}
+          splunkbase_username: ${{ secrets.SPLUNKBASE_USERNAME }}
+          splunkbase_password: ${{ secrets.SPLUNKBASE_PASSWORD }}
+          to_make_permission_changes: true

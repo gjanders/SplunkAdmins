@@ -324,10 +324,60 @@ The following ideas relate to this issue:
 - `SearchHeadLevel - Search Queries summary non-exact match`
 - `SearchHeadLevel - Dashboards using depends and running searches in the background`
 
+## Other notes
+### search_id's
+The macro search_type_from_sid attempts to determine the search "type" based on id and this worked quite well in older versions.
+There are many variations which the macro doesn't show as they are effectively ad-hoc searches in my understanding, these include:
+- md_ for metadata searches
+- ta_ for typeahead searches
+- sd_ (appears to be another kind of ad-hoc search)
+-  rt_ for realtime search
+
+In 9.1.3 the search_id pattern appears to have changed, or at least I didn't notice this change in 9.1.3, now there are search id's that start with:
+- deep-dive-
+- degraded-entities
+- episode-review-
+- event_management_query
+- health-score-tile-search
+- health-score-tree-base
+- kpi-health-score-sparklines
+- notable-events-search
+- service-health-score
+- side-kpi-table
+- single-thresholding-preview
+- common-fields-search
+- event-management-detail
+- get-block-listed-fields
+- impact-services-search
+- time-variant-preview
+- trending-ad-analysis
+- trending-ad-mad-analysis
+
+These are appear to be from premium apps but it does imply that there is a mechanism to customize the search_id's...
+
 ## Feedback?
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 3.0.14
+New reports:
+- `SearchHeadLevel - Lookup definitions with no lookup file or kvstore collection`
+- `SearchHeadLevel - User created kvstore collections`
+- `SearchHeadLevel - Search Queries summary loadjob and savedsearch usage in audit logs`
+  
+Updated alerts:
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only`
+- `SearchHeadLevel - Detect bundle pushes no longer occurring`
+- `SearchHeadLevel - macros in use`
+- `SearchHeadLevel - Search Messages user level`
+
+Updated reports:
+- `SearchHeadLevel - audit.log - lookup usage` - added regex as the search field sometimes doesn't auto-extract correctly
+- `SearchHeadLevel - Detect lookups that have not being accessed for a period of time` - added automatic lookups in
+- `SearchHeadLevel - platform_stats access summary` - criteria update
+- `SearchHeadLevel - Lookup file owners` - corrections to ensure that automatic lookups are not included  
+- `SearchHeadLevel - Search Queries summary non-exact match` - minor criteria update
+
 ### 3.0.13
 New reports:
 - `IndexerLevel - events per second benchmark`
@@ -354,7 +404,6 @@ Updated alerts:
 - `SearchHeadLevel - Search Messages field extractor slow` - updated comments
 - `SearchHeadLevel - Search Messages user level` - updated comments
 - `SearchHeadLevel - Search Messages admins only` - updated criteria and comments
-
 
 Updated reports:
 - `IndexerLevel - RemoteSearches - lookup usage` - typo fixed in description

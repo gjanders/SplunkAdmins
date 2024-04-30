@@ -309,6 +309,7 @@
                         <saved name="SearchHeadLevel - Search Queries summary exact match" />
                         <saved name="SearchHeadLevel - Search Queries summary exact match by user" />
                         <saved name="SearchHeadLevel - Search Queries summary exact match by index" />
+			<saved name="SearchHeadLevel - Search Queries summary loadjob and savedsearch usage in audit logs" />
 			<saved name="SearchHeadLevel - Sourcetypes usage from search telemetry data" />
 			<saved name="SearchHeadLevel - Searches by search type" />			
                         <saved name="SearchHeadLevel - IndexesPerUser Report" />
@@ -419,6 +420,8 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20login%20attempts%20from%20users%20that%20do%20not%20have%20any%20LDAP%20roles">Splunk login attempts from users that do not have any LDAP roles</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20authorize.conf%20settings%20will%20prevent%20some%20users%20from%20appearing%20in%20the%20UI">SearchHeadLevel - authorize.conf settings will prevent some users from appearing in the UI</a>
 			<saved name="SearchHeadLevel - Knowledge Bundle contents" />
+			<saved name="SearchHeadLevel - Lookup definitions with no lookup file or kvstore collection" />
+			<saved name="SearchHeadLevel - User created kvstore collections" />			
 		        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20summary%20indexing%20searches%20not%20using%20durable%20search">SearchHeadLevel - summary indexing searches not using durable search</a>			
 		</collection>	
 		<collection label="Quotas">			
@@ -449,6 +452,7 @@
                         <saved name="SearchHeadLevel - Detect changes to knowledge objects directory" />
                         <saved name="SearchHeadLevel - Detect changes to knowledge objects non-directory" />
 			<saved name="SearchHeadLevel - Lookup updates within SHC" />
+			<saved name="SearchHeadLevel - Lookup definitions with no lookup file or kvstore collection" />
 			<saved name="SearchHeadLevel - indexes per savedsearch" />
 			<saved name="SearchHeadLevel - macros in use" />
                         <saved name="SearchHeadLevel - SHC conf log summary" />
@@ -459,6 +463,7 @@
 			<saved name="SearchHeadLevel - Detect lookups that have not being accessed for a period of time" />
 			<saved name="SearchHeadLevel - Lookup Editor lookup updates" />
 			<saved name="SearchHeadLevel - REST API usage via audit.log" />
+			<saved name="SearchHeadLevel - User created kvstore collections" />
                         <saved name="IndexerLevel - RemoteSearches find all time searches" />
 			<saved name="IndexerLevel - RemoteSearches find datamodel acceleration with wildcards" />
 			<saved name="IndexerLevel - RemoteSearches - lookup usage" />			
