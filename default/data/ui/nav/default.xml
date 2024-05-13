@@ -56,6 +56,7 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%2520-%2520Data%2520Loss%2520on%2520shutdown">Data Loss on shutdown</a>
 	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Losing%20Contact%20With%20Master%20Node">Losing Contact With Master Node</a>
                                 <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20No%20recent%20metrics.log%20data">AllSplunkLevel - No recent metrics.log data</a>
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20Unable%20to%communicate%20with%20license%20manager">AllSplunkEnterpriseLevel - Unable to communicate with license manager</a>
 			</collection>    			
 			<collection label="Generic">
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
