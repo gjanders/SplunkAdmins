@@ -360,7 +360,8 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 
 ## Release Notes
 ### 3.0.15
-
+New alerts:
+- `AllSplunkEnterpriseLevel - Unable to communicate with license manager`
 
 ### 3.0.14
 New reports:
