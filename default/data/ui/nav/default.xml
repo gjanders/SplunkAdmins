@@ -114,6 +114,7 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Splunk%20forwarders%20are%20having%20issues%20with%20sending%20data%20to%20indexers">Splunk forwarders are having issues with sending data to indexers</a>								
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Splunk%20Heavy%20logging%20sources">Splunk Heavy logging sources</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkLevel%20-%20TCP%20Output%20Processor%20has%20paused%20the%20data%20flow">TCP Output Processor has paused the data flow</a>			
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Slow%20indexer%20detection%20capability">ForwarderLevel - Slow indexer detection capability</a>				
 			</collection>
 			<collection label="Data Balance">
 				<saved name="ForwarderLevel - Forwarders connecting to a single endpoint for extended periods UF level" />
@@ -143,6 +144,7 @@
 		    <view name="splunk_forwarder_data_balance_tuning" />
 		    <view name="splunk_introspection_io_stats" />
 		    <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">Channel churn issues</a>			
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Slow%20indexer%20detection%20capability">ForwarderLevel - Slow indexer detection capability</a>							
 		</collection>
                 <collection label="syslog-ng">
 			<saved name="syslog-ng - cache statistics summary" />
@@ -167,6 +169,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Index%20not%20defined">Index not defined</a>
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Stopping%20all%20listening%20ports">ForwarderLevel - Stopping all listening ports</a>							
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20replicationdatareceiverthread%20close%20to%20100%25%20utilisation">IndexerLevel - replicationdatareceiverthread close to 100% utilisation</a>							
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Slow%20indexer%20detection%20capability">ForwarderLevel - Slow indexer detection capability</a>							
 			<saved name="SearchHeadLevel - license usage per sourcetype per index" />
 		</collection>			
 		<collection label="Data Parsing">				
@@ -209,6 +212,7 @@
 				<view name="splunk_introspection_io_stats" />
   	                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Channel%20churn%20issues">ForwarderLevel - Channel churn issues</a>
                                 <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20replicationdatareceiverthread%20close%20to%20100%25%20utilisation">IndexerLevel - replicationdatareceiverthread close to 100% utilisation</a>				
+				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FForwarderLevel%20-%20Slow%20indexer%20detection%20capability">ForwarderLevel - Slow indexer detection capability</a>								
 			</collection>
 			<collection label="Other">
                                 <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Indexer%20not%20accepting%20TCP%20Connections">Indexer not accepting TCP Connections</a>		
