@@ -288,7 +288,7 @@
                     <saved name="IndexerLevel - platform_stats.indexers stddev measurement" />		    
 		    <saved name="IndexerLevel - platform_stats.indexers stddev incoming measurement" />	
                     <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
-		    <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
+		    <saved name="IndexerLevel - RemoteSearches Indexes Stats Wildcard" />
 		    <saved name="IndexerLevel - RemoteSearches - lookup usage" />
                 </collection>
 		<collection label="External">
@@ -327,7 +327,7 @@
 			<saved name="SearchHeadLevel - Jobs endpoint example" />
 			<saved name="SearchHeadLevel - configtracker index example" />
                         <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
-                        <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />			
+                        <saved name="IndexerLevel - RemoteSearches Indexes Stats Wildcard" />			
 			<saved name="IndexerLevel - RemoteSearches - lookup usage" />
 			<saved name="IndexerLevel - events per second benchmark" />
 		</collection>      
@@ -516,7 +516,7 @@
 	                <saved name="IndexerLevel - platform_stats.indexers stddev measurement" />
 	                <saved name="IndexerLevel - platform_stats.indexers stddev incoming measurement" />			
 	                <saved name="IndexerLevel - RemoteSearches Indexes Stats" />
-			<saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />			
+			<saved name="IndexerLevel - RemoteSearches Indexes Stats Wildcard" />			
 			<saved name="IndexerLevel - RemoteSearches - lookup usage" />			
 		</collection>
 		<collection label="Scheduled Search Failures">			
@@ -570,7 +570,7 @@
                 <saved name="IndexerLevel - platform_stats.indexers stddev measurement" />		
                 <saved name="IndexerLevel - platform_stats.indexers stddev incoming measurement" />		
 		<saved name="IndexerLevel - RemoteSearches Indexes Stats" />
-		<saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />		
+		<saved name="IndexerLevel - RemoteSearches Indexes Stats Wildcard" />		
 		<saved name="IndexerLevel - RemoteSearches - lookup usage" />
         </collection>
         <collection label="Users">
