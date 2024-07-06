@@ -150,9 +150,9 @@
       </single>
       <single>
         <search>
-          <query>`comment("The authors original attempt of | `datamodel(\"Splunk_Audit\", \"Datamodel_Acceleration\")` | `drop_dm_object_name(\"Datamodel_Acceleration\")` Just did not appear to show accurate numbers when compared to the filesystem of the indexers")`
-`comment("The previous attempt at this number via | rest \"/services/admin/introspection--disk-objects--summaries?count=-1\" ... worked fine *unless* there were multiple search head GUID's in the introspection data in which case it seems to return 1 set only (resulting in highly inaccurate numbers in some cases")`
-    `comment("Now querying the introspection data instead as that provides consistently accurate numbers")`
+          <query>```The authors original attempt of | `datamodel(\"Splunk_Audit\", \"Datamodel_Acceleration\``` | `drop_dm_object_name(\"Datamodel_Acceleration\")` Just did not appear to show accurate numbers when compared to the filesystem of the indexers")`
+```The previous attempt at this number via | rest \"/services/admin/introspection--disk-objects--summaries?count=-1\" ... worked fine *unless* there were multiple search head GUID's in the introspection data in which case it seems to return 1 set only (resulting in highly inaccurate numbers in some cases```
+    ```Now querying the introspection data instead as that provides consistently accurate numbers```
     index=_introspection `indexerhosts` component=summaries "data.name"=*$dm$
 | stats latest(data.total_size) AS size by data.search_head_guid, data.related_indexes_count, data.related_indexes, host
 | stats sum(size) AS size</query>
