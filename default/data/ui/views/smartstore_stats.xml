@@ -101,7 +101,7 @@
       <title>CacheManager Queued download count</title>
       <chart>
         <search>
-          <query>`comment("Relates to [cachemanager] max_concurrent_downloads in server.conf. Thanks to Splunk support for the original version of this search")` index=_internal $host$ `splunkadmins_metrics_source` TERM(group=cachemgr_download) sourcetype=splunkd queued 
+          <query>```Relates to [cachemanager] max_concurrent_downloads in server.conf. Thanks to Splunk support for the original version of this search``` index=_internal $host$ `splunkadmins_metrics_source` TERM(group=cachemgr_download) sourcetype=splunkd queued 
 | timechart partial=f limit=50 avg(queued) AS avg_queued by host 
 | eval ceiling=20</query>
           <earliest>$time.earliest$</earliest>
@@ -136,7 +136,7 @@
       <title>Excessive cachemanager downloads</title>
       <chart>
         <search>
-          <query>`comment("Thanks to Splunk support for the original version of this search, similar version available in the monitoring console...")` index=_internal $host$ `splunkadmins_splunkd_source` sourcetype=splunkd CacheManager TERM(action=download) TERM(status=succeeded) TERM(download_set=*)
+          <query>```Thanks to Splunk support for the original version of this search, similar version available in the monitoring console...``` index=_internal $host$ `splunkadmins_splunkd_source` sourcetype=splunkd CacheManager TERM(action=download) TERM(status=succeeded) TERM(download_set=*)
 | rex field=cache_id "&gt;*\|(?&lt;index_name&gt;.*)~.*~.*\|" 
 | eval identifier=(cache_id + host) 
 | stats count by identifier, index_name 
@@ -159,7 +159,7 @@
       <title>CacheManager downloads by age/index</title>
       <chart>
         <search>
-          <query>`comment("Thanks to Splunk support for the original version of this search")` index=_audit $host$ TERM(action=remote_bucket_download) TERM(info=completed)
+          <query>```Thanks to Splunk support for the original version of this search``` index=_audit $host$ TERM(action=remote_bucket_download) TERM(info=completed)
 | eval gbps=kb/1024/1024 
 | eval age=round((now()-earliest_time)/60/60/24) 
 | bucket span=30 age 

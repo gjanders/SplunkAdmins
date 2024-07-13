@@ -80,7 +80,7 @@
       <title>Data output std deviation</title>
       <chart>
         <search>
-          <query>`comment("Credit to Brett Adams")` index=_internal $host$ sourcetype=splunkd `splunkadmins_metrics_source` component=Metrics TERM(group=tcpout_connections) name=$output_group$*
+          <query>```Credit to Brett Adams``` index=_internal $host$ sourcetype=splunkd `splunkadmins_metrics_source` component=Metrics TERM(group=tcpout_connections) name=$output_group$*
 | rex field=name "(?P&lt;destination&gt;[^:]+)"
 | search destination=$output_group$*
 | timechart span=1m sum(kb) by destIp limit=50

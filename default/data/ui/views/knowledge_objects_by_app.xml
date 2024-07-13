@@ -26,7 +26,7 @@
         <query>| rest "/servicesNS/-/$app$/directory" count=0 splunk_server=local
 | search eai:acl.app=$app$
 | rename eai:type AS type
-| search type!="macros" `comment("macros only appears in really new versions of Splunk via the directory endpoint, so assume it doesn't exist in this query")`
+| search type!="macros" ```macros only appears in really new versions of Splunk via the directory endpoint, so assume it doesn't exist in this query```
 | stats count by type
 | fields - count</query>
         <earliest>-24h@h</earliest>
