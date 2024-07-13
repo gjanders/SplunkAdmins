@@ -19,17 +19,17 @@
       <table>
         <title>Timestamp parsing has failed, note that if the null queue is in use this can give false alarms</title>
         <search>
-          <query>```Timestamp parsing has failed, and it doesn't appear to be related to the event been broken due to having too many lines, that is a separate alert that may trigger a timestamp parsing issue (excluded from this alert as that issue needs to be resolved first)```
-```Please note that you may see this particular warning on data that is sent to the nullQueue using a transforms.conf. Obviously you won't see this in the index but you will see the warning because the time parsing occurs before the transforms.conf occurs```
-```This alert now checks for at least 2 failures, and header entries can often trigger 2 entries in the log files about timestamp parsing failures...```
-```Finally one strange edge case is a newline inserted into the log file (by itself with no content before/afterward) can trigger the warning but nothing will get indexed, multiline_event_extra_waittime, time_before_close and EVENT_BREAKER can resolve this edge case```
+          <query>```Timestamp parsing has failed, and it doesn't appear to be related to the event been broken due to having too many lines, that is a separate alert that may trigger a timestamp parsing issue (excluded from this alert as that issue needs to be resolved first)
+Please note that you may see this particular warning on data that is sent to the nullQueue using a transforms.conf. Obviously you won't see this in the index but you will see the warning because the time parsing occurs before the transforms.conf occurs
+This alert now checks for at least 2 failures, and header entries can often trigger 2 entries in the log files about timestamp parsing failures...
+Finally one strange edge case is a newline inserted into the log file (by itself with no content before/afterward) can trigger the warning but nothing will get indexed, multiline_event_extra_waittime, time_before_close and EVENT_BREAKER can resolve this edge case```
 index=_internal sourcetype=splunkd ("Failed to parse timestamp" "Defaulting to timestamp of previous event") OR "Breaking event because limit of " OR "outside of the acceptable time window" (`indexerhosts`) OR (`heavyforwarderhosts`) $sourcetype$
 | bin _time span=1m
 | eval host=data_host, source=data_source, sourcetype=data_sourcetype
 | rex "source::(?P&lt;source&gt;[^|]+)\|host::(?P&lt;host&gt;[^|]+)\|(?P&lt;sourcetype&gt;[^|]+)"
 | eventstats count(eval(isnotnull(data_host))) AS hasBrokenEventOrTuncatedLine, count(eval(searchmatch("outside of the acceptable time window"))) AS outsideTimewindow by _time, host, source, sourcetype
 | where hasBrokenEventOrTuncatedLine=0 AND isnull(data_host) AND NOT searchmatch("outside of the acceptable time window")
-| search ```To investigate further we want the previous timestamp that Splunk used for the event in question, that way we can see what it looks like in raw format...```
+```To investigate further we want the previous timestamp that Splunk used for the event in question, that way we can see what it looks like in raw format...```
 | rex "Defaulting to timestamp of previous event \((?P&lt;previousTimeStamp&gt;[^)]+)"
 | eval previousTimeStamp=strptime(previousTimeStamp, "%a %b %d %H:%M:%S %Y")
 | stats count, min(_time) AS firstSeen, max(_time) AS mostRecent, first(previousTimeStamp) AS recentExample, sum(outsideTimewindow) AS outsideTimewindow by host, sourcetype, source
@@ -40,7 +40,7 @@ index=_internal sourcetype=splunkd ("Failed to parse timestamp" "Defaulting to t
 | eval invesDataSource=if(mvcount(invesDataSource)&gt;1,mvjoin(invesDataSource,"\" OR source=\""),invesDataSource)
 | eval invesDataSource = "source=\"" + invesDataSource + "\""
 | eval invesDataSource = replace(invesDataSource, "\\\\", "\\\\\\\\")
-| eval investigationQuery="```\"The investigation query may find zero data if the data was sent to the null queue by a transforms.conf as the time parsing occurs before the transforms occur. If this source/sourcetype has a null queue you may need to exclude it from this alert\``` ```\"Note that the host= can be inaccurate if host overrides are in use in transforms.conf, if this query finds no results remove host=...\``` index=* host=" . host . " sourcetype=\"" . sourcetype . "\" " . invesDataSource . " earliest=" . recentExample . " latest=" . invesEnd . " | eval indextime=strftime(_indextime, \"%+\")"
+| eval investigationQuery="```The investigation query may find zero data if the data was sent to the null queue by a transforms.conf as the time parsing occurs before the transforms occur. If this source/sourcetype has a null queue you may need to exclude it from this alert. Note that the host= can be inaccurate if host overrides are in use in transforms.conf, if this query finds no results remove host=...``` index=* host=" . host . " sourcetype=\"" . sourcetype . "\" " . invesDataSource . " earliest=" . recentExample . " latest=" . invesEnd . " | eval indextime=strftime(_indextime, \"%+\")"
 | eval mostRecent=strftime(mostRecent, "%+"), firstSeen=strftime(firstSeen, "%+")
 | eval outsideAcceptableTimeWindow=if(outsideTimewindow!=0,"Timestamp parsing failed due to been outside the acceptable time window","No")
 | fields - recentExample, invesEnd, invesDataSource, outsideTimewindow
@@ -73,19 +73,19 @@ OR "is too far away from the previous event's time"
 OR "is suspiciously far away from the previous event's time" $sourcetype$
 | rex "source::(?P&lt;source&gt;[^|]+)\|host::(?P&lt;host&gt;[^|]+)\|(?P&lt;sourcetype&gt;[^|]+)"
 | rex "Context: source=(?P&lt;source&gt;[^|]+)\|host=(?P&lt;host&gt;[^|]+)\|(?P&lt;sourcetype&gt;[^|]+)"
-| search ```The goal of this part of the search was to obtain the messages that are relating to this particular host/source/sourcetype, however since the message includes a time we cannot uses values(message) without getting a huge number of values, therefore we use cluster to obtain the unique values. Since we want the original start/end times we use labelonly=true```
+```The goal of this part of the search was to obtain the messages that are relating to this particular host/source/sourcetype, however since the message includes a time we cannot uses values(message) without getting a huge number of values, therefore we use cluster to obtain the unique values. Since we want the original start/end times we use labelonly=true```
 | cluster labelonly=true
 | eval message=coalesce(message,event_message)
 | stats count, min(_time) AS firstSeen, max(_time) AS lastSeen, first(message) AS message by host, source, sourcetype, cluster_label
-| search ```While 'A possible timestamp match (...) is outside of the acceptable time window' and 'Time parsed (...) is too far away from the previous event's time', result in the current indexing time been used, the 'Accepted time (...) is suspiciously far away from the previous event's time' is accepted and therefore we need to expand the investigation query time to include this time range as well!```
+```While 'A possible timestamp match (...) is outside of the acceptable time window' and 'Time parsed (...) is too far away from the previous event's time', result in the current indexing time been used, the 'Accepted time (...) is suspiciously far away from the previous event's time' is accepted and therefore we need to expand the investigation query time to include this time range as well!```
 | rex field=message "Accepted time \((?P&lt;acceptedTime&gt;[^\)]+)"
 | eval acceptedTime=strptime(acceptedTime, "%a %b %d %H:%M:%S %Y")
 | eval firstSeen=if(acceptedTime&lt;firstSeen,acceptedTime,firstSeen)
-| search ```Now that we have the first message for each labelled cluster, we now take all relevant message per host/source/sourcetype```
+ ```Now that we have the first message for each labelled cluster, we now take all relevant message per host/source/sourcetype```
 | stats values(acceptedTime) AS acceptedTime, sum(count) AS count, min(firstSeen) AS firstSeen, max(lastSeen) AS lastSeen, values(message) AS message by host, source, sourcetype
 | eval invesEnd=if(lastSeen=firstSeen,round(lastSeen+1),round(lastSeen)), invesStart=floor(firstSeen)
 | eval invesDataSource = replace(source, "\\\\", "\\\\\\\\")
-| eval investigationQuery="```\"Please note that this query may need to be narrowed down further before running it, this is an example only...\``` index=* host=" . host . " sourcetype=\"" . sourcetype . "\" source=\"" . invesDataSource . "\" earliest=" . invesStart . " latest=" . invesEnd . " | eval indextime=strftime(_indextime, \"%+\")"
+| eval investigationQuery="```Please note that this query may need to be narrowed down further before running it, this is an example only...``` index=* host=" . host . " sourcetype=\"" . sourcetype . "\" source=\"" . invesDataSource . "\" earliest=" . invesStart . " latest=" . invesEnd . " | eval indextime=strftime(_indextime, \"%+\")"
 | eval firstSeen=strftime(firstSeen, "%+"), lastSeen=strftime(lastSeen, "%+")
 | table host, source, sourcetype count, firstSeen, lastSeen, message, investigationQuery
 | sort - count</query>
@@ -117,7 +117,7 @@ index=_internal "DateParserVerbose - Accepted time format has changed" sourcetyp
 | stats count, min(_time) AS firstSeen, max(_time) AS lastSeen by host, source, sourcetype, message
 | eval invesMaxTime=if(firstSeen=lastSeen,lastSeen+1,lastSeen)
 | eval invesDataSource = replace(source, "\\\\", "\\\\\\\\")
-| eval potentialInvestigationQuery="```\"If no results are found, prepend the earliest=/latest= with _index_ (eg _index_earliest=...) and expand the timeframe searched over, as the parsed timestamps from the data does not have to exactly match the time the warnings appeared...\``` index=* sourcetype=\"" . sourcetype . "\" source=\"" . invesDataSource . "\" host=" . host . " earliest=" . firstSeen . " latest=" . invesMaxTime . " | eval start=substr(_raw, 0, 30) | cluster field=start"
+| eval potentialInvestigationQuery="```If no results are found, prepend the earliest=/latest= with _index_ (eg _index_earliest=...) and expand the timeframe searched over, as the parsed timestamps from the data does not have to exactly match the time the warnings appeared...``` index=* sourcetype=\"" . sourcetype . "\" source=\"" . invesDataSource . "\" host=" . host . " earliest=" . firstSeen . " latest=" . invesMaxTime . " | eval start=substr(_raw, 0, 30) | cluster field=start"
 | eval firstSeen=strftime(firstSeen, "%+"), lastSeen=strftime(lastSeen, "%+")
 | fields - invesMaxTime, invesDataSource
 | sort - count</query>
@@ -142,15 +142,15 @@ index=_internal "DateParserVerbose - Accepted time format has changed" sourcetyp
       <table>
         <title>The event that came in was greater than the maximum number of lines that were configured, therefore it was broken into multiple events...(use a LINE_BREAKER or adjust MAX_EVENTS)</title>
         <search>
-          <query>```The event that came in was greater than the maximum number of lines that were configured, therefore it was broken into multiple events...```
-```If running Splunk 7 or newer than refer to the monitoring console Indexing -&gt; Inputs -&gt; Data Quality```
+          <query>```The event that came in was greater than the maximum number of lines that were configured, therefore it was broken into multiple events...
+Also refer to the monitoring console Indexing -&gt; Inputs -&gt; Data Quality```
 index=_internal "AggregatorMiningProcessor - Breaking event because limit of" sourcetype=splunkd data_sourcetype=$sourcetype$
 | rex "Breaking event because limit of (?P&lt;curlimit&gt;\d+)"
 | stats max(_time) AS mostRecent, min(_time) AS firstSeen, count by data_sourcetype, data_host, curlimit
 | eval longerThan=curlimit-1
 | eval invesLatest = if(mostRecent==firstSeen,mostRecent+1,mostRecent)
 | rename data_sourcetype AS sourcetype, data_host AS host
-| eval investigationQuery="```\"If no results are found prepend the earliest=/latest= with _index_ (eg _index_earliest=...) and expand the timeframe searched over, as the parsed timestamps from the data does not have to exactly match the time the warnings appeared...\``` index=* host=" . host . " sourcetype=\"" . sourcetype . "\" linecount&gt;" . longerThan . " earliest=" . firstSeen . " latest=" . invesLatest
+| eval investigationQuery="```If no results are found prepend the earliest=/latest= with _index_ (eg _index_earliest=...) and expand the timeframe searched over, as the parsed timestamps from the data does not have to exactly match the time the warnings appeared...``` index=* host=" . host . " sourcetype=\"" . sourcetype . "\" linecount&gt;" . longerThan . " earliest=" . firstSeen . " latest=" . invesLatest
 | fields - firstSeen, longerThan, invesLatest
 | eval mostRecent=strftime(mostRecent, "%+")
 | sort - count</query>
@@ -214,7 +214,7 @@ index=_internal "AggregatorMiningProcessor - Breaking event because limit of" so
     where _index_earliest=-7d, earliest=-300d, latest=-7d, sourcetype=$sourcetype$
     groupby source, sourcetype, index, host
 | eval invesDataSource = replace(source, "\\\\", "\\\\\\\\"), invesLatestTime=mostRecentlySeen+1, invesLatestIndexTime=mostRecentlyIndexed+1
-| eval investigationQuery="```\"Narrow down to the older part of the timeline after this query runs to see the potential issue...\``` index=" . index . " source=\"" . invesDataSource . "\" sourcetype=\"" . sourcetype . "\" host=" . host . " earliest=" . earliestSeen . " latest=" . invesLatestTime . " _index_earliest=" . earliestIndexTime . " _index_latest=" . invesLatestIndexTime . " | eval indextime=strftime(_indextime, \"%+\")"
+| eval investigationQuery="```Narrow down to the older part of the timeline after this query runs to see the potential issue...``` index=" . index . " source=\"" . invesDataSource . "\" sourcetype=\"" . sourcetype . "\" host=" . host . " earliest=" . earliestSeen . " latest=" . invesLatestTime . " _index_earliest=" . earliestIndexTime . " _index_latest=" . invesLatestIndexTime . " | eval indextime=strftime(_indextime, \"%+\")"
 | eval mostRecentlySeen=strftime(mostRecentlySeen, "%+"), mostRecentlyIndexed=strftime(mostRecentlyIndexed, "%+")
 | sort index, host, sourcetype
 | table index, source, sourcetype, host, mostRecentlySeen, mostRecentlyIndexed, count, investigationQuery</query>
@@ -238,9 +238,9 @@ index=_internal "AggregatorMiningProcessor - Breaking event because limit of" so
       <table>
         <title>The line was truncated due to length, the TRUNCATE setting may need tweaking (or it may be just bad data coming in)</title>
         <search>
-          <query>```The line was truncated due to length, the TRUNCATE setting may need tweaking (or it may be just bad data coming in)```
-```If running Splunk 7 or newer than refer to the Monitoring Console, Indexing -&gt; Inputs -&gt; Data Quality```
-```If you are in a (very) performance sensitive environment you might want to remove the rex/eval lines for the data_host field and let the admin update the inves query manually```
+          <query>```The line was truncated due to length, the TRUNCATE setting may need tweaking (or it may be just bad data coming in)
+Also refer to the Monitoring Console, Indexing -&gt; Inputs -&gt; Data Quality
+If you are in a (very) performance sensitive environment you might want to remove the rex/eval lines for the data_host field and let the admin update the investigation query manually```
 index=_internal "Truncating line because limit of" sourcetype=splunkd data_sourcetype=$sourcetype$ (`heavyforwarderhosts`) OR (`indexerhosts`)
 | rex "Truncating line because limit of (?P&lt;curlimit&gt;\d+) bytes.*with a line length &gt;= (?P&lt;approxlinelength&gt;\S+)"
 | rex field=data_host "(?P&lt;data_host&gt;[^\.]+)"
@@ -253,7 +253,7 @@ index=_internal "Truncating line because limit of" sourcetype=splunkd data_sourc
 | eval invesLastSeen=if(firstSeen==lastSeen,lastSeen+1,lastSeen)
 | eval firstSeen=firstSeen-10
 | eval invesLastSeen=invesLastSeen+10
-| eval investigationQuery="```\"Find examples where the truncation limit has been reached\``` ```\"The earliest/latest time is based on the warning messages in the Splunk logs, they may need customisation!\``` index=* sourcetype=" . sourcetype . " " . hostList . " earliest=" . firstSeen . " latest=" . invesLastSeen . " | where len(_raw)=" . curlimit
+| eval investigationQuery="```Find examples where the truncation limit has been reached. The earliest/latest time is based on the warning messages in the Splunk logs, they may need customisation!``` index=* sourcetype=" . sourcetype . " " . hostList . " earliest=" . firstSeen . " latest=" . invesLastSeen . " | where len(_raw)=" . curlimit
 | sort - count
 | eval lastSeen=strftime(lastSeen, "%+")
 | table sourcetype, curlimit, count, avgApproxLineLength, maxApproxLineLength, lastSeen, investigationQuery
