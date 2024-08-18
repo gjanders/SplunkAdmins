@@ -360,7 +360,10 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 
 ## Release Notes
 ### 3.0.15
-- Merged pull request from sifters relating to replacing comment macro with the triple backtick option introduced in Splunk 8.1
+- Merged pull request from sifters relating to replacing comment macro with the triple backtick option introduced in Splunk 8.1. This involved editing many searches to change the format of the comments.
+
+New reports:
+- SearchHeadLevel - configtracker index example2
 
 ### 3.0.14
 New reports:
