@@ -365,7 +365,7 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 New reports:
 - `SearchHeadLevel - configtracker index example2`
 
-The version number has moved to 4.0.0 as this change has the potential to introduce issues with the change of comment syntax. I've completed multiple reviews and I beleive there should be no broken alerts but please report them via the contact the author if you find any
+The version number has moved to 4.0.0 as this change has the potential to introduce issues with the change of comment syntax. I've completed multiple reviews and I believe there should be no broken alerts but please report them via the contact the author if you find any
 
 This version removes compatibility with Splunk versions below 8.1 due to the use of the newer comment syntax
 
