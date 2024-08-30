@@ -359,6 +359,11 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 4.0.1
+Updated alerts:
+- `AllSplunkEnterpriseLevel - Email Sending Failures` - added app context
+- `SearchHeadLevel - Splunk alert actions exceeding the max_action_results limit` - excluded summary indexing
+
 ### 4.0.0
 - Merged pull request from sifters relating to replacing comment macro with the triple backtick option introduced in Splunk 8.1. This involved editing many searches to change the format of the comments.
 
