@@ -159,6 +159,7 @@
 			<saved name="IndexerLevel - Corrupt buckets via DBInspect" />
 			<view name="rolled_buckets_by_index" />
 			<saved name="IndexerLevel - IndexWriter pause duration" />
+			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20indexes%20with%20unflushed%20buckets">indexes with unflushed buckets</a>
 		</collection>
 		<collection label="Data Ingestion">			
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FIndexerLevel%20-%20Data%20parsing%20error">Data parsing error</a>
