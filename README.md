@@ -360,6 +360,9 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 
 ## Release Notes
 ### 4.0.1
+New alerts:
+- `IndexerLevel - indexes with unflushed buckets`
+
 Updated alerts:
 - `AllSplunkEnterpriseLevel - Email Sending Failures` - added app context
 - `SearchHeadLevel - Splunk alert actions exceeding the max_action_results limit` - excluded summary indexing
