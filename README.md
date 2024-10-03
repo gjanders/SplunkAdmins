@@ -363,6 +363,9 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 New alerts:
 - `IndexerLevel - indexes with unflushed buckets`
 
+ New reports:
+- `SearchHeadLevel - Job performance data per indexer handoff time`
+
 Updated alerts:
 - `AllSplunkEnterpriseLevel - Email Sending Failures` - added app context
 - `SearchHeadLevel - Splunk alert actions exceeding the max_action_results limit` - excluded summary indexing
