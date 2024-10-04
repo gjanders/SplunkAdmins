@@ -461,6 +461,7 @@
                         <saved name="SearchHeadLevel - SHC conf log summary" />
 			<saved name="SearchHeadLevel - Searches dispatched as owner by other users" />
 			<saved name="SearchHeadLevel - Lookup CSV size" />
+			<saved name="SearchHeadLevel - KVStore collection size" />
 			<saved name="SearchHeadLevel - audit logs showing all time searches" />
 			<saved name="SearchHeadLevel - audit.log - lookup usage" />
 			<saved name="SearchHeadLevel - Detect lookups that have not being accessed for a period of time" />
