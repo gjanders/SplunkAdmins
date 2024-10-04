@@ -365,6 +365,7 @@ New alerts:
 
  New reports:
 - `SearchHeadLevel - Job performance data per indexer handoff time`
+- `SearchHeadLevel - KVStore collection size`
 
 Updated alerts:
 - `AllSplunkEnterpriseLevel - Email Sending Failures` - added app context
