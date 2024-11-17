@@ -286,9 +286,6 @@
 		    <saved name="IndexerLevel - RemoteSearches Indexes Stats Wilcard" />
 		    <saved name="IndexerLevel - RemoteSearches - lookup usage" />
                 </collection>
-		<collection label="External">
-			<a href="https://github.com/silkyrich/cluster_health_tools/">The cluster_health_tools git repository contains very useful dashboards for various indexer related performance stats</a>
-		</collection>
 	</collection>
 	<collection label="LicenseMaster">  
 		<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FLicenseMaster%20-%20Duplicated%20License%20Situation">Duplicated License Situation</a>
@@ -319,6 +316,7 @@
 			<saved name="SearchHeadLevel - Lookups within a dashboard" />
 			<saved name="SearchHeadLevel - Lookups within savedsearches" />
 			<saved name="SearchHeadLevel - Job performance data per indexer" />
+			<saved name="SearchHeadLevel - Job performance data per indexer handoff time" />
 			<saved name="SearchHeadLevel - Jobs endpoint example" />
 			<saved name="SearchHeadLevel - configtracker index example" />
 			<saved name="SearchHeadLevel - configtracker index example2" />
@@ -390,6 +388,7 @@
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20alert%20actions%20exceeding%20the%20max_action_results%20limit">Splunk alert actions exceeding the max_action_results limit</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20Splunk%20Scheduler%20logs%20have%20not%20appeared%20in%20the%20last">Splunk Scheduler logs have not appeared in the last</a>
 				<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20summary%20indexing%20searches%20not%20using%20durable%20search">SearchHeadLevel - summary indexing searches not using durable search</a>
+				<saved name="SearchHeadLevel - Savedsearches with schedules and no next_scheduled_time" />
 	  		</collection>									
 			<collection label="Other">
 				<saved name="SearchHeadLevel - Knowledge bundle replication times metrics.log" />							
@@ -459,6 +458,7 @@
                         <saved name="SearchHeadLevel - SHC conf log summary" />
 			<saved name="SearchHeadLevel - Searches dispatched as owner by other users" />
 			<saved name="SearchHeadLevel - Lookup CSV size" />
+			<saved name="SearchHeadLevel - KVStore collection size" />
 			<saved name="SearchHeadLevel - audit logs showing all time searches" />
 			<saved name="SearchHeadLevel - audit.log - lookup usage" />
 			<saved name="SearchHeadLevel - Detect lookups that have not being accessed for a period of time" />
@@ -535,12 +535,14 @@
 			<saved name="SearchHeadLevel - Lookup file owners" />
 		</collection>	
 		<collection label="Recommended (externally hosted)">
+			<a href="https://github.com/silkyrich/cluster_health_tools/">The cluster_health_tools git repository contains very useful dashboards for various indexer related performance stats</a>
 			<a href="https://github.com/dpaper-splunk/public/tree/master/dashboards" target="_blank">Extended Search Reporting (and others)</a>
 			<a href="https://github.com/nicovdw/splunk_concurrency_helper" target="_blank">Search Scheduler Tuning searches</a>
 			<a href="https://splunkbase.splunk.com/app/6449/" target="_blank">Sideview UI (User Activity details)</a>
 			<a href="https://splunkbase.splunk.com/app/6368/" target="_blank">Admins Little Helper for Splunk (btool, bundle utils and similar)</a>
-			<a href="https://splunkbase.splunk.com/app/4621/" target="_blank">TrackMe (Data Ingestion)</a>
+			<a href="https://splunkbase.splunk.com/app/4621/" target="_blank">TrackMe (Data Ingestion)</a>			
                         <a href="https://github.com/redvelociraptor/gettingsmarter/tree/main">Getting Smarter about Splunk SmartStore (including HEC dashboards)</a>
+			<a href="https://github.com/TheWoodRanger/presentation-conf_24_audittrail_native_telemetry">Maximizing Splunk Core: Analyzing Splunk Searches Using Audittrail and Native Splunk Telemetry</a>
 		</collection>
 	</collection>	
         <collection label="Summary_Reports">

@@ -112,7 +112,7 @@
     <p>Also note that the maxQueueSize should not be below 10MB (10MB minimium size)</p>
     <p>If you are using an AWS NLB, you may wish to refer to this newer post <a href="https://www.linkedin.com/posts/harendra-rawat-b10b41_asynchronous-forwarding-with-nlb-activity-7112204069363933185-SYRv"> Asynchronous forwarding with NLB</a></p>
     <p>Finally while this also works on UF's, there are some reasons why you may want to consider HF's if you are running an intermediate tier, answers post <a href="https://community.splunk.com/t5/Getting-Data-In/Wrongly-merged-Events-permanently-blocked-tcpout-queue-with/m-p/508743">Wrongly merged Events/permanently blocked tcpout queue with Intermediate Universal Forwarder</a></p>
-          <br/>
+          <br/><p>Finally you may want to refer to <a href="https://community.splunk.com/t5/Knowledge-Management/Slow-indexer-receiver-detection-capability/m-p/683768">Slow indexer/receiver detection capability</a></p>
     <p>What config  is used to achieve the above?</p>
     <p>outputs.conf file based on 1MB/s
     </p><p><code>maxQueueSize = 10MB</code>
@@ -128,12 +128,6 @@
           </p>
     <p>
             <code>connectionTTL = 300</code>
-          </p>
-    <p>
-            <code>heartbeatFrequency = 15</code>
-          </p>
-    <p>
-            <code>#heartbeatFrequency = 15 for useACK, 350 for non-useACK</code>
           </p>
         </body>
       </html>

@@ -1,0 +1,634 @@
+<form version="1.1">
+  <label>Dashboard - Heavy Forwarder analysis</label>
+  <description>As found on https://drive.google.com/file/d/1zvMKrFkk6wzmeXS1r69-GYfEbIdT_TVX/view from https://conf.splunk.com/files/2024/slides/PLA1509B.pdf / https://conf.splunk.com/files/2024/recordings/PLA1509B.mp4</description>
+  <fieldset submitButton="false">
+    <input type="time" token="time1">
+      <label>Select Time</label>
+      <default>
+        <earliest>-15m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="host1">
+      <label>Select Forwarder - HF</label>
+      <fieldForLabel>hostname</fieldForLabel>
+      <fieldForValue>hostname</fieldForValue>
+      <search>
+        <query>index=_internal  group=tcp*_connections   sourcetype=splunkd
+fwdType=full
+| stats count by hostname  fwdType</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>$host1$ Queues-Pipelines Fill perc 90% - if high check thruput not throttled</title>
+      <chart>
+        <search>
+          <query>index=_internal sourcetype=splunkd group=queue host=$host1$ (name=tcpin_queue OR name=splunktcpin OR name=parsingqueue OR name=aggqueue OR name=typingqueue OR name=indexqueue OR name=tcpout*)
+          | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "0")
+          | search ingest_pipe=*
+          | eval max=if(isnotnull(max_size_kb),max_size_kb,max_size)
+          | eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size)
+          | eval fill_perc=round((curr/max)*100,2)
+          | eval name=host."-".name."-".ingest_pipe
+          | timechart span=1m  Perc90(fill_perc) by name useother=false limit=0 usenull=f</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <search type="annotation">
+          <query>index=_internal sourcetype=splunkd host=$host1$ (shutdownhandler complete) OR (loader Splunkd starting build) OR (request state change from=RUN to=SHUTDOWN_SIGNALED) OR (request state change from=SHUTDOWN_IN_PROGRESS to=SHUTDOWN_COMPLETE) OR (loader Splunkd starting build) OR (my GUID is) OR (All pipelines finished) NOT(Queued job)
+| transaction startswith=finished endswith=starting maxspan=15min host keepevicted=true
+| eval annotation_label=case(searchmatch("new generated"), "first startup",
+    (searchmatch("complete") OR searchmatch("signalled")) AND searchmatch("NOT starting"), "graceful shutdown", 
+    (searchmatch("complete") OR searchmatch("signalled")) AND searchmatch("starting"), "graceful restart",1=1, "ungraceful restart")." ".host, annotation_category="restart", annotation_color="#FBB117"
+| table _time ann*</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.max_kflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.max_kflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="height">385</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>$host1$ Max Thruput (kbps) by ingest_pipe If =&lt; 256kbps Check FWD is Limited to 256kbps</title>
+      <single>
+        <search>
+          <query>index=_internal host=$host1$  group=thruput name=cooked_output
+          | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "0")
+          | timechart span=1m max(instantaneous_kbps) as max_instantaneous_kbps by ingest_pipe</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0xf8be34","0xdc4e41","0xdc4e41"]</option>
+        <option name="rangeValues">[200,250,260]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">1</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Connected to IDXs based on tcp connections</title>
+      <chart>
+        <search>
+          <query>index=_internal group=tcp*_connections sourcetype=splunkd (host=$host1$ OR hostname=$host1$) NOT lastIndexer=None| timechart span=1sec count by lastIndexer usenull=f</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>component="AutoLoadBalancedConnectionStrategy"</title>
+      <chart>
+        <search>
+          <query>index=_internal  sourcetype=splunkd (host=$host1$) component="AutoLoadBalancedConnectionStrategy" |timechart minspan=1sec count by idx usenull=f useother=false</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$host1$ Max KB/sec by index-pipe</title>
+      <chart>
+        <search>
+          <query>index=_internal host=$host1$  source="*metrics.log*"  group=per_index_thruput NOT series=_*
+          | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "0")
+          | eval index-pipe=series."-".ingest_pipe
+          |  timechart minspan=30sec  max(kbps) as "Max KB/sec" by index-pipe useother=f usenull=f limit=0</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <search type="annotation">
+          <query>index=_internal sourcetype=splunkd host=$host1$ (shutdownhandler complete) OR (loader Splunkd starting build) OR (request state change from=RUN to=SHUTDOWN_SIGNALED) OR (request state change from=SHUTDOWN_IN_PROGRESS to=SHUTDOWN_COMPLETE) OR (loader Splunkd starting build) OR (my GUID is) OR (All pipelines finished) NOT(Queued job)
+| transaction startswith=finished endswith=starting maxspan=15min host keepevicted=true
+| eval annotation_label=case(searchmatch("new generated"), "first startup",
+    (searchmatch("complete") OR searchmatch("signalled")) AND searchmatch("NOT starting"), "graceful shutdown", 
+    (searchmatch("complete") OR searchmatch("signalled")) AND searchmatch("starting"), "graceful restart",1=1, "ungraceful restart")." ".host, annotation_category="restart", annotation_color="#FBB117"
+| table _time ann*</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">kbps</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>$host1$ Max KB/sec by sourcetype-pipe</title>
+      <chart>
+        <search>
+          <query>index=_internal host=$host1$  source="*metrics.log*"  group=per_sourcetype_thruput NOT series=_*
+          | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "0")
+          | eval sourcetype-pipe=series."-".ingest_pipe
+          |  timechart minspan=30sec  max(kbps) as "Max KB/sec" by sourcetype-pipe useother=f usenull=f limit=0</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$host1$ Average kbps by ingest_pipe</title>
+      <chart>
+        <search>
+          <query>index=_internal host=$host1$  group=thruput name=cooked_output
+          | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "0")
+          | timechart span=1m max(average_kbps)  by ingest_pipe</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <search type="annotation">
+          <query>index=_internal sourcetype=splunkd host=$host1$ (shutdownhandler complete) OR (loader Splunkd starting build) OR (request state change from=RUN to=SHUTDOWN_SIGNALED) OR (request state change from=SHUTDOWN_IN_PROGRESS to=SHUTDOWN_COMPLETE) OR (loader Splunkd starting build) OR (my GUID is) OR (All pipelines finished) NOT(Queued job)
+| transaction startswith=finished endswith=starting maxspan=15min host keepevicted=true
+| eval annotation_label=case(searchmatch("new generated"), "first startup",
+    (searchmatch("complete") OR searchmatch("signalled")) AND searchmatch("NOT starting"), "graceful shutdown", 
+    (searchmatch("complete") OR searchmatch("signalled")) AND searchmatch("starting"), "graceful restart",1=1, "ungraceful restart")." ".host, annotation_category="restart", annotation_color="#FBB117"
+| table _time ann*</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">kbps</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.text">max_instantaneous_kbps</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.axisY2.scale">linear</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.overlayFields">"max_instantaneous_kbps: 0","max_instantaneous_kbps: 1","max_instantaneous_kbps: 2","max_instantaneous_kbps: 3","max_instantaneous_kbps: 4","max_instantaneous_kbps: 5","max_instantaneous_kbps: 6","max_instantaneous_kbps: 7","max_instantaneous_kbps: 8","max_instantaneous_kbps: 9","max_instantaneous_kbps: 10"</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>$host1$ Max kbps by ingest_pipe If &lt; 256kbps Check FWD is Limited to 256kbps</title>
+      <chart>
+        <search>
+          <query>index=_internal host=$host1$  group=thruput name=cooked_output
+          | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "0")
+          | eval UFdefaultkbps=256
+          | timechart span=1m  max(UFdefaultkbps) as UFdefaultkbps max(instantaneous_kbps) as max_instantaneous_kbps by ingest_pipe</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <search type="annotation">
+          <query>index=_internal sourcetype=splunkd host=$host1$ (shutdownhandler complete) OR (loader Splunkd starting build) OR (request state change from=RUN to=SHUTDOWN_SIGNALED) OR (request state change from=SHUTDOWN_IN_PROGRESS to=SHUTDOWN_COMPLETE) OR (loader Splunkd starting build) OR (my GUID is) OR (All pipelines finished) NOT(Queued job)
+| transaction startswith=finished endswith=starting maxspan=15min host keepevicted=true
+| eval annotation_label=case(searchmatch("new generated"), "first startup",
+    (searchmatch("complete") OR searchmatch("signalled")) AND searchmatch("NOT starting"), "graceful shutdown", 
+    (searchmatch("complete") OR searchmatch("signalled")) AND searchmatch("starting"), "graceful restart",1=1, "ungraceful restart")." ".host, annotation_category="restart", annotation_color="#FBB117"
+| table _time ann*</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">kbps</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.text">max_instantaneous_kbps</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.minimumNumber">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.overlayFields">"UFdefaultkbps: 0","UFdefaultkbps: 1","UFdefaultkbps: 2","UFdefaultkbps: 3","UFdefaultkbps: 4","UFdefaultkbps: 5","UFdefaultkbps: 6","UFdefaultkbps: 7","UFdefaultkbps: 8","UFdefaultkbps: 9","UFdefaultkbps: 10",,"UFdefaultkbps: 11","UFdefaultkbps: 12","UFdefaultkbps: 13","UFdefaultkbps: 14","UFdefaultkbps: 15","UFdefaultkbps: 16","UFdefaultkbps: 17","UFdefaultkbps: 18","UFdefaultkbps: 19","UFdefaultkbps: 20"</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$host1$ % CPU by pipe_name_processor</title>
+      <chart>
+        <search>
+          <query>index=_internal host=$host1$   source="*metrics.log*"  sourcetype=splunkd  group=pipeline  NOT processor=sendout
+    | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "0")
+    | eval pipe_name_processor=ingest_pipe."-".name."-".processor
+    | timechart minspan=30s per_second(eval(cpu_seconds*100)) AS pctCPU by pipe_name_processor useother=false limit=0</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>$host1$ executes by pipe_name_processor</title>
+      <chart>
+        <search>
+          <query>index=_internal host=$host1$   source="*metrics.log*"  sourcetype=splunkd  group=pipeline  NOT processor=sendout
+    | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "0")
+    | eval pipe_name_processor=ingest_pipe."-".name."-".processor
+    | timechart minspan=30s per_second(executes) AS executes   by pipe_name_processor useother=false limit=0</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$host1$ cpu_seconds, executes name processor</title>
+      <chart>
+        <search>
+          <query>index=_internal sourcetype=splunkd host=$host1$ Metrics TERM(group=pipeline) NOT TERM(processor=sendout) NOT TERM(processor=readerin)
+| bucket _time span=1m
+| fields cpu_seconds, executes name processor 
+| eval name_rocessor=name."-".processor 
+|timechart sum(cpu_seconds) as cpu_seconds sum(executes) as executes by name_rocessor useother=f</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Check if TCPout Groups and Queues Dropping Events</title>
+      <table>
+        <search>
+          <query>index=_internal host=$host1$ component=TcpOutputProc sourcetype=splunkd "TcpOutputProc - Queue for group * has"
+[| tstats  min(_time) as earliest  where (index=_internal sourcetype=splunkd)]
+[| tstats  max(_time) as latest  where (index=_internal  sourcetype=splunkd)]
+| rex field=event_message "Queue for group (?&lt;tcpout_group&gt;.*) has (?&lt;queue_action&gt;.*) events"
+| eval group_action=tcpout_group."-".queue_action
+| stats sparkline count  by tcpout_group queue_action</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>The TCP output processor has paused the data flow</title>
+      <table>
+        <search>
+          <query>index=_internal host=$host1$ component=TcpOutputProc sourcetype=splunkd event_message="The TCP output processor has paused the data flow*"
+| rex field=event_message "Forwarding to output group (?&lt;tcpout_group&gt;.*) has been blocked for (?&lt;blocked_for_seconds&gt;.*) seconds"
+| stats  sparkline(max(blocked_for_seconds),5m) as blocked_for_seconds last(_time) as _time min(blocked_for_seconds) as min_blocked_seconds max(blocked_for_seconds) as max_blocked_seconds by  tcpout_group host</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>$host1$ Blocking</title>
+      <table>
+        <search>
+          <query>index=_internal sourcetype=splunkd host=LOG-HF11.myengie.com (log_level=ERROR AND ("TcpInputProc - Error encountered for connection from" AND " Local side shutting down")) OR (log_level=INFO AND blocked=true) 
+    | eval combined=max_size_kb."-".current_size_kb."-".current_size."-".largest_size
+| stats dc(_time) as count  values(max_size_kb) as max_size_kb values(current_size_kb) as current_size_kb  values(current_size) as current_size values(largest_size) as largest_size earliest(_time) as firsttime latest(_time) as lasttime by host name combined
+| convert ctime(lasttime) as LastTime, ctime(firsttime) as FirstTime 
+| addcoltotals labelfield=host label=Total
+| fields - firsttime lasttime combined | where count&gt;0 | sort - count</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>$host1$  Queues : Current Size v Max Size (kb)</title>
+      <chart>
+        <search>
+          <query>index=_internal source="*metrics.log*" group=queue host=$host1$ 
+| timechart values(current_size_kb) AS current_size_kb values(max_size_kb) as max_size_kb by name</query>
+          <earliest>$time1.earliest$</earliest>
+          <latest>$time1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">collapsed</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.overlayFields">max_size_kb</option>
+        <option name="charting.chart.showDataLabels">minmax</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">1</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">1</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trellis.splitBy">name</option>
+      </chart>
+    </panel>
+  </row>
+</form>

@@ -359,6 +359,41 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 4.0.1
+New dashboard:
+-`heavy_forwarder_analysis` - as found in the conf24 presentation PLA1509B
+
+ New reports:
+- `SearchHeadLevel - Job performance data per indexer handoff time`
+- `SearchHeadLevel - KVStore collection size`
+- `SearchHeadLevel - Savedsearches with schedules and no next_scheduled_time`
+
+Updated alerts:
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - search updates
+- `AllSplunkEnterpriseLevel - Email Sending Failures` - added app context
+- `IndexerLevel - These Indexes Are Approaching The warmDBCount limit` - added datatype=all argument
+- `IndexerLevel - Cold data location approaching size limits` - added datatype=all argument
+- `IndexerLevel - Unclean Shutdown - Fsck` - added datatype=all argument
+- `SearchHeadLevel - Peer timeouts or authentication issues` - updates to use Splunkd source
+- `SearchHeadLevel - Splunk alert actions exceeding the max_action_results limit` - excluded summary indexing
+- `SearchHeadLevel - Scheduled Searches without a configured earliest and latest time` - rewrote search for efficiency
+- `SearchHeadLevel - Search Messages user level` - search updates
+- `SearchHeadLevel - Search Messages admins only` - search updates
+
+Updated dashboards:
+- `splunk_forwarder_output_tuning` - updated comments, removed heartbeatFrequency
+
+Updated macros:
+- `search_type_from_sid` - minor tweaks to regex
+
+Updated reports:
+- `SearchHeadLevel - indexes per savedsearch` - corrected typo on multisearch, re-wrote parts of the query to include subsearches as well
+- `SearchHeadLevel - Indexes for savedsearch without subsearches` - corrected typo on multisearch
+- `SearchHeadLevel - Search Queries summary non-exact match` - added delim for index IN (a b c), corrected typo on multisearch, updated description to link to https://github.com/TheWoodRanger/presentation-conf_24_audittrail_native_telemetry
+- `SearchHeadLevel - Search Queries summary exact match` - added delim for index IN (a b c), corrected typo on multisearch, updated description to link to https://github.com/TheWoodRanger/presentation-conf_24_audittrail_native_telemetry
+
+Also updated the navigation menu.
+
 ### 4.0.0
 - Merged pull request from sifters relating to replacing comment macro with the triple backtick option introduced in Splunk 8.1. This involved editing many searches to change the format of the comments.
 
