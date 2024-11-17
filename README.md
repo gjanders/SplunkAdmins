@@ -359,6 +359,9 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 4.0.2
+
+
 ### 4.0.1
 New dashboard:
 -`heavy_forwarder_analysis` - as found in the conf24 presentation PLA1509B
