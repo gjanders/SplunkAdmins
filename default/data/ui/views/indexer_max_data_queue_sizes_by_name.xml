@@ -132,8 +132,8 @@
 | join guid
     [| rest /services/search/distributed/peers
     | table guid peerName]
-| transaction bid guid endswith="has room now" keeporphans=true
-| timechart span=1m count, max(duration) AS duration by peerName</query>	  
+| transaction bid guid endswith="has room now" keeporphans=true keepevicted=true
+| timechart span=$span$ count, max(duration) AS duration by peerName</query>	  
           <earliest>-60m@m</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
