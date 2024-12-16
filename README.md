@@ -359,6 +359,21 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 4.0.2
+Updated alerts:
+- `MonitoringConsole - one or more servers require configuration automated` - added missing \, issue #25 (thanks to barrettnet)
+- `SearchHeadLevel - Detect MongoDB errors` - included warning level entries
+
+Updated dashboards:
+- `indexer_max_data_queue_sizes_by_name` - improved replication panel
+- `indexer_max_data_queue_sizes_by_name_v8` - improved replication panel
+
+Updated reports:
+- `SearchHeadLevel - indexes per savedsearch` - updated regex for union/set/multisearch
+- `SearchHeadLevel - Search Queries summary exact match` - updated regex for union/set/multisearch
+- `SearchHeadLevel - Search Queries summary non-exact match` - updated regex for union/set/multisearch
+- `SearchHeadLevel - Search Queries summary loadjob and savedsearch usage in audit logs` - updated rexgex, rewrote search to find map, join, appendcols and other commands
+
 ### 4.0.1
 New dashboard:
 -`heavy_forwarder_analysis` - as found in the conf24 presentation PLA1509B
