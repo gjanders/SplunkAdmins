@@ -31,6 +31,7 @@
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20TCP%20or%20SSL%20Config%20Issue">TCP or SSL Config Issue</a> 
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20WARN%20iniFile%20Configuration%20Issues">WARN iniFile Configuration Issues</a> 
 			<a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20error%20in%20stdout">error in stdout.log</a>
+                        <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FAllSplunkEnterpriseLevel%20-%20Splunkd%20Log%20Messages%20Admins%20Only">Splunkd Log Messages Admins Only</a>
 		</collection>	
 		<collection label="Splunk Level Failures">
 			<collection label="Deployment Server Related">
@@ -295,6 +296,7 @@
 			<saved name="SearchHeadLevel - audit.log - lookup usage" />
 			<saved name="SearchHeadLevel - Detect lookups that have not being accessed for a period of time" />
 			<saved name="SearchHeadLevel - Lookup Editor lookup updates" />
+			<saved name="SearchHeadLevel - Datamodel access summary" />
 			<saved name="SearchHeadLevel - indexes per savedsearch" />
 			<saved name="SearchHeadLevel - macros in use" />
 			<saved name="SearchHeadLevel - Search Queries Per Day Audit Logs" />
@@ -329,6 +331,7 @@
 			<saved name="SearchHeadLevel - Data Model Acceleration Completion Status" />
 			<saved name="SearchHeadLevel - DataModel Fields" />
 			<saved name="SearchHeadLevel - Accelerated DataModels Access Info" />
+			<saved name="SearchHeadLevel - Datamodel access summary" />
 			<saved name="SearchHeadLevel - Datamodel REST endpoint indexes in use" />			
 			<saved name="IndexerLevel - DataModel Acceleration - Indexes in use" />
                         <a href="/app/SplunkAdmins/alert?s=%2FservicesNS%2Fnobody%2FSplunkAdmins%2Fsaved%2Fsearches%2FSearchHeadLevel%20-%20datamodel%20errors%20in%20splunkd">datamodel errors in splunkd</a>			

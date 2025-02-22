@@ -359,6 +359,26 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 4.0.3
+New reports:
+- `SearchHeadLevel - Datamodel access summary`
+
+Updated alerts:
+- `AllSplunkEnterpriseLevel - File integrity check failure` - removed wildcard, feedback from Gregg Woodcock
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - removed extra "AND", feedback from Gregg Woodcock
+
+Updated reports:
+- `SearchHeadLevel - Accelerated DataModels Access Info - updated description`
+- `SearchHeadLevel - Datamodel REST endpoint indexes in use` - correct indexin multivalued extraction
+- `SearchHeadLevel - indexes per savedsearch` - correct indexin multivalued extraction
+- `SearchHeadLevel - Indexes for savedsearch without subsearches` - correct indexin multivalued extraction
+- `SearchHeadLevel - Lookups within savedsearches` - included the action.lookup.filename
+- `SearchHeadLevel - Search Queries summary exact match` - correct indexin multivalued extraction
+- `SearchHeadLevel - Search Queries summary non-exact match` - correct indexin multivalued extraction
+- `SearchHeadLevel - SmartStore cache misses - dashboards` - correct indexin multivalued extraction
+- `SearchHeadLevel - SmartStore cache misses - savedsearches` - correct indexin multivalued extraction
+- `SearchHeadLevel - SmartStore cache misses - combined` - correct indexin multivalued extraction
+
 ### 4.0.2
 Updated alerts:
 - `MonitoringConsole - one or more servers require configuration automated` - added missing \, issue #25 (thanks to barrettnet)
