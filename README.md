@@ -359,6 +359,24 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 4.0.4
+New reports:
+- `SearchHeadLevel - access logs kvstore usage`
+- `SearchHeadLevel - Lookup Watcher Recent Modification Summary`
+
+Updated alert:
+- `AllSplunkEnterpriseLevel - Email Sending Failures` - to exclude a warning noticed in 9.3.3
+
+Updated macro:
+- `search_type_from_sid` - for subsearches
+
+Updated reports:
+- `SearchHeadLevel - Lookup file owners` - description/comment update
+- `SearchHeadLevel - Detect lookups that have not being accessed for a period of time` - description/comment update
+
+
+Updated cron schedules of various reports to move them to different times
+
 ### 4.0.3
 New reports:
 - `SearchHeadLevel - Datamodel access summary`
