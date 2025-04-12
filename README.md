@@ -359,6 +359,8 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 4.0.5
+
 ### 4.0.4
 New reports:
 - `SearchHeadLevel - access logs kvstore usage`
