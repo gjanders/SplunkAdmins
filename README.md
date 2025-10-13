@@ -359,6 +359,25 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 4.0.5
+New alerts:
+- `AllSplunkEnterpriseLevel - Splunk servers with resource starvation v2`
+
+New reports:
+- `SearchHeadLevel - indexes per dashboard`
+
+Updated reports/alerts:
+- `AllSplunkEnterpriseLevel - Splunk Servers with resource starvation` - reference to new version
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - additional criteria
+- `IndexerLevel - Slow peer from remote searches` - updated regex for Splunk 9.4 and above
+- `IndexerLevel - RemoteSearches Indexes Stats Wilcard` - updated regex for Splunk 9.4 and above
+- `IndexerLevel - RemoteSearches Indexes Stats` - updated regex for Splunk 9.4 and above
+- `SearchHeadLevel - Excessive REST API usage` - added semantic jobs endpoints
+- `SearchHeadLevel - platform_stats.remote_searches metrics populating search`
+- `SearchHeadLevel - platform_stats access summary` - added semantic jobs endpoints
+- `SearchHeadLevel - SHC Captain unable to establish common bundle` - additional criteria
+- `SearchHeadLevel - Search Messages admins only` - additional criteria
+
 ### 4.0.4
 New reports:
 - `SearchHeadLevel - access logs kvstore usage`
