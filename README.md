@@ -359,6 +359,31 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 4.0.6
+New macros:
+- `indexes_extraction(1)` - to extract indexes from search logs
+
+Updated reports/alerts:
+- `AllSplunkEnterpriseLevel - Splunkd Crash Logs Have Appeared in Production` - updated based on email feedback to use sourcetype (as source matching needed wildcards)
+- `IndexerLevel - Slow peer from remote searches` - corrected comment in search only
+- `SearchHeadLevel - Search Queries summary exact match`
+- `SearchHeadLevel - Search Queries summary non-exact match`
+- `SearchHeadLevel - SmartStore cache misses - dashboards`
+- `SearchHeadLevel - SmartStore cache misses - savedsearches`
+- `SearchHeadLevel - SmartStore cache misses - combined`
+- `SearchHeadLevel - Datamodel REST endpoint indexes in use`
+- `SearchHeadLevel - indexes per savedsearch`
+- `SearchHeadLevel - Indexes for savedsearch without subsearches`
+- `SearchHeadLevel - indexes per dashboard`
+
+Updated reports/alerts:
+- `AllSplunkEnterpriseLevel - Splunk Scheduler excessive delays in executing search`
+- `AllSplunkEnterpriseLevel - sendmodalert errors`
+- `SearchHeadLevel - Alerts that have not fired an action in X days
+- `SearchHeadLevel - Scheduled Search Efficiency`
+
+To extract savedsearch_name (as I found you can have savedsearches with double quotes in the title).
+
 ### 4.0.5
 New alerts:
 - `AllSplunkEnterpriseLevel - Splunk servers with resource starvation v2`
