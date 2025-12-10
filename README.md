@@ -359,6 +359,8 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 4.0.7
+
 ### 4.0.6
 New macros:
 - `indexes_extraction(1)` - to extract indexes from search logs
