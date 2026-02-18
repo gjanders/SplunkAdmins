@@ -360,6 +360,8 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 
 ## Release Notes
 ### 4.0.7
+Updated reports:
+- `SearchHeadLevel - SmartStore cache misses - combined` - missing \ (thanks to @barrettnet) 
 
 ### 4.0.6
 New macros:
