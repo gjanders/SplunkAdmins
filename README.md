@@ -359,6 +359,13 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 4.0.8
+Updated reports/alerts:
+- `AllSplunkEnterpriseLevel - Email Sending Failures` - excluded pkg_resources as mentioned on community slack
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - additional criteria
+- `SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring` - updated criteria and included HF into the search scope
+- `SearchHeadLevel - macros in use` - updated comment
+
 ### 4.0.7
 Updated reports:
 - `SearchHeadLevel - SmartStore cache misses - combined` - missing \ (thanks to @barrettnet) 
