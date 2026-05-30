@@ -325,6 +325,7 @@
 			<saved name="SearchHeadLevel - Job performance data per indexer" />
 			<saved name="SearchHeadLevel - Job performance data per indexer handoff time" />
 			<saved name="SearchHeadLevel - Jobs endpoint example" />
+			<saved name="SearchHeadLevel - KV Store collections replicated size" />
 			<saved name="SearchHeadLevel - configtracker index example" />
 			<saved name="SearchHeadLevel - configtracker index example2" />
 			<saved name="SearchHeadLevel - Lookup Watcher Recent Modification Summary" />
@@ -500,6 +501,7 @@
 			<saved name="IndexerLevel - events per second benchmark" />
 			<saved name="IndexerLevel - savedsearches by indexer execution time" />
 			<saved name="SearchHeadLevel - Indexes for savedsearch without subsearches" />
+			<saved name="SearchHeadLevel - KV Store collections replicated size" />
 		</collection>	
 		<collection label="Summary_Reports">
 			<saved name="SearchHeadLevel - audit.log - lookup usage" />

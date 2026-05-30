@@ -359,6 +359,34 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 4.0.9
+New reports:
+- `SearchHeadLevel - KV Store collections replicated size`
+
+Updated macros:
+- `splunkadmins_audit_logs_macro_sub` - this is now the v8 version renamed, added a mvfilter to avoid invalid macro name matching
+- `splunkadmins_audit_logs_datamodel_sub` - so that it will not substitute if it doesn't have a definition 
+
+Updated reports/alerts:
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - additional criteria
+- `SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring` - correct to use searchheadhosts macro
+- `SearchHeadLevel - platform_stats access summary` - rewritten to include audit.log entries to catch all savedsearch calls`
+- `SearchHeadLevel - macros in use` - added splunkd_access logs for indirect macro usage (not via search directly) 
+
+Removed macros:
+- `splunkadmins_audit_logs_macro_sub_v8`
+
+All searches:
+- Links to answers.splunk.com updated with community.splunk.com links
+- Links to docs.splunk.com replaced with links to help.splunk.com
+- Descriptions updated for most reports and alerts
+
+Deprecated reports/alerts:
+- `ForwarderLevel - SSL Errors In Logs (Potential Universal Forwarder and License Issue)`
+- `IndexerLevel - Buckets rolling more frequently than expected`
+- `IndexerLevel - S2SFileReceiver Error`
+- `SearchHeadLevel - SHCluster Artifact Replication Issues`
+
 ### 4.0.8
 Updated reports/alerts:
 - `AllSplunkEnterpriseLevel - Email Sending Failures` - excluded pkg_resources as mentioned on community slack
