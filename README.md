@@ -360,6 +360,8 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 
 ## Release Notes
 ### 4.0.11
+Updated alerts:
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - additional criteria
 
 ### 4.0.10
 Updated alerts:
