@@ -360,9 +360,13 @@ Feel free to open an issue on github or use the contact author on the SplunkBase
 
 ## Release Notes
 ### 4.0.11
+New alerts:
+- `AllSplunkEnterpriseLevel - Splunk Postgres errors`
+
 Updated alerts:
 - `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - additional criteria
 - `AllSplunkEnterpriseLevel - Replication Failures` - updated exclusion criteria
+- `SearchHeadLevel - Search Messages admins only` - additional criteria
 
 ### 4.0.10
 Updated alerts:
