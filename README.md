@@ -366,6 +366,7 @@ New alerts:
 Updated alerts:
 - `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - additional criteria
 - `AllSplunkEnterpriseLevel - Replication Failures` - updated exclusion criteria
+- `SearchHeadLevel - Script failures in the last day` - additional context for webhook failures
 - `SearchHeadLevel - Search Messages admins only` - additional criteria
 
 ### 4.0.10
