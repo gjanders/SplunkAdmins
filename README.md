@@ -11,7 +11,7 @@ The overall idea behind this application is to provide a variety of alerts that 
 This application was built as there were a variety of messages in the Splunk console and logs in Splunk that if acted upon could have prevented an issue within the environment.
 
 The original presentation is available as a [recording](http://conf.splunk.com/files/2017/recordings/howd-you-get-so-big-tips-n-tricks-for-growing-your-splunk-deployment-from-50-gb-per-day-to-1-tb-per-day.mp4) or [PDF](http://conf.splunk.com/files/2017/slides/howd-you-get-so-big-tips-tricks-for-growing-your-splunk-deployment-from-50-gb-day-to-1-tb-day.pdf)
-The powerpoint should it be required is available [here](https://github.com/gjanders/splunkconf2017)
+The powerpoint should it be required is available [here](https://github.com/gjanders/splunkconf2017). The original presentation while still partially relevant, is quite dated at this point. Please refer to my [website](https://gjanders.github.io/) for more up-to-date articles.
 
 There are many potential alerts that might cause an issue so this application has all alerts disabled by default, post-installation once the required macros are configured you can enable the alerts you wish to use and add the required actions
 
@@ -359,6 +359,9 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 4.0.12
+
+
 ### 4.0.11
 New alerts:
 - `AllSplunkEnterpriseLevel - Splunk Postgres errors`
