@@ -359,6 +359,22 @@ These are appear to be from premium apps but it does imply that there is a mecha
 Feel free to open an issue on github or use the contact author on the SplunkBase link and I will try to get back to you when possible, thanks!
 
 ## Release Notes
+### 4.0.11
+New alerts:
+- `AllSplunkEnterpriseLevel - Splunk Postgres errors`
+
+Updated alerts:
+- `AllSplunkEnterpriseLevel - Splunkd Log Messages Admins Only` - additional criteria
+- `AllSplunkEnterpriseLevel - Replication Failures` - updated exclusion criteria
+- `ForwarderLevel - Splunk Universal Forwarders Exceeding the File Descriptor Cache` - updated comments
+- `IndexerLevel - IndexConfig Warnings from Splunk indexers` - updated exclusion criteria
+- `SearchHeadLevel - Script failures in the last day` - additional context for webhook failures
+- `SearchHeadLevel - Search Messages admins only` - additional criteria
+
+Updated reports:
+- `SearchHeadLevel - Search Queries summary exact match` - updated regex due to match limits
+- `SearchHeadLevel - Search Queries summary non-exact match` - updated regex due to match limits
+
 ### 4.0.10
 Updated alerts:
 - `SearchHeadLevel - KVStore Or Conf Replication Issues Are Occurring` - corrected typo in macroname, thanks to https://github.com/gjanders/SplunkAdmins/issues/26
